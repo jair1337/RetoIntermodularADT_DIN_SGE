@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.ClienteMenuController">
+   <items>
+      <VBox alignment="CENTER" maxWidth="200.0">
+         <children>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+            <Label text="Usuario" />
+            <Label text="Rol: Cliente" />
+            <Button fx:id="btnPerfil" maxWidth="150.0" mnemonicParsing="false" onAction="#abrirPerfil" text="Consultar perfil">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="btnLogrosPuntos" maxWidth="150.0" mnemonicParsing="false" onAction="#abrirPuntosLogros" text="Consultar logros/puntos">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="btnCerrarSesion" maxWidth="150.0" mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar sesion">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+      <VBox alignment="CENTER" maxWidth="400.0">
+         <children>
+            <Label text="TxandaSport">
+               <font>
+                  <Font size="36.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </Label>
+            <Button fx:id="btnConsultarDisponibilidad" maxWidth="150.0" mnemonicParsing="false" onAction="#abrirDisponibilidad" text="Consultar disponibilidad">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="btnConsultarActividades" maxWidth="150.0" mnemonicParsing="false" onAction="#abrirCancelar" text="Consultar actividades">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="btnContacto" maxWidth="150.0" mnemonicParsing="false" onAction="#abrirContacto" text="Contactanos">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="btnAyuda" maxWidth="150.0" mnemonicParsing="false" onAction="#abrirAyuda" text="Ayuda">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+   </items>
+</SplitPane>
