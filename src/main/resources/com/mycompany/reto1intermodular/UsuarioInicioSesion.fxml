@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane styleClass="popup-wrapper" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.UsuarioInicioSesionController">
+   <padding>
+      <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+   </padding>
+   <children>
+      <VBox alignment="TOP_CENTER" maxWidth="340.0" prefWidth="340.0" spacing="14.0" styleClass="login-card">
+         <padding>
+            <Insets bottom="28.0" left="30.0" right="30.0" top="18.0" />
+         </padding>
+         <children>
+            <HBox alignment="CENTER_RIGHT">
+               <children>
+                  <Button fx:id="btnCerrar" onAction="#cerrar" styleClass="close-btn" text="✕" />
+               </children>
+            </HBox>
+            <Label styleClass="brand-small" text="🏟 TxandaSport" />
+            <Label styleClass="login-title" text="Iniciar sesión" />
+            <Label styleClass="login-sub" text="Accede a tu cuenta para continuar" />
+            <TextField fx:id="txtUsuario" onAction="#entrar" promptText="Usuario" styleClass="login-field" />
+            <StackPane>
+               <children>
+                  <PasswordField fx:id="pwdContrasena" onAction="#entrar" promptText="Contraseña" styleClass="login-field" />
+                  <TextField fx:id="txtContrasenaVisible" onAction="#entrar" promptText="Contraseña" styleClass="login-field" visible="false" />
+                  <Button fx:id="btnOjo" onAction="#alternarVisibilidad" styleClass="eye-btn" text="👁" StackPane.alignment="CENTER_RIGHT" />
+               </children>
+            </StackPane>
+            <Label fx:id="lblError" managed="false" styleClass="error-label" visible="false" />
+            <Button fx:id="btnEntrar" maxWidth="1.7976931348623157E308" onAction="#entrar" styleClass="primary-btn, full" text="Entrar" />
+            <Hyperlink fx:id="lblRegistrarse" onAction="#abrirRegistrarse" styleClass="forgot-link" text="Registrarse" />
+         </children>
+      </VBox>
+   </children>
+</StackPane>

@@ -1,31 +1,28 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelo;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
  * @author Albeiro.Mamani
  */
 public class Actividad {
-    private int id;
+    private String id;
     private String titulo;
     private String tipo;
     private String pistaZona;
     private String localizacion;
-    private LocalDate fechaInicio;
-    private LocalDate fechaFin;
+    private Date fechaInicio;
+    private Date fechaFin;
     private double precio;
     private int aforoMaximo;
     private int puntos;
     private String idEmpleado;
-    private ArrayList<Cliente> participantes;
+    private List<Cliente> participantes;
+    
 
-    public Actividad(int id, String titulo, String tipo, String pistaZona, String localizacion, LocalDate fechaInicio, LocalDate fechaFin, double precio, int aforoMaximo, int puntos, String idEmpleado, ArrayList<Cliente> participantes) {
+    public Actividad(String id, String titulo, String tipo, String pistaZona, String localizacion, Date fechaInicio, Date fechaFin, double precio, int aforoMaximo, int puntos, String idEmpleado, List<Cliente> participantes) {
         this.id = id;
         this.titulo = titulo;
         this.tipo = tipo;
@@ -40,5 +37,103 @@ public class Actividad {
         this.participantes = participantes;
     }
     
-    
+    public Actividad() {
+        
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getPistaZona() {
+        return pistaZona;
+    }
+
+    public void setPistaZona(String pistaZona) {
+        this.pistaZona = pistaZona;
+    }
+
+    public String getLocalizacion() {
+        return localizacion;
+    }
+
+    public void setLocalizacion(String localizacion) {
+        this.localizacion = localizacion;
+    }
+
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Date getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public int getAforoMaximo() {
+        return aforoMaximo;
+    }
+
+    public void setAforoMaximo(int aforoMaximo) {
+        this.aforoMaximo = aforoMaximo;
+    }
+
+    public int getPuntos() {
+        return puntos;
+    }
+
+    public void setPuntos(int puntos) {
+        this.puntos = puntos;
+    }
+
+    public String getIdEmpleado() {
+        return idEmpleado;
+    }
+
+    public void setIdEmpleado(String idEmpleado) {
+        this.idEmpleado = idEmpleado;
+    }
+
+    public List<Cliente> getParticipantes() {
+        return participantes;
+    }
+
+    public void setParticipantes(List<Cliente> participantes) {
+        this.participantes = participantes;
+    }  
 }

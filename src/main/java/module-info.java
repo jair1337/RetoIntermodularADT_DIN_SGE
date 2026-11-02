@@ -14,4 +14,7 @@ module Reto1Intermodular {
     requires org.mongodb.bson;
     requires org.mongodb.driver.core;
     requires java.base;
+    
+    exports modelo;
+    opens modelo to javafx.base;
 }

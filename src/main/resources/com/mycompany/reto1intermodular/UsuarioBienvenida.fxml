@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane fx:id="root" prefHeight="560.0" prefWidth="900.0" styleClass="root-bg" stylesheets="@../styles/ApartadoLoginCSS.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.UsuarioBienvenidaController">
+   <children>
+      <BorderPane>
+         <center>
+            <VBox alignment="CENTER_LEFT" spacing="18.0">
+               <padding>
+                  <Insets left="70.0" right="70.0" />
+               </padding>
+               <children>
+                  <Label styleClass="brand" text="  🏟 TxandaSport" />
+                  <Label styleClass="hero-title" text="Gestiona tu deporte&#10;como nunca antes" />
+                  <Label styleClass="hero-sub" text="Organizar polideportivos nunca&#10;fue tan facil!" />
+                  <Button fx:id="btnComenzar" onAction="#abrirLogin" styleClass="primary-btn" text="▶   Comenzar" />
+               </children>
+            </VBox>
+         </center>
+         <bottom>
+            <HBox alignment="CENTER" spacing="90.0">
+               <padding>
+                  <Insets bottom="25.0" top="10.0" />
+               </padding>
+               <children>
+                  <VBox alignment="CENTER" spacing="4.0">
+                     <children>
+                        <Label styleClass="nav-icon" text="🎉" />
+                        <Label styleClass="nav-text" text="Sencillez" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" spacing="4.0">
+                     <children>
+                        <Label styleClass="nav-icon" text="🔒" />
+                        <Label styleClass="nav-text" text="Seguridad" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" spacing="4.0">
+                     <children>
+                        <Label styleClass="nav-icon" text="📊" />
+                        <Label styleClass="nav-text" text="Resultados" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </bottom>
+      </BorderPane>
+      <Region fx:id="overlay" styleClass="overlay" visible="false" />
+   </children>
+</StackPane>

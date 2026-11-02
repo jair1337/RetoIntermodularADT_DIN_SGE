@@ -14,8 +14,9 @@ import javafx.stage.Stage;
 public class Principal extends Application {
     
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/com/mycompany/reto1intermodular/Login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/com/mycompany/reto1intermodular/UsuarioBienvenida.fxml"));
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/styles/ApartadoLoginCSS.css").toExternalForm());
         stage.setTitle("Login - TxandaSport");
         stage.setScene(scene);
         stage.show();

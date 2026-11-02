@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.ClienteDisponibilidadController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.ClienteDisponibilidadController">
   <tabs>
     <Tab text="Clases">
          <content>
@@ -38,17 +38,20 @@
                   </HBox>
                   <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
                      <children>
-                        <TableView maxHeight="300.0" maxWidth="500.0" prefHeight="300.0" prefWidth="500.0">
+                        <TableView fx:id="tbActividad" maxHeight="300.0" maxWidth="800.0" prefHeight="300.0" prefWidth="800.0">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="ID" />
-                            <TableColumn prefWidth="75.0" text="Titulo" />
-                              <TableColumn prefWidth="75.0" text="Localizacion" />
-                              <TableColumn prefWidth="75.0" text="Inicio" />
-                              <TableColumn prefWidth="75.0" text="Fin" />
-                              <TableColumn prefWidth="75.0" text="Precio" />
+                            <TableColumn fx:id="colTitulo" prefWidth="126.0" text="Titulo" />
+                              <TableColumn fx:id="colTipo" minWidth="0.0" prefWidth="90.0" text="Tipo" />
+                              <TableColumn fx:id="colZona" prefWidth="104.0" text="Zona" />
+                              <TableColumn fx:id="collLocalizacion" prefWidth="112.0" text="Localizacion" />
+                              <TableColumn fx:id="colInicio" prefWidth="94.0" text="Inicio" />
+                              <TableColumn fx:id="colFin" prefWidth="81.0" text="Fin" />
+                              <TableColumn fx:id="colAforo" prefWidth="60.0" text="Aforo" />
+                              <TableColumn fx:id="colPuntos" prefWidth="70.0" text="Puntos" />
+                              <TableColumn fx:id="colPrecio" prefWidth="62.0" text="Precio" />
                           </columns>
                         </TableView>
-                        <Button mnemonicParsing="false" prefWidth="100.0" text="Registrarse">
+                        <Button fx:id="btnRegistrarse" mnemonicParsing="false" prefWidth="100.0" text="Registrarse">
                            <HBox.margin>
                               <Insets left="40.0" />
                            </HBox.margin>
@@ -92,7 +95,7 @@
                   </HBox>
                   <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
                      <children>
-                        <TableView maxHeight="300.0" maxWidth="500.0" prefHeight="300.0" prefWidth="500.0">
+                        <TableView maxHeight="300.0" maxWidth="800.0" prefHeight="300.0" prefWidth="800.0">
                           <columns>
                             <TableColumn prefWidth="75.0" text="ID" />
                             <TableColumn prefWidth="75.0" text="Nombre" />
