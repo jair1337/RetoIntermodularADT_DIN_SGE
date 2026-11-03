@@ -40,6 +40,70 @@ public class DaoImplementacion implements Dao {
 
             MongoCollection<Document> collection = database.getCollection("usuarios");
 
+            // Buscamos al usuario por su nombre de usuario
+            Document documento = collection.find(eq("nombreUsuario", nombreUsuario)).first();
+
+            if (documento == null) {
+                return null;
+            }
+
+            // Comprobamos la contraseña
+            String contrasenaGuardada = documento.getString("contrasenaUsuario");
+
+            if (contrasenaGuardada == null ||
+                !contrasenaGuardada.equals(contrasenaUsuario)) {
+                return null;
+            }
+
+            // Recuperamos TODOS los datos del usuario
+            Usuario usuario = new Usuario();
+
+            usuario.setDni(documento.getString("dni"));
+            usuario.setNombreUsuario(documento.getString("nombreUsuario"));
+            usuario.setContrasenaUsuario(contrasenaGuardada);
+            usuario.setNombre(documento.getString("nombre"));
+            usuario.setApellidos(documento.getString("apellidos"));
+            usuario.setEmail(documento.getString("email"));
+            usuario.setTelefono(documento.getString("telefono"));
+            
+            Document direccionDoc = documento.get("direccion", Document.class);
+
+            if (direccionDoc != null) {
+                String direccionCompleta =
+                        direccionDoc.getString("calle") + ", " +
+                        direccionDoc.getString("numero") + ", " +
+                        direccionDoc.getString("localidad") + ", " +
+                        direccionDoc.getString("codigoPostal") + ", " +
+                        direccionDoc.getString("provincia");
+
+                usuario.setDireccion(direccionCompleta);
+            }
+            
+            /*
+            Document direccionDoc = documento.get("direccion", Document.class);
+            
+                String calle = direccionDoc.getString("calle");
+                String numero = direccionDoc.getString("numero");
+                String localidad = direccionDoc.getString("localidad");
+                String codigoPostal = direccionDoc.getString("codigoPostal");
+                String provincia = direccionDoc.getString("provincia");
+            */
+
+            //usuario.setDireccion(documento.getString("direccion"));
+
+            return usuario;
+        }
+    }
+    /*
+    @Override
+    public Usuario logearse(String nombreUsuario, String contrasenaUsuario) throws Exception {
+
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
+
+            MongoDatabase database = mongoClient.getDatabase("base_datos");
+
+            MongoCollection<Document> collection = database.getCollection("usuarios");
+
             Document documento = collection.find(eq("nombreUsuario", nombreUsuario)).first();
 
             if (documento == null) {
@@ -61,6 +125,7 @@ public class DaoImplementacion implements Dao {
             return usuario;
         }
     }
+    */
     
     @Override
     public Usuario registrarse(String dni, String nombreUsuario, String contrasenaUsuario, String nombre, String apellidos, String email, String telefono, String direccion) throws Exception {
@@ -72,7 +137,7 @@ public class DaoImplementacion implements Dao {
 
             Document documento = collection.find(eq("nombreUsuario", nombreUsuario)).first();
             
-            if (documento == null) {
+            if (documento != null) {
                 return null;
             }
             

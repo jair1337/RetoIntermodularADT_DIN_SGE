@@ -23,7 +23,7 @@ public class PerfilController extends LoggerController implements Initializable 
     
     private final Controlador controlador = new Controlador();
     
-    private String dniUsuario;
+    private Usuario usuarioActual;
 
     @FXML
     private Button btnAtras;
@@ -45,10 +45,32 @@ public class PerfilController extends LoggerController implements Initializable 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        cargarPerfil();
+        // cargarPerfil();
         
     }
     
+    public void setUsuario(Usuario usuario) {
+        this.usuarioActual = usuario;
+        cargarPerfil();
+    }
+    
+    private void cargarPerfil() {
+
+    if (usuarioActual == null) {
+        logger.warning("No se ha recibido ningún usuario");
+        return;
+    }
+
+    txtNombreUsuario.setText(usuarioActual.getNombreUsuario());
+    txtContrasenaUsuario.setText(usuarioActual.getContrasenaUsuario());
+    txtNombre.setText(usuarioActual.getNombre());
+    txtApellidos.setText(usuarioActual.getApellidos());
+    txtEmail.setText(usuarioActual.getEmail());
+    txtTelefono.setText(usuarioActual.getTelefono());
+    txtDireccion.setText(usuarioActual.getDireccion());
+
+    }
+    /*
     private void cargarPerfil () {
     Usuario usuario = controlador.verPerfil(dniUsuario);
     
@@ -66,6 +88,7 @@ public class PerfilController extends LoggerController implements Initializable 
             logger.info("No se ha encontrado al usuario");
         }
     }
+    */
     
         
     @FXML

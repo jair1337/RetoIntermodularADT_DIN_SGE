@@ -24,18 +24,12 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Button fx:id="btnAtras" maxWidth="100.0" mnemonicParsing="false" onAction="#volver" text="Atras" GridPane.halignment="CENTER" GridPane.rowIndex="9" GridPane.valignment="CENTER" />
-      <Button maxWidth="100.0" mnemonicParsing="false" text="Modificar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="9" GridPane.valignment="CENTER" />
-      <Button maxWidth="100.0" mnemonicParsing="false" text="Guardar" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="9" GridPane.valignment="CENTER" />
-      <Label text="Otro:" GridPane.halignment="LEFT" GridPane.rowIndex="8" GridPane.valignment="CENTER">
-         <GridPane.margin>
-            <Insets left="30.0" />
-         </GridPane.margin>
-      </Label>
+      <Button fx:id="btnAtras" maxWidth="100.0" mnemonicParsing="false" onAction="#volver" text="Atras" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
+      <Button maxWidth="100.0" mnemonicParsing="false" text="Modificar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
+      <Button maxWidth="100.0" mnemonicParsing="false" text="Guardar" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
       <Label text="Direccion:" GridPane.halignment="LEFT" GridPane.rowIndex="7" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets left="30.0" />
@@ -79,7 +73,6 @@
             <Insets left="30.0" />
          </GridPane.margin>
       </Label>
-      <TextField maxWidth="130.0" prefWidth="130.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
       <TextField fx:id="txtDireccion" maxWidth="130.0" prefWidth="130.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
       <TextField fx:id="txtTelefono" maxWidth="130.0" prefWidth="130.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
       <TextField fx:id="txtEmail" maxWidth="130.0" prefWidth="130.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
