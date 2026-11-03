@@ -70,20 +70,13 @@ public class DaoImplementacion implements Dao {
 
             MongoCollection<Document> collection = database.getCollection("usuarios");
 
-            Document usuarioExistente = collection.find(eq("nombreUsuario", nombreUsuario)).first();
+            Document documento = collection.find(eq("nombreUsuario", nombreUsuario)).first();
             
-            if (usuarioExistente != null) {
+            if (documento == null) {
                 return null;
             }
             
-            Document documento = new Document("dni", dni)
-            .append("nombreUsuario", nombreUsuario)
-            .append("contrasenaUsuario", contrasenaUsuario)
-            .append("nombre", nombre)
-            .append("apellidos", apellidos)
-            .append("email", email)
-            .append("telefono", telefono)
-            .append("direccion", direccion);
+            FindIterable<Document> documentos = collection.find();
             
             collection.insertOne(documento);
             
@@ -104,6 +97,35 @@ public class DaoImplementacion implements Dao {
     }
     
     @Override
+    public Usuario verPerfil(String id) {
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
+            
+            MongoDatabase database = mongoClient.getDatabase("base_datos");
+
+            MongoCollection<Document> collection = database.getCollection("usuarios");
+
+            Document documento = collection.find(eq("_id", id)).first();
+            
+            if (documento == null) {
+                return null;
+            }
+            
+            Usuario usuario = new Usuario();
+
+            usuario.setDni(documento.getString("dni"));
+            usuario.setNombreUsuario(documento.getString("nombreUsuario"));
+            usuario.setContrasenaUsuario(documento.getString("contrasenaUsuario"));
+            usuario.setNombre(documento.getString("nombre"));
+            usuario.setApellidos(documento.getString("apellidos"));
+            usuario.setEmail(documento.getString("email"));
+            usuario.setTelefono(documento.getString("telefono"));
+            usuario.setDireccion(documento.getString("direccion"));
+
+            return usuario;
+        }
+    }
+    
+    @Override
     public List<Actividad> obtenerActividades() throws Exception {
 
         List<Actividad> listaActividades = new ArrayList<>();
@@ -112,8 +134,7 @@ public class DaoImplementacion implements Dao {
 
             MongoDatabase database = mongoClient.getDatabase("base_datos");
 
-            MongoCollection<Document> collection =
-                    database.getCollection("actividades");
+            MongoCollection<Document> collection = database.getCollection("actividades");
 
             FindIterable<Document> documentos = collection.find();
 

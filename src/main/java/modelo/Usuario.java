@@ -9,7 +9,7 @@ package modelo;
  * @author Albeiro.Mamani
  */
 public class Usuario {
-    private int id;
+    private String id;
     private String dni;
     private Rol rol;
     private String nombreUsuario;
@@ -20,7 +20,7 @@ public class Usuario {
     private String email;
     private String telefono;
 
-    public Usuario(int id, String dni, Rol rol, String nombreUsuario, String contrasenaUsuario, String nombre, String apellidos, String direccion, String email, String telefono) {
+    public Usuario(String id, String dni, Rol rol, String nombreUsuario, String contrasenaUsuario, String nombre, String apellidos, String direccion, String email, String telefono) {
         this.id = id;
         this.dni = dni;
         this.rol = rol;
@@ -36,11 +36,12 @@ public class Usuario {
     public Usuario() {
         
     }
-    public int getId() {
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -115,10 +116,5 @@ public class Usuario {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-
-    
-
-    
-    
     
 }

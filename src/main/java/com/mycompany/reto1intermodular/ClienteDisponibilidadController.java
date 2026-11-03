@@ -23,13 +23,13 @@ import modelo.Actividad;
  *
  * @author Albeiro.Mamani
  */
-public class ClienteDisponibilidadController implements Initializable {
+public class ClienteDisponibilidadController extends LoggerController implements Initializable {
+    
+    private final Controlador controlador = new Controlador();
 
     @FXML
     private Button btnAtras;
     
-    private final Controlador controlador = new Controlador();
-  
     @FXML
     private Button btnRegistrarse;
     @FXML
@@ -82,7 +82,7 @@ public class ClienteDisponibilidadController implements Initializable {
                 System.out.println("ERROR:" + e);
         }     
     }
-     
+    
     
     @FXML
     private void volver() {
@@ -93,25 +93,14 @@ public class ClienteDisponibilidadController implements Initializable {
             Scene escena = btnAtras.getScene();
             escena.setRoot(root);
             
+            Stage stage = (Stage) escena.getWindow();
+            stage.setWidth(900);
+            stage.setHeight(560);
+            stage.centerOnScreen();
+            logger.info("Volviendo al escenario Menu");
         } catch (IOException e) {
+            logger.info("Error en la salida/entrada");
             System.out.println("ERROR: " + e);
         }
     }
-    /*
-    @FXML
-    private void volver() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/reto1intermodular/ClienteMenu.fxml"));
-            
-            Parent root = loader.load();
-
-            Stage stage = (Stage) btnAtras.getScene().getWindow(); 
-            stage.setScene(new Scene(root));
-            stage.setTitle("Iniciar sesión");
-
-        } catch (IOException e) {
-            System.out.println("ERROR: " + e);
-        }
-    }
-    */
 }

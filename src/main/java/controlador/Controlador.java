@@ -15,11 +15,16 @@ public class Controlador {
         return dao.logearse(nombreUsuario, contrasenaUsuario);
     }
     
-    public List<Actividad> obtenerActividades() throws Exception {
-        return dao.obtenerActividades();
-    }
-    
     public Usuario registrarse(String dni, String nombreUsuario, String contrasenaUsuario, String nombre, String apellidos, String email, String telefono, String direccion) throws Exception {
         return dao.registrarse(dni, nombreUsuario, contrasenaUsuario, nombre, apellidos, email, telefono, direccion);
     }
+    
+    public Usuario verPerfil(String id) {
+        return dao.verPerfil(id);
+    }
+    
+    public List<Actividad> obtenerActividades() throws Exception {
+        return dao.obtenerActividades();
+    }
+      
 }

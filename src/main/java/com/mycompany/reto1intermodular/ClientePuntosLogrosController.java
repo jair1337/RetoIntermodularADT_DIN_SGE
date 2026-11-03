@@ -20,7 +20,7 @@ import javafx.stage.Stage;
  *
  * @author Albeiro.Mamani
  */
-public class ClientePuntosLogrosController implements Initializable {
+public class ClientePuntosLogrosController extends LoggerController implements Initializable {
 
     @FXML
     private Button btnAtras;
@@ -38,12 +38,16 @@ public class ClientePuntosLogrosController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/reto1intermodular/ClienteMenu.fxml"));
 
             Parent root = loader.load();
-
-            Stage stage = (Stage) btnAtras.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Iniciar sesión");
-
+            Scene escena = btnAtras.getScene();
+            escena.setRoot(root);
+            
+            Stage stage = (Stage) escena.getWindow();
+            stage.setWidth(900);
+            stage.setHeight(560);
+            stage.centerOnScreen();
+            logger.info("Volviendo al escenario Menu");
         } catch (IOException e) {
+            logger.info("Error en la salida/entrada");
             System.out.println("ERROR: " + e);
         }
     }

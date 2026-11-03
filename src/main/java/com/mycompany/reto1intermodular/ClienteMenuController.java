@@ -1,11 +1,6 @@
 package com.mycompany.reto1intermodular;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.ToggleGroup;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,37 +10,46 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
+import modelo.Usuario;
 
 
-public class ClienteMenuController {
+public class ClienteMenuController extends LoggerController {
 
-    @FXML 
+    private Usuario usuarioActual;
+   
     private ToggleGroup grupoNav;
     
-    @FXML
-    private ToggleButton navInicio;
-    
-    @FXML
-    private ToggleButton navPerfil;
-    
-    @FXML
-    private ToggleButton navFavoritos;
-    
-    @FXML
     private ToggleButton navConfig;
     
-    @FXML
     private Button btnDeportividad;
     
-    @FXML
     private Button btnEquipos;
     
-    @FXML
     private Button btnResultados;
     
-    @FXML
     private Button btnConfiguracion;
-
+    
+    @FXML
+    private ToggleButton btnCasa;
+    @FXML
+    private ToggleButton btnPerfil;
+    @FXML
+    private ToggleButton btnPuntosLogros;
+    @FXML
+    private ToggleButton btnCerrarSesion;
+    @FXML
+    private Button btnDisponibilidad;
+    @FXML
+    private Button btnCancelar;
+    @FXML
+    private Button btnContactanos;
+    @FXML
+    private Button btnAyuda;
+    
+    public void setUsuario(Usuario usuario) {
+        this.usuarioActual = usuario;
+    }
+    
     private void initialize() {
         // Evita que la barra lateral se quede sin ningún botón seleccionado
         grupoNav.selectedToggleProperty().addListener((obs, anterior, nuevo) -> {
@@ -60,15 +64,18 @@ public class ClienteMenuController {
     private void abrirPerfil() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/reto1intermodular/Perfil.fxml"));
+
             Parent root = loader.load();
+            Scene escena = btnPerfil.getScene();
+            escena.setRoot(root);
             
-            // Obtener la ventana actual y cambiarle la escena
-            Stage stage = (Stage) btnDeportividad.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Disponibilidad");
-            stage.show();
+            Stage stage = (Stage) escena.getWindow();
+            stage.setWidth(450);
+            stage.setHeight(550);
+            stage.centerOnScreen();
+            logger.info("Inicializando escenario Perfil");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("ERROR: " + e);
         }
     }
     
@@ -76,22 +83,25 @@ public class ClienteMenuController {
     private void abrirPuntosYLogros() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/reto1intermodular/ClientePuntosLogros.fxml"));
+
             Parent root = loader.load();
+            Scene escena = btnPerfil.getScene();
+            escena.setRoot(root);
             
-            // Obtener la ventana actual y cambiarle la escena
-            Stage stage = (Stage) btnDeportividad.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Disponibilidad");
-            stage.show();
+            Stage stage = (Stage) escena.getWindow();
+            stage.setWidth(450);
+            stage.setHeight(400);
+            stage.centerOnScreen();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("ERROR: " + e);
         }
     }
     
     @FXML
     private void cerrarSesion() {
-    Stage stage = (Stage) navConfig.getScene().getWindow();
+    Stage stage = (Stage) btnCerrarSesion.getScene().getWindow();
     stage.close();
+    logger.info("Sesion cerrada");
     }
 
     // ===== Tarjetas del menú =====
@@ -101,44 +111,25 @@ public class ClienteMenuController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/reto1intermodular/ClienteDisponibilidad.fxml"));
 
             Parent root = loader.load();
-            Scene escena = btnDeportividad.getScene();
+            Scene escena = btnDisponibilidad.getScene();
             escena.setRoot(root);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("ERROR: " + e);
         }
     }
-    /*
-    @FXML
-    private void abrirDisponibilidad() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/reto1intermodular/ClienteDisponibilidad.fxml"));
-            Parent root = loader.load();
-            
-            // Obtener la ventana actual y cambiarle la escena
-            Stage stage = (Stage) btnDeportividad.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Disponibilidad");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    */
     
     @FXML
     private void abrirCancelar() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/reto1intermodular/ClienteCancelar.fxml"));
+
             Parent root = loader.load();
-            
-            // Obtener la ventana actual y cambiarle la escena
-            Stage stage = (Stage) btnEquipos.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Cancelar reserva");
-            stage.show();
+            Scene escena = btnPerfil.getScene();
+            escena.setRoot(root);
+
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("ERROR: " + e);
         }
     }
     
@@ -146,15 +137,13 @@ public class ClienteMenuController {
     private void abrirContacto() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/reto1intermodular/ClienteContacto.fxml"));
+
             Parent root = loader.load();
-            
-            // Obtener la ventana actual y cambiarle la escena
-            Stage stage = (Stage) btnResultados.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Contactanos");
-            stage.show();
-        } catch (IOException e) {    
-            e.printStackTrace();
+            Scene escena = btnPerfil.getScene();
+            escena.setRoot(root);
+
+        } catch (IOException e) {
+            System.out.println("ERROR: " + e);
         }
     }
     
@@ -162,18 +151,13 @@ public class ClienteMenuController {
     private void abrirAyuda() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/reto1intermodular/ClienteAyuda.fxml"));
+
             Parent root = loader.load();
-            
-            // Obtener la ventana actual y cambiarle la escena
-            Stage stage = (Stage) btnConfiguracion.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Preguntas frecuentes");
-            stage.show();
+            Scene escena = btnPerfil.getScene();
+            escena.setRoot(root);
+
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("ERROR: " + e);
         }
     }
-    
-        
-    
 }

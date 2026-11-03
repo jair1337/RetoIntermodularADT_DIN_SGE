@@ -9,13 +9,32 @@
     -fx-background-repeat: no-repeat; */
 }
 
-.overlay { -fx-background-color: rgba(10, 30, 70, 0.55); }
+.overlay { 
+    -fx-background-color: rgba(10, 30, 70, 0.55); 
+}
 
-.brand       { -fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: white; }
-.hero-title  { -fx-font-size: 38px; -fx-font-weight: bold; -fx-text-fill: white; }
-.hero-sub    { -fx-font-size: 15px; -fx-text-fill: rgba(255,255,255,0.8); }
-.nav-icon    { -fx-font-size: 26px; -fx-text-fill: white; }
-.nav-text    { -fx-font-size: 12px; -fx-text-fill: rgba(255,255,255,0.75); }
+.brand { 
+    -fx-font-size: 26px; 
+    -fx-font-weight: bold; 
+    -fx-text-fill: white; 
+}
+.hero-title { 
+    -fx-font-size: 38px; 
+    -fx-font-weight: bold; 
+    -fx-text-fill: white; 
+}
+.hero-sub { 
+    -fx-font-size: 15px; 
+    -fx-text-fill: rgba(255,255,255,0.8); 
+}
+.nav-icon { 
+    -fx-font-size: 26px; 
+    -fx-text-fill: white; 
+}
+.nav-text { 
+    -fx-font-size: 12px; 
+    -fx-text-fill: rgba(255,255,255,0.75); 
+}
 
 /* ====== Botones principales ====== */
 .primary-btn {

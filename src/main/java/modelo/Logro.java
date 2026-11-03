@@ -9,17 +9,16 @@ package modelo;
  * @author Albeiro.Mamani
  */
 public class Logro {
-    private int id;
+    private String id;
     private String nombre;
     private String descripcion;
     private String iconoUrl;
 
-    public Logro(int id, String nombre, String descripcion, String iconoUrl) {
+    public Logro(String id, String nombre, String descripcion, String iconoUrl) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.iconoUrl = iconoUrl;
     }
-    
     
 }

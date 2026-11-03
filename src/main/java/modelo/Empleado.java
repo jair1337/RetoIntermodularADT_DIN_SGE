@@ -14,7 +14,7 @@ public class Empleado extends Usuario {
     private String puesto;
     private ArrayList<Actividad> actividadesAsignadas;
 
-    public Empleado(String puesto, ArrayList<Actividad> actividadesAsignadas, int id, String dni, Rol rol, String nombreUsuario, String contrasenaUsuario, String nombre, String apellidos, String direccion, String email, String telefono) {
+    public Empleado(String puesto, ArrayList<Actividad> actividadesAsignadas, String id, String dni, Rol rol, String nombreUsuario, String contrasenaUsuario, String nombre, String apellidos, String direccion, String email, String telefono) {
         super(id, dni, rol, nombreUsuario, contrasenaUsuario, nombre, apellidos, direccion, email, telefono);
         this.puesto = puesto;
         this.actividadesAsignadas = actividadesAsignadas;

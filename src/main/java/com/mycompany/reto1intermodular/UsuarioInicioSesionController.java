@@ -28,8 +28,10 @@ import modelo.Usuario;
  *
  * @author Albeiro.Mamani
  */
-public class UsuarioInicioSesionController implements Initializable {
+public class UsuarioInicioSesionController extends LoggerController implements Initializable {
 
+    private Usuario usuarioEncontrado;
+    
     @FXML
     private Button btnCerrar;
     @FXML
@@ -73,13 +75,17 @@ public class UsuarioInicioSesionController implements Initializable {
     public String getUsuario() { 
         return txtUsuario.getText(); 
     }
-
-    /*
+    
+    public Usuario getUsuarioAutenticado() {
+        return usuarioEncontrado;
+    }
+    
+    
     private void initialize() {
         // Las dos cajas de contraseña comparten el mismo texto
         txtContrasenaVisible.textProperty().bindBidirectional(pwdContrasena.textProperty());
     }
-    */
+    
 
     @FXML
     private void alternarVisibilidad() {
@@ -88,6 +94,7 @@ public class UsuarioInicioSesionController implements Initializable {
         pwdContrasena.setVisible(!mostrar);
     }
 
+    /*
     @FXML
     private void entrar() {
         String user = txtUsuario.getText().trim();
@@ -109,9 +116,44 @@ public class UsuarioInicioSesionController implements Initializable {
             }
 
         } catch (Exception e) {       
-            System.out.println("ERROR:" + e);
+            logger.severe("Error durante el inicio de sesión: " + e.getMessage());
         }
         
+    }
+    */
+    
+    @FXML
+    private void entrar() {
+        String user = txtUsuario.getText().trim();
+        String pass = pwdContrasena.getText();
+
+        if (user.isEmpty() || pass.isEmpty()) {
+            mostrarError("Introduce usuario y contraseña");
+            return;
+        }
+
+        try {
+
+            // pasando el usario lgo cambiar si no funca
+            usuarioEncontrado = controlador.logearse(user, pass);
+
+            if (usuarioEncontrado != null) {
+
+                loginCorrecto = true;
+
+                // Cerramos el popup
+                stage.close();
+
+            } else {
+
+                mostrarError("Usuario o contraseña incorrectos");
+            }
+
+        } catch (Exception e) {
+
+            logger.severe("Error al iniciar sesión: " + e.getMessage());
+            mostrarError("Se ha producido un error al iniciar sesión");
+        }
     }
     
     @FXML
@@ -123,16 +165,9 @@ public class UsuarioInicioSesionController implements Initializable {
         Scene escena = new Scene(root);
         //escena.getStylesheets().add(getClass().getResource("/styles/RegistroCSS.css").toExternalForm());
             
-        
         stage.setScene(escena);
         stage.setTitle("Registro de cliente");
-        /*
-        Stage test = (Stage) lblRegistrarse.getScene().getWindow();
-        test.setScene(new Scene(root));
-        test.setTitle("Registro de cliente");
-        test.show();
-        */
-            
+           
         } catch (IOException e) {
             System.out.println("ERROR:" + e);
         }

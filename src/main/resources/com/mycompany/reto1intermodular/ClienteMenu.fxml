@@ -20,12 +20,12 @@
                 <Insets top="22.0" />
             </padding>
             <children>
-                <Label styleClass="sidebar-logo" text="⚽" />
+                <Label styleClass="sidebar-logo" text="Logo" />
                 <Region prefHeight="10.0" />
-                <ToggleButton fx:id="navInicio" selected="true" styleClass="nav-btn" text="🏠" />
-                <ToggleButton fx:id="navPerfil" onAction="#abrirPerfil" styleClass="nav-btn" text="👤" />
-                <ToggleButton fx:id="navFavoritos" onAction="#abrirPuntosYLogros" styleClass="nav-btn" text="★" />
-                <ToggleButton fx:id="navConfig" onAction="#cerrarSesion" styleClass="nav-btn" text="⚙" />
+                <ToggleButton fx:id="btnCasa" selected="true" styleClass="nav-btn" text="🏠" />
+                <ToggleButton fx:id="btnPerfil" onAction="#abrirPerfil" styleClass="nav-btn" text="👤" />
+                <ToggleButton fx:id="btnPuntosLogros" onAction="#abrirPuntosYLogros" styleClass="nav-btn" text="★" />
+                <ToggleButton fx:id="btnCerrarSesion" onAction="#cerrarSesion" styleClass="nav-btn" text="⏻" />
             </children>
         </VBox>
     </left>
@@ -41,43 +41,43 @@
                 <Label styleClass="menu-sub" text="¿Qué quieres hacer?" />
                 <Region prefHeight="22.0" />
 
-                <GridPane hgap="26.0" vgap="26.0">
+                <GridPane alignment="CENTER" hgap="26.0" vgap="26.0">
                     <children>
-                        <Button fx:id="btnDeportividad" onAction="#abrirDisponibilidad" styleClass="menu-card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <Button fx:id="btnDisponibilidad" onAction="#abrirDisponibilidad" styleClass="menu-card" GridPane.columnIndex="0" GridPane.rowIndex="0">
                             <graphic>
                                 <VBox alignment="CENTER" spacing="10.0">
                                     <children>
-                                        <Label styleClass="card-icon" text="🏆" />
+                                        <Label styleClass="card-icon" text="🏟" />
                                         <Label styleClass="card-text" text="Consultar&#10;disponibilidad" />
                                     </children>
                                 </VBox>
                             </graphic>
                         </Button>
-                        <Button fx:id="btnEquipos" onAction="#abrirCancelar" styleClass="menu-card" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                        <Button fx:id="btnCancelar" onAction="#abrirCancelar" styleClass="menu-card" GridPane.columnIndex="1" GridPane.rowIndex="0">
                             <graphic>
                                 <VBox alignment="CENTER" spacing="10.0">
                                     <children>
-                                        <Label styleClass="card-icon" text="👥" />
+                                        <Label styleClass="card-icon" text="🎫" />
                                         <Label styleClass="card-text" text="Consultar&#10;actividades" />
                                     </children>
                                 </VBox>
                             </graphic>
                         </Button>
-                        <Button fx:id="btnResultados" onAction="#abrirContacto" styleClass="menu-card" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                        <Button fx:id="btnContactanos" onAction="#abrirContacto" styleClass="menu-card" GridPane.columnIndex="0" GridPane.rowIndex="1">
                             <graphic>
                                 <VBox alignment="CENTER" spacing="10.0">
                                     <children>
-                                        <Label styleClass="card-icon" text="📊" />
+                                        <Label styleClass="card-icon" text="📨" />
                                         <Label styleClass="card-text" text="Contactanos" />
                                     </children>
                                 </VBox>
                             </graphic>
                         </Button>
-                        <Button fx:id="btnConfiguracion" onAction="#abrirAyuda" styleClass="menu-card" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Button fx:id="btnAyuda" onAction="#abrirAyuda" styleClass="menu-card" GridPane.columnIndex="1" GridPane.rowIndex="1">
                             <graphic>
                                 <VBox alignment="CENTER" spacing="10.0">
                                     <children>
-                                        <Label styleClass="card-icon" text="⚙" />
+                                        <Label styleClass="card-icon" text="❓" />
                                         <Label styleClass="card-text" text="Ayuda" />
                                     </children>
                                 </VBox>
