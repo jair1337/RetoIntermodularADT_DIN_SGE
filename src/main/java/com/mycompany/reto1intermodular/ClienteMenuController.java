@@ -45,13 +45,7 @@ public class ClienteMenuController extends LoggerController implements Initializ
     public void initialize(URL url, ResourceBundle rb) {
     
     }
-    /*
-    NOTA: Tener en cuenta que al hacer el initialize hay q darle a la clase implements Initializable y luego al metodo @Override, no @FXML jiijijija
-    private void initialize() {
-        
-    }
-    */
-
+    
     // ===== Barra lateral =====   
     @FXML
     private void abrirPerfil() {
@@ -69,7 +63,7 @@ public class ClienteMenuController extends LoggerController implements Initializ
             // Cambiamos la interfaz
             Scene escena = btnPerfil.getScene();
             escena.setRoot(root);
-
+            
             logger.info("Inicializando escenario Perfil");
         } catch (IOException e) {
             logger.severe("Error al abrir Perfil: " + e.getMessage());

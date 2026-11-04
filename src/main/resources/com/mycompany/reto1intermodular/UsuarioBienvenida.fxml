@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane fx:id="root" prefHeight="560.0" prefWidth="900.0" styleClass="root-bg" stylesheets="@../styles/ApartadoLoginCSS.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.UsuarioBienvenidaController">
+<StackPane fx:id="root" prefHeight="560.0" prefWidth="1000.0" styleClass="root-bg" stylesheets="@../styles/ApartadoLoginCSS.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.UsuarioBienvenidaController">
    <children>
       <BorderPane>
          <center>

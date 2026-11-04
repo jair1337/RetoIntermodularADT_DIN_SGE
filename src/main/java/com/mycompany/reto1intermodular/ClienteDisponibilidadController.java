@@ -17,6 +17,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import modelo.Actividad;
+import modelo.Pista;
 
 /**
  * FXML Controller class
@@ -31,8 +32,6 @@ public class ClienteDisponibilidadController extends LoggerController implements
     private Button btnAtras;
     
     @FXML
-    private Button btnRegistrarse;
-    @FXML
     private TableView tbActividad;
     
     private ObservableList<Actividad> clienteActividad;
@@ -45,6 +44,7 @@ public class ClienteDisponibilidadController extends LoggerController implements
     private TableColumn colZona;
     @FXML
     private TableColumn collLocalizacion;
+    /*
     @FXML
     private TableColumn colInicio;
     @FXML
@@ -53,10 +53,30 @@ public class ClienteDisponibilidadController extends LoggerController implements
     private TableColumn colAforo;
     @FXML
     private TableColumn colPuntos;
+    */
     @FXML
     private TableColumn colPrecio;
     
+    @FXML
+    private TableView tbPista;
+    @FXML
+    private TableColumn colNombrePista;
+    @FXML
+    private TableColumn colTipoPista;
+    @FXML
+    private TableColumn colLocalizacionPista;
+    @FXML
+    private TableColumn colPrecioPista;
+    @FXML
+    private TableColumn colEstadoPista;
     
+    private ObservableList<Pista> clientePista;
+    
+    @FXML
+    private Button btnRegistrarseActividad;
+    @FXML
+    private Button btnReservarPista;
+     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     cargarTabla();
@@ -64,25 +84,35 @@ public class ClienteDisponibilidadController extends LoggerController implements
     
     // Con observableList aaa
     private void cargarTabla() {
-    //actividadID.setCellValueFactory(new PropertyValueFactory<>("id"));
+    // De la tabla actividades
     colTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
     colTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
     colZona.setCellValueFactory(new PropertyValueFactory<>("pistaZona"));
     collLocalizacion.setCellValueFactory(new PropertyValueFactory<>("localizacion"));
-    colInicio.setCellValueFactory(new PropertyValueFactory<>("fechaInicio"));
-    colFin.setCellValueFactory(new PropertyValueFactory<>("fechaFin"));
-    colAforo.setCellValueFactory(new PropertyValueFactory<>("aforoMaximo"));
-    colPuntos.setCellValueFactory(new PropertyValueFactory<>("puntos"));
-    colPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
+    colPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));    
+        
+    // De la tabla pistas    
+    colNombrePista.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    colTipoPista.setCellValueFactory(new PropertyValueFactory<>("tipo"));
+    colLocalizacionPista.setCellValueFactory(new PropertyValueFactory<>("localizacion"));
+    colPrecioPista.setCellValueFactory(new PropertyValueFactory<>("precioHora"));
+    colEstadoPista.setCellValueFactory(new PropertyValueFactory<>("estado"));    
     
     try {
         clienteActividad = FXCollections.observableArrayList(controlador.obtenerActividades());
         tbActividad.setItems(clienteActividad);
-        } catch (Exception e) {       
-                System.out.println("ERROR:" + e);
-        }     
+    } catch (Exception e) {       
+        System.out.println("ERROR:" + e);
+    }  
+    
+    try {       
+        clientePista = FXCollections.observableArrayList(controlador.obtenerPistas());
+        tbPista.setItems(clientePista);
+    } catch (Exception e) {       
+        System.out.println("ERROR:" + e);
     }
     
+    }
     
     @FXML
     private void volver() {
@@ -93,13 +123,15 @@ public class ClienteDisponibilidadController extends LoggerController implements
             Scene escena = btnAtras.getScene();
             escena.setRoot(root);
             
+            /*
             Stage stage = (Stage) escena.getWindow();
             stage.setWidth(900);
             stage.setHeight(560);
             stage.centerOnScreen();
+            */
             logger.info("Volviendo al escenario Menu");
         } catch (IOException e) {
-            logger.info("Error en la salida/entrada");
+            logger.severe("ERROR:" + e);
             System.out.println("ERROR: " + e);
         }
     }

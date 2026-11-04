@@ -41,9 +41,7 @@ public class UsuarioBienvenidaController extends LoggerController implements Ini
 @FXML
 private void abrirLogin() throws Exception {
 
-    FXMLLoader loader = new FXMLLoader(
-        getClass().getResource("/com/mycompany/reto1intermodular/UsuarioInicioSesion.fxml")
-    );
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/reto1intermodular/UsuarioInicioSesion.fxml"));
 
     Parent card = loader.load();
 
@@ -61,9 +59,7 @@ private void abrirLogin() throws Exception {
     Scene scene = new Scene(card);
     scene.setFill(Color.TRANSPARENT);
 
-    scene.getStylesheets().add(
-        getClass().getResource("/styles/ApartadoLoginCSS.css").toExternalForm()
-    );
+    scene.getStylesheets().add(getClass().getResource("/styles/ApartadoLoginCSS.css").toExternalForm());
 
     popup.setScene(scene);
 
@@ -82,8 +78,7 @@ private void abrirLogin() throws Exception {
     } finally {
         overlay.setVisible(false);
     }
-
-
+    
     // Comprobamos si el usuario ha iniciado sesión correctamente
     if (login.isLoginCorrecto()) {
 
@@ -91,9 +86,7 @@ private void abrirLogin() throws Exception {
         Usuario usuario = login.getUsuarioAutenticado();
 
         // Cargamos el menú
-        FXMLLoader loaderMenu = new FXMLLoader(
-            getClass().getResource("/com/mycompany/reto1intermodular/ClienteMenu.fxml")
-        );
+        FXMLLoader loaderMenu = new FXMLLoader(getClass().getResource("/com/mycompany/reto1intermodular/ClienteMenu.fxml"));
 
         Parent menu = loaderMenu.load();
 

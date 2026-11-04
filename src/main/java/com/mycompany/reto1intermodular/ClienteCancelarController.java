@@ -38,10 +38,12 @@ public class ClienteCancelarController extends LoggerController implements Initi
             Scene escena = btnAtras.getScene();
             escena.setRoot(root);
             
+            /*
             Stage stage = (Stage) escena.getWindow();
             stage.setWidth(900);
             stage.setHeight(560);
             stage.centerOnScreen();
+            */
             logger.info("Volviendo al escenario Menu");
         } catch (IOException e) {
             logger.info("Error en la salida/entrada");

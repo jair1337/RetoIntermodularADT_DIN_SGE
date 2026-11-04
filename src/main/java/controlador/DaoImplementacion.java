@@ -11,7 +11,6 @@ import java.util.List;
 
 import modelo.*;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 public class DaoImplementacion implements Dao {
    
@@ -200,6 +199,7 @@ public class DaoImplementacion implements Dao {
             MongoDatabase database = mongoClient.getDatabase("base_datos");
 
             MongoCollection<Document> collection = database.getCollection("actividades");
+            MongoCollection<Document> collectionPolideportivos = database.getCollection("polideportivos");
 
             FindIterable<Document> documentos = collection.find();
 
@@ -215,14 +215,33 @@ public class DaoImplementacion implements Dao {
 
                 actividad.setPistaZona(documento.getString("pistaZona"));
 
-                actividad.setLocalizacion(documento.getObjectId("localizacion").toString());
+                // Ojito en como se obtiene el objectId
+                org.bson.types.ObjectId polideportivoId = documento.getObjectId("localizacion");
 
+                if (polideportivoId != null) {
+                    
+                    Document poliDoc = collectionPolideportivos.find(com.mongodb.client.model.Filters.eq("_id", polideportivoId)).first();
+
+                    if (poliDoc != null) {
+                        
+                        Document direccionDoc = poliDoc.get("direccion", Document.class);
+                        if (direccionDoc != null) {
+                            String localizacionCompleta =
+                                    direccionDoc.getString("calle") + ", " +
+                                    direccionDoc.getString("numero") + ", " +
+                                    direccionDoc.getString("localidad") + ", " +
+                                    direccionDoc.getString("codigoPostal") + ", " +
+                                    direccionDoc.getString("provincia");
+                            actividad.setLocalizacion(localizacionCompleta);
+                        }
+                    }
+                }
+                
                 actividad.setFechaInicio(documento.getDate("fechaInicio"));
 
                 actividad.setFechaFin(documento.getDate("fechaFin"));
 
-                //actividad.setPrecio(documento.getDouble("precio")); provisional, a ver si funciona
-                actividad.setPrecio(((Number) documento.get("precio")).doubleValue());
+                actividad.setPrecio((documento.getDouble("precio")));
 
                 actividad.setAforoMaximo(documento.getInteger("aforoMaximo"));
 
@@ -249,4 +268,61 @@ public class DaoImplementacion implements Dao {
 
         return listaActividades;
     }  
+    
+    @Override
+    public List<Pista> obtenerPistas() throws Exception  {
+    List<Pista> listaPistas = new ArrayList<>();
+
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
+
+            MongoDatabase database = mongoClient.getDatabase("base_datos");
+
+            MongoCollection<Document> collection = database.getCollection("pistas");
+            MongoCollection<Document> collectionPolideportivos = database.getCollection("polideportivos");
+
+            FindIterable<Document> documentos = collection.find();
+
+            for (Document documento : documentos) {
+
+                Pista pista = new Pista();
+
+                pista.setId(documento.getObjectId("_id").toString());
+
+                pista.setNombre(documento.getString("nombre"));
+
+                pista.setTipo(documento.getString("tipo"));
+
+                // Ojito en como se obtiene el objectId
+                org.bson.types.ObjectId polideportivoId = documento.getObjectId("localizacion");
+
+                if (polideportivoId != null) {
+                    
+                    Document poliDoc = collectionPolideportivos.find(com.mongodb.client.model.Filters.eq("_id", polideportivoId)).first();
+
+                    if (poliDoc != null) {
+                        
+                        Document direccionDoc = poliDoc.get("direccion", Document.class);
+                        if (direccionDoc != null) {
+                            String localizacionCompleta =
+                                    direccionDoc.getString("calle") + ", " +
+                                    direccionDoc.getString("numero") + ", " +
+                                    direccionDoc.getString("localidad") + ", " +
+                                    direccionDoc.getString("codigoPostal") + ", " +
+                                    direccionDoc.getString("provincia");
+                            pista.setLocalizacion(localizacionCompleta);
+                        }
+                    }
+                }
+              
+                pista.setPrecioHora((documento.getDouble("precioHora")));
+
+//                pista.setEstado((documento.getString("estado")));
+                pista.setEstado(Estado.valueOf(documento.getString("estado")));
+
+                
+                listaPistas.add(pista);
+            }
+        }    
+        return listaPistas;  
+    }
 }

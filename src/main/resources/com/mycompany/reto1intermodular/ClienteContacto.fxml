@@ -8,33 +8,41 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.ClienteContactoController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.ClienteContactoController">
    <children>
-      <HBox alignment="CENTER_LEFT" VBox.vgrow="ALWAYS">
+      <VBox alignment="CENTER_LEFT" prefHeight="100.0">
          <children>
             <Label text="Contactanos">
                <font>
-                  <Font size="24.0" />
+                  <Font size="36.0" />
                </font>
-               <HBox.margin>
-                  <Insets left="70.0" />
-               </HBox.margin>
+               <VBox.margin>
+                  <Insets left="100.0" />
+               </VBox.margin>
+            </Label>
+            <Label text="Tus comentarios nos ayudan a mejorar">
+               <VBox.margin>
+                  <Insets left="100.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="18.0" />
+               </font>
             </Label>
          </children>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="250.0" prefWidth="600.0">
+      </VBox>
+      <HBox alignment="CENTER" prefHeight="250.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
          <children>
-            <TextArea maxHeight="200.0" maxWidth="300.0" />
+            <TextArea maxHeight="300.0" maxWidth="800.0" prefHeight="300.0" prefWidth="800.0" />
          </children>
       </HBox>
-      <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
+      <HBox alignment="CENTER" prefHeight="100.0">
          <children>
             <Button fx:id="btnAtras" maxWidth="100.0" mnemonicParsing="false" onAction="#volver" prefWidth="100.0" text="Atras">
                <HBox.margin>
                   <Insets right="50.0" />
                </HBox.margin>
             </Button>
-            <Button maxWidth="100.0" mnemonicParsing="false" prefWidth="100.0" text="Enviar mensaje">
+            <Button fx:id="btnEnviar" maxWidth="100.0" mnemonicParsing="false" onAction="#enviarMensaje" prefWidth="100.0" text="Enviar mensaje">
                <HBox.margin>
                   <Insets left="50.0" />
                </HBox.margin>

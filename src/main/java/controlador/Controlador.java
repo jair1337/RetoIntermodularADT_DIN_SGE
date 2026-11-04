@@ -1,6 +1,7 @@
 package controlador;
 import java.util.List;
 import modelo.Actividad;
+import modelo.Pista;
 import modelo.Usuario;
 
 public class Controlador {
@@ -25,6 +26,10 @@ public class Controlador {
     
     public List<Actividad> obtenerActividades() throws Exception {
         return dao.obtenerActividades();
+    }
+    
+    public List<Pista> obtenerPistas() throws Exception {
+        return dao.obtenerPistas();
     }
       
 }
