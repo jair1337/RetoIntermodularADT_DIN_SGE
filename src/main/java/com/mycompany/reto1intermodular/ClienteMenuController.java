@@ -58,7 +58,7 @@ public class ClienteMenuController extends LoggerController implements Initializ
             PerfilController perfilController = loader.getController();
 
             // Le pasamos el usuario que ya tenemos
-            perfilController.setUsuario(usuarioActual);
+            //perfilController.setUsuario(usuarioActual);
 
             // Cambiamos la interfaz
             Scene escena = btnPerfil.getScene();
@@ -96,13 +96,18 @@ public class ClienteMenuController extends LoggerController implements Initializ
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/reto1intermodular/ClientePuntosLogros.fxml"));
 
             Parent root = loader.load();
+            
+            /*
+            ClientePuntosLogrosController plController = loader.getController();
+
+            
+            plController.setUsuario(usuarioActual);
+            */
+            
             Scene escena = btnPuntosLogros.getScene();
             escena.setRoot(root);
             
-            Stage stage = (Stage) escena.getWindow();
-            stage.setWidth(450);
-            stage.setHeight(400);
-            stage.centerOnScreen();
+            
         } catch (IOException e) {
             System.out.println("ERROR: " + e);
         }

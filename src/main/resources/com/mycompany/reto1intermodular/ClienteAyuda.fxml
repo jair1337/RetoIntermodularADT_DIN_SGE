@@ -25,11 +25,11 @@
       </HBox>
       <VBox alignment="CENTER" prefHeight="300.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
          <children>
-            <TitledPane animated="false" maxWidth="800.0" prefWidth="800.0" text="¿Donde estamos y quienes somos?">
+            <TitledPane animated="false" maxWidth="800.0" prefWidth="800.0" text="¿Quienes somos y donde nos ubicamos?">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="14.0" layoutY="11.0" prefHeight="18.0" prefWidth="777.0" text="Añadir textozxc" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
+                        <Label layoutX="14.0" layoutY="11.0" prefHeight="18.0" prefWidth="777.0" text="Somos TxandaSport y nos encontramos en Bizkaia." AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
                      </children></AnchorPane>
               </content>
             </TitledPane>
@@ -37,15 +37,15 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutY="10.0" prefHeight="18.0" prefWidth="777.0" text="Añadir textozxc" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
+                        <Label layoutY="10.0" prefHeight="18.0" prefWidth="777.0" text="Ofrecemos servicios deportivos, gestión de eventos y ocio otorgando a los clientes acceso a reservas de espacios, clases deportivas especializadas con monitores cualificados, comunidad interactiva, mensajería de soporte y recompensas por continuidad en el programa de fidelización." AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
                      </children></AnchorPane>
               </content>
             </TitledPane>
-            <TitledPane animated="false" maxWidth="800.0" prefWidth="800.0" text="¿Es fiable?">
+            <TitledPane animated="false" maxWidth="800.0" prefWidth="800.0" text="¿Es seguro?">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label prefHeight="18.0" prefWidth="777.0" text="Añadir textozxc" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
+                        <Label prefHeight="18.0" prefWidth="777.0" text="aa" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
                      </children></AnchorPane>
               </content>
             </TitledPane>
@@ -53,23 +53,23 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label prefHeight="18.0" prefWidth="777.0" text="Añadir textozxc" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
+                        <Label prefHeight="18.0" prefWidth="777.0" text="Trabajamos bajo la propuesta de explotación de recursos comunitarios e instalaciones deportivas, firmando acuerdos de cesión/alquiler de franjas horarias en polideportivos para ofrecer actividades privadas y exclusivas a los usuarios." AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
                      </children></AnchorPane>
                </content>
             </TitledPane>
-            <TitledPane animated="false" maxWidth="800.0" prefWidth="800.0" text="¿Puedo cancelar alguna de mis reservas?">
+            <TitledPane animated="false" maxWidth="800.0" prefWidth="800.0" text="aaa">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label prefHeight="18.0" prefWidth="777.0" text="Añadir textozxc" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
+                        <Label prefHeight="18.0" prefWidth="777.0" text="aa" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
                      </children></AnchorPane>
                </content>
             </TitledPane>
-            <TitledPane animated="false" maxWidth="800.0" prefWidth="800.0" text="¿Como se gestionan mis datos?">
+            <TitledPane animated="false" maxWidth="800.0" prefWidth="800.0" text="aa">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label prefHeight="18.0" prefWidth="777.0" text="Añadir textozxc" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
+                        <Label prefHeight="18.0" prefWidth="777.0" text="aa" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
                      </children></AnchorPane>
                </content>
             </TitledPane>

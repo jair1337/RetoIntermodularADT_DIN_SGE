@@ -47,7 +47,7 @@
                               <TableColumn fx:id="colPrecio" prefWidth="160.0" text="Precio" />
                           </columns>
                         </TableView>
-                        <Button fx:id="btnRegistrarseActividad" mnemonicParsing="false" prefWidth="100.0" text="Registrarse">
+                        <Button fx:id="btnRegistrarseActividad" mnemonicParsing="false" onAction="#registroEnActividad" prefWidth="100.0" text="Registrarse">
                            <HBox.margin>
                               <Insets left="40.0" />
                            </HBox.margin>
@@ -100,7 +100,7 @@
                               <TableColumn fx:id="colPrecioPista" prefWidth="160.0" text="Precio/hora" />
                           </columns>
                         </TableView>
-                        <Button fx:id="btnReservarPista" mnemonicParsing="false" prefWidth="100.0" text="Reservar">
+                        <Button fx:id="btnReservarPista" mnemonicParsing="false" onAction="#reservarPista" prefWidth="100.0" text="Reservar">
                            <HBox.margin>
                               <Insets left="40.0" />
                            </HBox.margin>
@@ -109,7 +109,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="70.0">
                      <children>
-                        <Button maxWidth="70.0" mnemonicParsing="false" prefWidth="70.0" text="Atras">
+                        <Button maxWidth="70.0" mnemonicParsing="false" onAction="#volver" prefWidth="70.0" text="Atras">
                            <HBox.margin>
                               <Insets left="30.0" />
                            </HBox.margin>

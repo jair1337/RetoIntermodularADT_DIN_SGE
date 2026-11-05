@@ -1,4 +1,5 @@
 package controlador;
+import java.util.Date;
 import java.util.List;
 import modelo.Actividad;
 import modelo.Pista;
@@ -30,6 +31,14 @@ public class Controlador {
     
     public List<Pista> obtenerPistas() throws Exception {
         return dao.obtenerPistas();
+    }
+    
+    public void registrarseEnActividad(String idUsuario, String idActividad) throws Exception {
+    dao.registrarseEnActividad(idUsuario, idActividad);
+}
+
+    public void reservarPista(String idUsuario, String idPista, Date inicio, Date fin) throws Exception {
+        dao.reservarPista(idUsuario, idPista, inicio, fin);
     }
       
 }

@@ -79,9 +79,22 @@ private void abrirLogin() throws Exception {
         overlay.setVisible(false);
     }
     
-    // Comprobamos si el usuario ha iniciado sesión correctamente
     if (login.isLoginCorrecto()) {
 
+    // Guardamos el usuario en la sesión (una sola vez)
+    Sesion.iniciar(login.getUsuarioAutenticado());
+
+    // Cargamos el menú
+    Parent menu = FXMLLoader.load(getClass().getResource("/com/mycompany/reto1intermodular/ClienteMenu.fxml"));
+    root.getScene().setRoot(menu);
+
+    logger.info("UsuarioBienvenidaController: Inicio de sesión correcto");
+    }
+    
+    /*
+    // Comprobamos si el usuario ha iniciado sesión correctamente
+    if (login.isLoginCorrecto()) {
+        Sesion.iniciar(login.getUsuarioAutenticado());
         // RECUPERAMOS EL OBJETO USUARIO
         Usuario usuario = login.getUsuarioAutenticado();
 
@@ -102,6 +115,7 @@ private void abrirLogin() throws Exception {
         logger.info("UsuarioBienvenidaController: Inicio de sesión correcto");
         }
     }
+    */
 
     /*
     @FXML
@@ -141,5 +155,5 @@ private void abrirLogin() throws Exception {
 
     }
     */
-      
+    }      
 }

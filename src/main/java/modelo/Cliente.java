@@ -20,6 +20,29 @@ public class Cliente extends Usuario {
         this.logrosObtenidos = logrosObtenidos;
     }
 
+    public int getPuntos() {
+        return puntos;
+    }
+
+    public void setPuntos(int puntos) {
+        this.puntos = puntos;
+    }
+
+    public ArrayList<Logro> getLogrosObtenidos() {
+        return logrosObtenidos;
+    }
+
+    public void setLogrosObtenidos(ArrayList<Logro> logrosObtenidos) {
+        this.logrosObtenidos = logrosObtenidos;
+    }
+    
+    
+
+    @Override
+    public String toString() {
+        return "Cliente{" + "puntos=" + puntos + ", logrosObtenidos=" + logrosObtenidos + '}';
+    }
+
     
     
     

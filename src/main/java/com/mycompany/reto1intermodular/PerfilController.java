@@ -11,7 +11,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import modelo.Usuario;
 
 /**
@@ -28,69 +29,86 @@ public class PerfilController extends LoggerController implements Initializable 
     @FXML
     private Button btnAtras;
     @FXML
-    private TextField txtDireccion;
+    private Button btnModificar;
     @FXML
-    private TextField txtTelefono;
+    private Button btnGuardar;
     @FXML
-    private TextField txtEmail;
+    private TextField tfDireccion;
     @FXML
-    private TextField txtApellidos;
+    private TextField tfTelefono;
     @FXML
-    private TextField txtNombre;
+    private TextField tfEmail;
     @FXML
-    private TextField txtContrasenaUsuario;
+    private TextField tfApellidos;
     @FXML
-    private TextField txtNombreUsuario;
+    private TextField tfNombre;
+    @FXML
+    private TextField tfContrasenaUsuario;
+    @FXML
+    private TextField tfNombreUsuario;
+    
+    @FXML
+    private ImageView imgPerfil;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        // cargarPerfil();
+        bloquearCampos(true);
         
+        Image image = new Image(getClass().getResourceAsStream("/images/usuarioimg.jpg"));
+        imgPerfil.setImage(image);
+        
+        usuarioActual = Sesion.getUsuario();
+        cargarPerfil();
+       
     }
     
+    /*
     public void setUsuario(Usuario usuario) {
         this.usuarioActual = usuario;
-        cargarPerfil();
+        //cargarPerfil();
     }
+    */
     
     private void cargarPerfil() {
-
     if (usuarioActual == null) {
         logger.warning("No se ha recibido ningún usuario");
         return;
     }
 
-    txtNombreUsuario.setText(usuarioActual.getNombreUsuario());
-    txtContrasenaUsuario.setText(usuarioActual.getContrasenaUsuario());
-    txtNombre.setText(usuarioActual.getNombre());
-    txtApellidos.setText(usuarioActual.getApellidos());
-    txtEmail.setText(usuarioActual.getEmail());
-    txtTelefono.setText(usuarioActual.getTelefono());
-    txtDireccion.setText(usuarioActual.getDireccion());
+    tfNombreUsuario.setText(usuarioActual.getNombreUsuario());
+    tfContrasenaUsuario.setText(usuarioActual.getContrasenaUsuario());
+    tfNombre.setText(usuarioActual.getNombre());
+    tfApellidos.setText(usuarioActual.getApellidos());
+    tfEmail.setText(usuarioActual.getEmail());
+    tfTelefono.setText(usuarioActual.getTelefono());
+    tfDireccion.setText(usuarioActual.getDireccion());
 
     }
-    /*
-    private void cargarPerfil () {
-    Usuario usuario = controlador.verPerfil(dniUsuario);
     
-    if (usuario != null) {
-
-            txtNombreUsuario.setText(usuario.getNombreUsuario());
-            txtContrasenaUsuario.setText(usuario.getContrasenaUsuario());
-            txtNombre.setText(usuario.getNombre());
-            txtApellidos.setText(usuario.getApellidos());
-            txtEmail.setText(usuario.getEmail());
-            txtTelefono.setText(usuario.getTelefono());
-            txtDireccion.setText(usuario.getDireccion());
-
-        } else {
-            logger.info("No se ha encontrado al usuario");
-        }
+    @FXML
+    private void desbloquearCampos() {
+        bloquearCampos(false);
+        btnModificar.setDisable(true);
+        btnGuardar.setDisable(false);
     }
-    */
     
-        
+    private void bloquearCampos(boolean bloqueado) {
+    tfNombreUsuario.setDisable(bloqueado);
+    tfContrasenaUsuario.setDisable(bloqueado);
+    tfNombre.setDisable(bloqueado);
+    tfApellidos.setDisable(bloqueado);
+    tfEmail.setDisable(bloqueado);
+    tfTelefono.setDisable(bloqueado);
+    tfDireccion.setDisable(bloqueado);
+    }
+    
+    @FXML
+    private void actualizarPerfil() {
+    System.out.println("salio bien");
+        btnModificar.setDisable(false);
+        btnGuardar.setDisable(true);
+    }
+       
     @FXML
     private void volver() {
         try {
@@ -100,14 +118,9 @@ public class PerfilController extends LoggerController implements Initializable 
             Scene escena = btnAtras.getScene();
             escena.setRoot(root);
             
-            Stage stage = (Stage) escena.getWindow();
-            stage.setWidth(900);
-            stage.setHeight(560);
-            stage.centerOnScreen();
             logger.info("Volviendo al escenario Menu");
         } catch (IOException e) {
-            logger.info("Error en la salida/entrada");
-            System.out.println("ERROR: " + e);
+            logger.severe("ERROR: " + e);
         }
     }  
 }

@@ -5,18 +5,23 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import static com.mongodb.client.model.Filters.eq;
+import com.mongodb.client.model.Updates;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import modelo.*;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 public class DaoImplementacion implements Dao {
    
     private static final String uri = "mongodb://localhost:27017";
     
     public DaoImplementacion() {
+    /*
     try (MongoClient mongoClient = MongoClients.create(uri)) {
             MongoDatabase database = mongoClient.getDatabase("sample_mflix");
             MongoCollection<Document> collection = database.getCollection("usuarios");
@@ -27,7 +32,8 @@ public class DaoImplementacion implements Dao {
             } else {
                 System.out.println("No matching documents found.");
             }
-        }    
+        }  
+    */
     }
    
     @Override
@@ -57,6 +63,7 @@ public class DaoImplementacion implements Dao {
             // Recuperamos TODOS los datos del usuario
             Usuario usuario = new Usuario();
 
+            usuario.setId(documento.getObjectId("_id").toString());
             usuario.setDni(documento.getString("dni"));
             usuario.setNombreUsuario(documento.getString("nombreUsuario"));
             usuario.setContrasenaUsuario(contrasenaGuardada);
@@ -78,18 +85,6 @@ public class DaoImplementacion implements Dao {
                 usuario.setDireccion(direccionCompleta);
             }
             
-            /*
-            Document direccionDoc = documento.get("direccion", Document.class);
-            
-                String calle = direccionDoc.getString("calle");
-                String numero = direccionDoc.getString("numero");
-                String localidad = direccionDoc.getString("localidad");
-                String codigoPostal = direccionDoc.getString("codigoPostal");
-                String provincia = direccionDoc.getString("provincia");
-            */
-
-            //usuario.setDireccion(documento.getString("direccion"));
-
             return usuario;
         }
     }
@@ -125,7 +120,6 @@ public class DaoImplementacion implements Dao {
         }
     }
     */
-    
     @Override
     public Usuario registrarse(String dni, String nombreUsuario, String contrasenaUsuario, String nombre, String apellidos, String email, String telefono, String direccion) throws Exception {
         try (MongoClient mongoClient = MongoClients.create(uri)) {
@@ -250,6 +244,7 @@ public class DaoImplementacion implements Dao {
                 actividad.setIdEmpleado(documento.getObjectId("idEmpleado").toString()
                 );
 
+                
                 /*
                 List<ObjectId> participantesMongo = documento.getList("participantes", ObjectId.class);
 
@@ -258,7 +253,7 @@ public class DaoImplementacion implements Dao {
                 for (ObjectId participante : participantesMongo) {
                     participantes.add(participante.toString());
                 }
-
+                
                 actividad.setParticipantes(participantes);
                 */
 
@@ -287,12 +282,8 @@ public class DaoImplementacion implements Dao {
                 Pista pista = new Pista();
 
                 pista.setId(documento.getObjectId("_id").toString());
-
                 pista.setNombre(documento.getString("nombre"));
-
                 pista.setTipo(documento.getString("tipo"));
-
-                // Ojito en como se obtiene el objectId
                 org.bson.types.ObjectId polideportivoId = documento.getObjectId("localizacion");
 
                 if (polideportivoId != null) {
@@ -315,14 +306,68 @@ public class DaoImplementacion implements Dao {
                 }
               
                 pista.setPrecioHora((documento.getDouble("precioHora")));
-
-//                pista.setEstado((documento.getString("estado")));
                 pista.setEstado(Estado.valueOf(documento.getString("estado")));
-
-                
+            
                 listaPistas.add(pista);
             }
         }    
         return listaPistas;  
+    }
+    
+    @Override
+    public void registrarseEnActividad(String idUsuario, String idActividad) throws Exception {
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
+            MongoCollection<Document> collection = mongoClient.getDatabase("base_datos").getCollection("actividades");
+
+            ObjectId actId = new ObjectId(idActividad);
+            ObjectId usrId = new ObjectId(idUsuario);
+
+            Document actividad = collection.find(eq("_id", actId)).first();
+            if (actividad == null) {
+                throw new Exception("La actividad ya no existe");
+            }
+
+            List<ObjectId> participantes = actividad.getList("participantes", ObjectId.class, new ArrayList<>());
+
+            if (participantes.contains(usrId)) {
+                throw new Exception("Ya estás registrado en esta actividad");
+            }
+            if (participantes.size() >= actividad.getInteger("aforoMaximo")) {
+                throw new Exception("La actividad está completa");
+            }
+
+            // $addToSet evita duplicados aunque haya dos peticiones a la vez
+            collection.updateOne(eq("_id", actId), Updates.addToSet("participantes", usrId));
+        }
+    }
+
+    @Override
+    public void reservarPista(String idUsuario, String idPista, Date inicio, Date fin) throws Exception {
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
+            MongoDatabase database = mongoClient.getDatabase("base_datos");
+            MongoCollection<Document> pistas = database.getCollection("pistas");
+            MongoCollection<Document> reservas = database.getCollection("reservas");
+
+            ObjectId pistaId = new ObjectId(idPista);
+
+            Document pista = pistas.find(eq("_id", pistaId)).first();
+            if (pista == null) {
+                throw new Exception("La pista ya no existe");
+            }
+
+            // Ajusta este valor al de tu enum Estado
+            if (!"DISPONIBLE".equals(pista.getString("estado"))) {
+                throw new Exception("La pista no está disponible");
+            }
+
+            // ¿Hay otra reserva que se solape con ese horario?
+            Document solape = reservas.find(Filters.and(eq("idPista", pistaId), Filters.lt("fechaInicio", fin), Filters.gt("fechaFin", inicio))).first();
+
+            if (solape != null) {
+                throw new Exception("La pista ya está reservada en ese horario");
+            }
+
+            reservas.insertOne(new Document("idPista", pistaId).append("idUsuario", new ObjectId(idUsuario)).append("fechaInicio", inicio).append("fechaFin", fin));
+        }
     }
 }
