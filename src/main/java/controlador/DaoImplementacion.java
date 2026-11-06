@@ -364,12 +364,44 @@ public class DaoImplementacion implements Dao {
                 }
               
                 pista.setPrecioHora((documento.getDouble("precioHora")));
-                pista.setEstado(Estado.valueOf(documento.getString("estado")));
+                pista.setEstado(EstadoPista.valueOf(documento.getString("estado")));
             
                 listaPistas.add(pista);
             }
         }    
         return listaPistas;  
+    }
+    
+    @Override
+    public List<Reserva> obtenerReservas() throws Exception {
+        List<Reserva> listaReservas = new ArrayList<>();
+        
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
+            MongoDatabase database = mongoClient.getDatabase("base_datos");
+
+            MongoCollection<Document> collection = database.getCollection("reservas");
+            MongoCollection<Document> collectionUsuarios = database.getCollection("usuarios");
+            MongoCollection<Document> collectionPistas = database.getCollection("pistas");
+            
+            FindIterable<Document> documentos = collection.find();
+            
+            for (Document documento : documentos) {
+                Reserva reserva = new Reserva();
+                
+                reserva.setId(documento.getObjectId("_id").toString());
+                reserva.setId(documento.getObjectId("idCliente").toString());
+                reserva.setId(documento.getObjectId("idPista").toString());
+                reserva.setFechaHoraInicio(documento.getDate("fechaHoraInicio"));
+                reserva.setFechaHoraFin(documento.getDate("fechaHoraFin"));
+                reserva.setImporte((documento.getDouble("importe")));
+                reserva.setMetodoPago(Pago.valueOf(documento.getString("metodoPago")));
+                reserva.setEstado(EstadoReserva.valueOf(documento.getString("estado")));
+                reserva.setFechaReserva(documento.getDate("fechaReserva"));
+                
+                listaReservas.add(reserva);
+            }
+        }
+        return listaReservas;
     }
     
     @Override
@@ -399,6 +431,7 @@ public class DaoImplementacion implements Dao {
         }
     }
 
+    /*
     @Override
     public void reservarPista(String idUsuario, String idPista, Date inicio, Date fin) throws Exception {
         try (MongoClient mongoClient = MongoClients.create(uri)) {
@@ -426,6 +459,50 @@ public class DaoImplementacion implements Dao {
             }
 
             reservas.insertOne(new Document("idPista", pistaId).append("idUsuario", new ObjectId(idUsuario)).append("fechaInicio", inicio).append("fechaFin", fin));
+        }
+    }*/
+    
+    @Override
+    public void reservarPista(String idUsuario, String idPista, Date inicio, Date fin) throws Exception {
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
+            MongoDatabase database = mongoClient.getDatabase("base_datos");
+            MongoCollection<Document> pistas = database.getCollection("pistas");
+            MongoCollection<Document> reservas = database.getCollection("reservas");
+
+            ObjectId pistaId = new ObjectId(idPista);
+            ObjectId clienteId = new ObjectId(idUsuario);
+
+            Document pista = pistas.find(eq("_id", pistaId)).first();
+            if (pista == null) {
+                throw new Exception("La pista ya no existe");
+            }
+
+            // 1. Validar contra "Libre" que es como lo tienes en MongoDB y en la interfaz
+            String estadoPista = pista.getString("estado");
+            if (!"Libre".equalsIgnoreCase(estadoPista)) {
+                throw new Exception("La pista no está disponible (estado actual: " + estadoPista + ")");
+            }
+
+            // 2. Comprobación de solapes usando los nombres correctos (fechaHoraInicio / fechaHoraFin)
+            Document solape = reservas.find(Filters.and(
+                    eq("idPista", pistaId),
+                    Filters.lt("fechaHoraInicio", fin),
+                    Filters.gt("fechaHoraFin", inicio)
+            )).first();
+
+            if (solape != null) {
+                throw new Exception("La pista ya está reservada en ese horario");
+            }
+
+            // 3. Insertar respetando los nombres de campos de tu colección 'reservas'
+            Document nuevaReserva = new Document("idPista", pistaId)
+                    .append("idCliente", clienteId)
+                    .append("fechaHoraInicio", inicio)
+                    .append("fechaHoraFin", fin)
+                    .append("fechaReserva", new Date())
+                    .append("estado", "Confirmada");
+
+            reservas.insertOne(nuevaReserva);
         }
     }
     

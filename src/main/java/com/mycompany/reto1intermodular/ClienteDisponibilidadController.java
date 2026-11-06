@@ -28,7 +28,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import modelo.Actividad;
-import modelo.Estado;
+import modelo.EstadoPista;
 import modelo.Pista;
 import modelo.Usuario;
 
@@ -68,7 +68,7 @@ public class ClienteDisponibilidadController extends LoggerController implements
     @FXML private TableColumn<Pista, String> colTipoPista;
     @FXML private TableColumn<Pista, String> colLocalizacionPista;
     @FXML private TableColumn<Pista, Double> colPrecioPista;
-    @FXML private TableColumn<Pista, Estado> colEstadoPista;
+    @FXML private TableColumn<Pista, EstadoPista> colEstadoPista;
     
     /*
     @FXML

@@ -166,7 +166,7 @@ public class ClienteMenuController extends LoggerController implements Initializ
     @FXML
     private void abrirAyuda() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/reto1intermodular/ClienteAyuda.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/reto1intermodular/ClienteFAQ.fxml"));
 
             Parent root = loader.load();
             Scene escena = btnAyuda.getScene();

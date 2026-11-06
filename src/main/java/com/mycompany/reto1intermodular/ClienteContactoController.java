@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 
 /**
  * FXML Controller class
@@ -26,6 +27,8 @@ public class ClienteContactoController extends LoggerController implements Initi
     private Button btnAtras;
     @FXML
     private Button btnEnviar;
+    @FXML
+    private TextArea taComentario;
 
     /**
      * Initializes the controller class.
@@ -44,6 +47,7 @@ public class ClienteContactoController extends LoggerController implements Initi
         alert.setHeaderText("¡Mensaje enviado!");
         //alert.setContentText("Los datos se han guardado correctamente en la base de datos.");
 
+        taComentario.setText("");
         alert.showAndWait();    
     }
 
@@ -57,16 +61,9 @@ public class ClienteContactoController extends LoggerController implements Initi
             Scene escena = btnAtras.getScene();
             escena.setRoot(root);
             
-            /*
-            Stage stage = (Stage) escena.getWindow();
-            stage.setWidth(900);
-            stage.setHeight(560);
-            stage.centerOnScreen();
-            */
             logger.info("Volviendo al escenario Menu");
         } catch (IOException e) {
-            logger.info("Error en la salida/entrada");
-            System.out.println("ERROR: " + e);
+            logger.severe("ERROR: " + e);
         }
     }
 }
