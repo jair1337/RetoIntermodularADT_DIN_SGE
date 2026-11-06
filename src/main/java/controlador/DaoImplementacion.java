@@ -88,38 +88,8 @@ public class DaoImplementacion implements Dao {
             return usuario;
         }
     }
+  
     /*
-    @Override
-    public Usuario logearse(String nombreUsuario, String contrasenaUsuario) throws Exception {
-
-        try (MongoClient mongoClient = MongoClients.create(uri)) {
-
-            MongoDatabase database = mongoClient.getDatabase("base_datos");
-
-            MongoCollection<Document> collection = database.getCollection("usuarios");
-
-            Document documento = collection.find(eq("nombreUsuario", nombreUsuario)).first();
-
-            if (documento == null) {
-                return null;
-            }
-
-            String contrasenaGuardada = documento.getString("contrasenaUsuario");
-
-            if (contrasenaGuardada == null || !contrasenaGuardada.equals(contrasenaUsuario)) {
-                return null;
-            }
-
-            Usuario usuario = new Usuario();
-
-            usuario.setNombreUsuario(documento.getString("nombreUsuario"));
-
-            usuario.setContrasenaUsuario(contrasenaGuardada);
-
-            return usuario;
-        }
-    }
-    */
     @Override
     public Usuario registrarse(String dni, String nombreUsuario, String contrasenaUsuario, String nombre, String apellidos, String email, String telefono, String direccion) throws Exception {
         try (MongoClient mongoClient = MongoClients.create(uri)) {
@@ -153,6 +123,59 @@ public class DaoImplementacion implements Dao {
         }
         
     }
+    */
+    @Override
+    public Usuario registrarse(String dni, String nombreUsuario, String contrasenaUsuario, String nombre, String apellidos, String email, String telefono, String direccion) throws Exception {
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
+
+            MongoDatabase database = mongoClient.getDatabase("base_datos");
+
+            MongoCollection<Document> collection = database.getCollection("usuarios");
+
+            // Comprobamos si el nombre de usuario ya existe
+            Document documentoExistente = collection.find(eq("nombreUsuario", nombreUsuario)).first();
+
+            if (documentoExistente != null) {
+                return null;
+            }
+            
+            Document direccionDoc = new Document("calle", direccion)
+                    .append("numero", "")
+                    .append("localidad", "")
+                    .append("codigoPostal", "")
+                    .append("provincia", "");
+
+            // Creamos el nuevo documento con los datos del usuario
+            Document documento = new Document("dni", dni)
+                    .append("nombreUsuario", nombreUsuario)
+                    .append("contrasenaUsuario", contrasenaUsuario)
+                    .append("nombre", nombre)
+                    .append("apellidos", apellidos)
+                    .append("email", email)
+                    .append("telefono", telefono)
+                    .append("direccion", direccionDoc);
+
+            // Insertamos el documento en MongoDB
+            collection.insertOne(documento);
+
+            // Creamos el objeto Usuario que devolveremos
+            Usuario usuario = new Usuario();
+
+            usuario.setDni(dni);
+            usuario.setNombreUsuario(nombreUsuario);
+            usuario.setContrasenaUsuario(contrasenaUsuario);
+            usuario.setNombre(nombre);
+            usuario.setApellidos(apellidos);
+            usuario.setEmail(email);
+            usuario.setTelefono(telefono);
+            String direccionCompleta = direccion + ", , , , ";
+            usuario.setDireccion(direccionCompleta);
+            //usuario.setDireccion(direccion);
+            
+            return usuario;
+        }
+    }
+    
     
     @Override
     public Usuario verPerfil(String id) {
@@ -181,6 +204,42 @@ public class DaoImplementacion implements Dao {
 
             return usuario;
         }
+    }
+    
+    @Override
+    public Usuario verLogrosUsuario(String id) {  
+        return null;
+    }
+    
+    @Override
+    public List<Logro> verLogros() throws Exception {
+        
+        List<Logro> listaLogros = new ArrayList<>();
+        
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
+            
+            MongoDatabase database = mongoClient.getDatabase("base_datos");
+
+            MongoCollection<Document> collection = database.getCollection("logros");
+            
+            FindIterable<Document> documentos = collection.find();
+            
+            for (Document documento : documentos) {
+                Logro logro = new Logro();
+                
+                logro.setId(documento.getObjectId("_id").toString());
+
+                logro.setNombre(documento.getString("nombre"));
+
+                logro.setDescripcion(documento.getString("descripcion"));
+
+                logro.setIconoUrl(documento.getString("iconoUrl"));
+                
+                listaLogros.add(logro);
+            }
+        }
+        
+        return listaLogros;
     }
     
     @Override
@@ -241,8 +300,7 @@ public class DaoImplementacion implements Dao {
 
                 actividad.setPuntos(documento.getInteger("puntos"));
 
-                actividad.setIdEmpleado(documento.getObjectId("idEmpleado").toString()
-                );
+                actividad.setIdEmpleado(documento.getObjectId("idEmpleado").toString());
 
                 
                 /*
@@ -355,7 +413,7 @@ public class DaoImplementacion implements Dao {
                 throw new Exception("La pista ya no existe");
             }
 
-            // Ajusta este valor al de tu enum Estado
+            // Ajustar el valor al del enum Estado
             if (!"DISPONIBLE".equals(pista.getString("estado"))) {
                 throw new Exception("La pista no está disponible");
             }
@@ -370,4 +428,25 @@ public class DaoImplementacion implements Dao {
             reservas.insertOne(new Document("idPista", pistaId).append("idUsuario", new ObjectId(idUsuario)).append("fechaInicio", inicio).append("fechaFin", fin));
         }
     }
+    
+    @Override
+    public List<Actividad> obtenerActividadesReservadas(String id) throws Exception {
+        
+        /*try (MongoClient mongoClient = MongoClients.create(uri)) {
+            
+            MongoDatabase database = mongoClient.getDatabase("base_datos");
+
+            MongoCollection<Document> collection = database.getCollection("usuarios");
+            MongoCollection<Document> collectionPolideportivos = database.getCollection("polideportivos");
+
+            Document documento = collection.find(eq("_id", id)).first();
+            
+            if (documento == null) {
+                return null;
+            }
+        }   */
+        return null;
+    }
+    
+    
 }

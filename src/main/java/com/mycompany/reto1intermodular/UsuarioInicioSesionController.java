@@ -182,6 +182,6 @@ public class UsuarioInicioSesionController extends LoggerController implements I
         lblError.setText(msg);
         lblError.setVisible(true);
         lblError.setManaged(true);
-    }
+    }   
     
 }

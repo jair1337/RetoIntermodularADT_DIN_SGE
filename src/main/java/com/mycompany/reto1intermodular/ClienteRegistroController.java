@@ -57,8 +57,7 @@ public class ClienteRegistroController implements Initializable {
     
     try {
         if (dni.isBlank() | nombreC.isBlank() | contrasenaC.isBlank() | nombre.isBlank() | apellidos.isBlank() | email.isBlank() | telefono.isBlank() | direccion.isBlank() | telefono.isBlank()) {
-            // Luego lo cambio
-            System.out.println("cagaste");
+            System.out.println("mal");
         } else {
             controlador.registrarse(dni, nombreC, contrasenaC, nombre, apellidos, email, telefono, direccion);
             volver();    

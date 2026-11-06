@@ -2,6 +2,7 @@ package controlador;
 import java.util.Date;
 import java.util.List;
 import modelo.Actividad;
+import modelo.Logro;
 import modelo.Pista;
 import modelo.Usuario;
 
@@ -23,6 +24,14 @@ public class Controlador {
     
     public Usuario verPerfil(String id) {
         return dao.verPerfil(id);
+    }
+    
+    public Usuario verLogrosUsuario(String id) {
+        return dao.verLogrosUsuario(id);
+    }
+    
+    public List<Logro> verLogros() throws Exception {
+        return dao.verLogros();
     }
     
     public List<Actividad> obtenerActividades() throws Exception {

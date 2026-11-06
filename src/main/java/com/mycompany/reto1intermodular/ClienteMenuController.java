@@ -93,7 +93,7 @@ public class ClienteMenuController extends LoggerController implements Initializ
     @FXML
     private void abrirPuntosYLogros() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/reto1intermodular/ClientePuntosLogros.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/reto1intermodular/ClienteLogrosPuntos.fxml"));
 
             Parent root = loader.load();
             
