@@ -10,6 +10,7 @@ public interface Dao {
     public Usuario verPerfil(String id);
     public List<Actividad> obtenerActividades() throws Exception;
     public List<Pista> obtenerPistas() throws Exception;
+    public List<Reserva> obtenerReservas() throws Exception;
     
     public void registrarseEnActividad(String idUsuario, String idActividad) throws Exception;
     public void reservarPista(String idUsuario, String idPista, Date inicio, Date fin) throws Exception;

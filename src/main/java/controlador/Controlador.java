@@ -3,6 +3,7 @@ import java.util.Date;
 import java.util.List;
 import modelo.Actividad;
 import modelo.Pista;
+import modelo.Reserva;
 import modelo.Usuario;
 
 public class Controlador {
@@ -31,6 +32,10 @@ public class Controlador {
     
     public List<Pista> obtenerPistas() throws Exception {
         return dao.obtenerPistas();
+    }
+    
+    public List<Reserva> obtenerReservas() throws Exception {
+        return dao.obtenerReservas();
     }
     
     public void registrarseEnActividad(String idUsuario, String idActividad) throws Exception {

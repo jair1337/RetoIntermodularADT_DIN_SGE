@@ -8,6 +8,6 @@ package modelo;
  *
  * @author Albeiro.Mamani
  */
-public enum Estado {
+public enum EstadoPista {
     Libre, Ocupada, Mantenimiento
 }

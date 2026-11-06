@@ -41,16 +41,9 @@ public class ClienteAyudaController extends LoggerController implements Initiali
             Scene escena = btnAtras.getScene();
             escena.setRoot(root);
             
-            /*
-            Stage stage = (Stage) escena.getWindow();
-            stage.setWidth(900);
-            stage.setHeight(560);
-            stage.centerOnScreen();
-            */
             logger.info("Volviendo al escenario Menu");
         } catch (IOException e) {
-            logger.info("Error en la salida/entrada");
-            System.out.println("ERROR: " + e);
+            logger.severe("ERROR:" + e);
         }
     }
 }

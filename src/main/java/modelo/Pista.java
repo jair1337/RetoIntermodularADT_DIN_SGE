@@ -15,9 +15,9 @@ public class Pista {
     private String tipo;
     private String localizacion;
     private double precioHora;
-    private Estado estado;
+    private EstadoPista estado;
 
-    public Pista(String id, String nombre, String tipo, String localizacion, double precioHora, Estado estado) {
+    public Pista(String id, String nombre, String tipo, String localizacion, double precioHora, EstadoPista estado) {
         this.id = id;
         this.nombre = nombre;
         this.tipo = tipo;
@@ -70,11 +70,11 @@ public class Pista {
         this.precioHora = precioHora;
     }
 
-    public Estado getEstado() {
+    public EstadoPista getEstado() {
         return estado;
     }
 
-    public void setEstado(Estado estado) {
+    public void setEstado(EstadoPista estado) {
         this.estado = estado;
     }
 

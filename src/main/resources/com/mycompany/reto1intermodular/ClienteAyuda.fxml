@@ -11,65 +11,65 @@
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.ClienteAyudaController">
    <children>
-      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="600.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="600.0">
          <children>
-            <Label text="Preguntas frecuentes">
+            <Label text="¿En que podemos ayudarte?">
                <font>
                   <Font size="36.0" />
                </font>
                <HBox.margin>
-                  <Insets left="70.0" />
+                  <Insets />
                </HBox.margin>
             </Label>
          </children>
       </HBox>
       <VBox alignment="CENTER" prefHeight="300.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
          <children>
-            <TitledPane animated="false" maxWidth="800.0" prefWidth="800.0" text="¿Quienes somos y donde nos ubicamos?">
+            <TitledPane animated="false" maxWidth="800.0" prefWidth="800.0" text="Perfil">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="14.0" layoutY="11.0" prefHeight="18.0" prefWidth="777.0" text="Somos TxandaSport y nos encontramos en Bizkaia." AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
+                        <Label layoutX="14.0" layoutY="11.0" prefHeight="18.0" prefWidth="777.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
                      </children></AnchorPane>
               </content>
             </TitledPane>
-            <TitledPane animated="false" maxWidth="800.0" prefWidth="800.0" text="¿Que ofrecemos en TxandaSport?">
+            <TitledPane animated="false" maxWidth="800.0" prefWidth="800.0" text="Gestion de pagos">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutY="10.0" prefHeight="18.0" prefWidth="777.0" text="Ofrecemos servicios deportivos, gestión de eventos y ocio otorgando a los clientes acceso a reservas de espacios, clases deportivas especializadas con monitores cualificados, comunidad interactiva, mensajería de soporte y recompensas por continuidad en el programa de fidelización." AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
+                        <Label layoutY="10.0" prefHeight="18.0" prefWidth="777.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
                      </children></AnchorPane>
               </content>
             </TitledPane>
-            <TitledPane animated="false" maxWidth="800.0" prefWidth="800.0" text="¿Es seguro?">
+            <TitledPane animated="false" maxWidth="800.0" prefWidth="800.0">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label prefHeight="18.0" prefWidth="777.0" text="aa" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
+                        <Label prefHeight="18.0" prefWidth="777.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
                      </children></AnchorPane>
               </content>
             </TitledPane>
-            <TitledPane animated="false" maxWidth="800.0" prefWidth="800.0" text="¿Como funciona la reserva una de actividad o pista?">
+            <TitledPane animated="false" maxWidth="800.0" prefWidth="800.0">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label prefHeight="18.0" prefWidth="777.0" text="Trabajamos bajo la propuesta de explotación de recursos comunitarios e instalaciones deportivas, firmando acuerdos de cesión/alquiler de franjas horarias en polideportivos para ofrecer actividades privadas y exclusivas a los usuarios." AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
+                        <Label prefHeight="18.0" prefWidth="777.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
                      </children></AnchorPane>
                </content>
             </TitledPane>
-            <TitledPane animated="false" maxWidth="800.0" prefWidth="800.0" text="aaa">
+            <TitledPane animated="false" maxWidth="800.0" prefWidth="800.0">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label prefHeight="18.0" prefWidth="777.0" text="aa" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
+                        <Label prefHeight="18.0" prefWidth="777.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
                      </children></AnchorPane>
                </content>
             </TitledPane>
-            <TitledPane animated="false" maxWidth="800.0" prefWidth="800.0" text="aa">
+            <TitledPane animated="false" maxWidth="800.0" prefWidth="800.0" text="Seguridad">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label prefHeight="18.0" prefWidth="777.0" text="aa" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
+                        <Label prefHeight="18.0" prefWidth="777.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
                      </children></AnchorPane>
                </content>
             </TitledPane>
