@@ -3,11 +3,6 @@ package com.mycompany.reto1intermodular;
 import controlador.Controlador;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,15 +13,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
-import javafx.scene.control.Spinner;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.VBox;
 import modelo.Actividad;
 import modelo.EstadoPista;
 import modelo.Pista;
@@ -126,6 +115,7 @@ public class ClienteDisponibilidadController extends LoggerController implements
         }
     }
     
+    /*
     @FXML
     private void reservarPista() {
         Pista seleccionada = tbPista.getSelectionModel().getSelectedItem();
@@ -170,7 +160,30 @@ public class ClienteDisponibilidadController extends LoggerController implements
             new Alert(Alert.AlertType.WARNING, e.getMessage()).showAndWait();
         }
     }
-    
+    */
+    @FXML
+    private void reservarPista() {
+        Pista seleccionada = tbPista.getSelectionModel().getSelectedItem();
+
+        if (seleccionada == null || Sesion.getUsuario() == null) {
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/reto1intermodular/ClientePago.fxml"));
+            Parent root = loader.load();
+
+            // Le pasamos la pista elegida a la pantalla de pago
+            ClientePagoController pago = loader.getController();
+            pago.setPista(seleccionada);
+
+            btnReservarPista.getScene().setRoot(root);
+
+            logger.info("Abriendo pantalla de pago para la pista " + seleccionada.getNombre());
+        } catch (IOException e) {
+            logger.severe("ERROR: " + e);
+        }
+    }
     
     
     private void cargarTabla() {

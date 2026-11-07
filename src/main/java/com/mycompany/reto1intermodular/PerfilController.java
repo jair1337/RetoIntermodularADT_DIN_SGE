@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -102,12 +103,60 @@ public class PerfilController extends LoggerController implements Initializable 
     tfDireccion.setDisable(bloqueado);
     }
     
+    /*
     @FXML
     private void actualizarPerfil() {
     System.out.println("salio bien");
         btnModificar.setDisable(false);
         btnGuardar.setDisable(true);
     }
+    */
+    @FXML
+    private void actualizarPerfil() {
+        if (usuarioActual == null) {
+            return;
+        }
+
+        String nombreUsuario = tfNombreUsuario.getText().trim();
+        String contrasena = tfContrasenaUsuario.getText().trim();
+        String nombre = tfNombre.getText().trim();
+        String apellidos = tfApellidos.getText().trim();
+        String email = tfEmail.getText().trim();
+        String telefono = tfTelefono.getText().trim();
+        String direccion = tfDireccion.getText().trim();
+
+        if (nombreUsuario.isEmpty() || contrasena.isEmpty() || nombre.isEmpty() || apellidos.isEmpty()
+                || email.isEmpty() || telefono.isEmpty() || direccion.isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "Rellena todos los campos").showAndWait();
+            return;
+        }
+
+        try {
+            controlador.actualizarPerfil(usuarioActual.getId(), nombreUsuario, contrasena,
+                    nombre, apellidos, email, telefono, direccion);
+
+            // Actualizamos también el usuario guardado en Sesion para que siga coherente
+            usuarioActual.setNombreUsuario(nombreUsuario);
+            usuarioActual.setContrasenaUsuario(contrasena);
+            usuarioActual.setNombre(nombre);
+            usuarioActual.setApellidos(apellidos);
+            usuarioActual.setEmail(email);
+            usuarioActual.setTelefono(telefono);
+            usuarioActual.setDireccion(direccion);
+
+            bloquearCampos(true);
+            btnModificar.setDisable(false);
+            btnGuardar.setDisable(true);
+
+            new Alert(Alert.AlertType.INFORMATION, "Perfil actualizado correctamente").showAndWait();
+            logger.info("Perfil actualizado: " + nombreUsuario);
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.WARNING, e.getMessage()).showAndWait();
+            logger.severe("Error al actualizar el perfil: " + e);
+        }
+    }
+    
+    
        
     @FXML
     private void volver() {

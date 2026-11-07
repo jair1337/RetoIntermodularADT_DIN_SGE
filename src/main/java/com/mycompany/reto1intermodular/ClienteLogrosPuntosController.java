@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package com.mycompany.reto1intermodular;
 
 import static com.mycompany.reto1intermodular.LoggerController.logger;
@@ -23,11 +19,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import modelo.Logro;
+import modelo.Usuario;
 
 /**
  * FXML Controller class
  *
- * @author aldair
+ * @author Albeiro.Mamani
  */
 public class ClienteLogrosPuntosController implements Initializable {
 
@@ -63,13 +60,30 @@ public class ClienteLogrosPuntosController implements Initializable {
     colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
     colDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
     colIcono.setCellValueFactory(new PropertyValueFactory<>("iconoUrl"));
-       
+     
+    // Usuario que inició sesión (igual que en Perfil)
+    Usuario usuario = Sesion.getUsuario();
+    if (usuario == null) {
+        logger.warning("No hay ningún usuario en sesión");
+        return;
+    }
+
+    try {
+        listaLogros = FXCollections.observableArrayList(controlador.verLogrosUsuario(usuario.getId()));
+        tbLogros.setItems(listaLogros);
+    } catch (Exception e) {       
+        System.out.println("ERROR:" + e);
+    }      
+    
+    
+    /*
     try {
         listaLogros = FXCollections.observableArrayList(controlador.verLogros());
         tbLogros.setItems(listaLogros);
     } catch (Exception e) {       
         System.out.println("ERROR:" + e);
-    }      
+    }
+    */
     }
     
     @FXML

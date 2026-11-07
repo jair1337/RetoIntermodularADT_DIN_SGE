@@ -14,12 +14,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
-import modelo.Usuario;
+import modelo.Rol;
+import static modelo.Rol.Administrador;
+import static modelo.Rol.Empleado;
 
 /**
  * FXML Controller class
  *
- * @author aldair
+ * @author Albeiro.Mamani
  */
 public class UsuarioBienvenidaController extends LoggerController implements Initializable {
 
@@ -36,59 +38,122 @@ public class UsuarioBienvenidaController extends LoggerController implements Ini
     @FXML 
     private Region overlay;
 
-    
-    
-@FXML
-private void abrirLogin() throws Exception {
+    /*
+    @FXML
+    private void abrirLogin() throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/reto1intermodular/UsuarioInicioSesion.fxml"));
 
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/reto1intermodular/UsuarioInicioSesion.fxml"));
+        Parent card = loader.load();
 
-    Parent card = loader.load();
+        UsuarioInicioSesionController login = loader.getController();
 
-    // Obtenemos el controlador del Login
-    UsuarioInicioSesionController login = loader.getController();
+        Stage popup = new Stage();
 
-    Stage popup = new Stage();
+        Window owner = root.getScene().getWindow();
 
-    Window owner = root.getScene().getWindow();
+        popup.initOwner(owner);
+        popup.initModality(Modality.APPLICATION_MODAL);
+        popup.initStyle(StageStyle.TRANSPARENT);
 
-    popup.initOwner(owner);
-    popup.initModality(Modality.APPLICATION_MODAL);
-    popup.initStyle(StageStyle.TRANSPARENT);
+        Scene scene = new Scene(card);
+        scene.setFill(Color.TRANSPARENT);
 
-    Scene scene = new Scene(card);
-    scene.setFill(Color.TRANSPARENT);
+        scene.getStylesheets().add(getClass().getResource("/styles/ApartadoLoginCSS.css").toExternalForm());
 
-    scene.getStylesheets().add(getClass().getResource("/styles/ApartadoLoginCSS.css").toExternalForm());
+        popup.setScene(scene);
 
-    popup.setScene(scene);
+        login.setStage(popup);
 
-    login.setStage(popup);
+        // Centrar el popup
+        popup.setOnShown(e -> {
+            popup.setX(owner.getX() + (owner.getWidth() - popup.getWidth()) / 2);
+            popup.setY(owner.getY() + (owner.getHeight() - popup.getHeight()) / 2);
+        });
 
-    // Centramos el popup
-    popup.setOnShown(e -> {
-        popup.setX(owner.getX() + (owner.getWidth() - popup.getWidth()) / 2);
-        popup.setY(owner.getY() + (owner.getHeight() - popup.getHeight()) / 2);
-    });
+        overlay.setVisible(true);
 
-    overlay.setVisible(true);
+            try {
+                popup.showAndWait();
+            } finally {
+                overlay.setVisible(false);
+            }
 
-    try {
-        popup.showAndWait();
-    } finally {
-        overlay.setVisible(false);
-    }
-    
-    if (login.isLoginCorrecto()) {
+            if (login.isLoginCorrecto()) {
 
-    // Guardamos el usuario en la sesión (una sola vez)
-    Sesion.iniciar(login.getUsuarioAutenticado());
+            // Guardar el usuario en la sesión (una sola vez)
+            Sesion.iniciar(login.getUsuarioAutenticado());
 
-    // Cargamos el menú
-    Parent menu = FXMLLoader.load(getClass().getResource("/com/mycompany/reto1intermodular/ClienteMenu.fxml"));
-    root.getScene().setRoot(menu);
+            Parent menu = FXMLLoader.load(getClass().getResource("/com/mycompany/reto1intermodular/ClienteMenu.fxml"));
+            root.getScene().setRoot(menu);
 
-    logger.info("UsuarioBienvenidaController: Inicio de sesión correcto");
-    }
+            logger.info("UsuarioBienvenidaController: Inicio de sesión correcto");
+            }
     }      
+    */
+    @FXML
+    private void abrirLogin() throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/reto1intermodular/UsuarioInicioSesion.fxml"));
+
+        Parent card = loader.load();
+
+        UsuarioInicioSesionController login = loader.getController();
+
+        Stage popup = new Stage();
+
+        Window owner = root.getScene().getWindow();
+
+        popup.initOwner(owner);
+        popup.initModality(Modality.APPLICATION_MODAL);
+        popup.initStyle(StageStyle.TRANSPARENT);
+
+        Scene scene = new Scene(card);
+        scene.setFill(Color.TRANSPARENT);
+
+        scene.getStylesheets().add(getClass().getResource("/styles/ApartadoLoginCSS.css").toExternalForm());
+
+        popup.setScene(scene);
+
+        login.setStage(popup);
+
+        // Centrar el popup
+        popup.setOnShown(e -> {
+            popup.setX(owner.getX() + (owner.getWidth() - popup.getWidth()) / 2);
+            popup.setY(owner.getY() + (owner.getHeight() - popup.getHeight()) / 2);
+        });
+
+        overlay.setVisible(true);
+
+            try {
+                popup.showAndWait();
+            } finally {
+                overlay.setVisible(false);
+            }
+
+            if (login.isLoginCorrecto()) {
+
+            // Guardar el usuario en la sesión (una sola vez)
+            Sesion.iniciar(login.getUsuarioAutenticado());
+
+            // Menú según el rol del usuario que ha iniciado sesión
+            Rol rol = login.getUsuarioAutenticado().getRol();
+            Parent menu = FXMLLoader.load(getClass().getResource(rutaMenu(rol)));
+            root.getScene().setRoot(menu);
+
+            logger.info("UsuarioBienvenidaController: Inicio de sesión correcto");
+            }
+        }
+
+    // Cliente -> ClienteMenu, Empleado -> EmpleadoMenu, Administrador -> AdministradorMenu
+    private String rutaMenu(Rol rol) {
+        String base = "/com/mycompany/reto1intermodular/";
+
+        switch (rol) {
+            case Empleado:
+                return base + "EmpleadoMenu.fxml";
+            case Administrador:
+                return base + "AdministradorMenu.fxml";
+            default:
+                return base + "ClienteMenu.fxml";
+        }
+    }
 }

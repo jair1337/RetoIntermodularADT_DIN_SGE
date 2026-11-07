@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package com.mycompany.reto1intermodular;
 
 import java.io.IOException;
@@ -19,7 +15,7 @@ import javafx.scene.control.TextArea;
 /**
  * FXML Controller class
  *
- * @author aldair
+ * @author Albeiro.Mamani
  */
 public class ClienteContactoController extends LoggerController implements Initializable {
 

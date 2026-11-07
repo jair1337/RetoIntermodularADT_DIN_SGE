@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.AdministradorMenuController">
+<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.AdministradorMenuController">
    <items>
       <VBox alignment="CENTER" maxWidth="200.0">
          <children>
@@ -27,7 +27,7 @@
             </Button>
          </children>
       </VBox>
-      <VBox alignment="CENTER" maxWidth="400.0">
+      <VBox alignment="CENTER">
          <children>
             <Label text="TxandaSport">
                <font>
@@ -37,22 +37,22 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Label>
-            <Button fx:id="btnAñadir" maxWidth="150.0" mnemonicParsing="false" onAction="#mostrarOpciones" text="Añadir polideportivo">
+            <Button maxWidth="150.0" mnemonicParsing="false" text="Añadir polideportivo">
                <VBox.margin>
                   <Insets bottom="10.0" top="10.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="btnRegistrar" maxWidth="150.0" mnemonicParsing="false" onAction="#abrirRegistrarEmpleado" text="Registrar empleado">
+            <Button maxWidth="150.0" mnemonicParsing="false" text="Registrar empleado">
                <VBox.margin>
                   <Insets bottom="10.0" top="10.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="btnModificar" maxWidth="150.0" mnemonicParsing="false" onAction="#abrirModificarHorario" text="Modificar horario">
+            <Button maxWidth="150.0" mnemonicParsing="false" text="Modificar horario">
                <VBox.margin>
                   <Insets bottom="10.0" top="10.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="btnEliminar" maxWidth="150.0" mnemonicParsing="false" onAction="#abrirEliminarUsuario" text="Eliminar usuario">
+            <Button maxWidth="150.0" mnemonicParsing="false" text="Eliminar usuario">
                <VBox.margin>
                   <Insets bottom="10.0" top="10.0" />
                </VBox.margin>

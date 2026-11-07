@@ -2,11 +2,18 @@ package controlador;
 import java.util.Date;
 import java.util.List;
 import modelo.Actividad;
+import modelo.ItemReserva;
 import modelo.Logro;
+import modelo.Pago;
 import modelo.Pista;
 import modelo.Reserva;
 import modelo.Usuario;
 
+/**
+ * FXML Controller class
+ *
+ * @author Albeiro.Mamani
+ */
 public class Controlador {
     private Dao dao;
 
@@ -27,7 +34,7 @@ public class Controlador {
         return dao.verPerfil(id);
     }
     
-    public Usuario verLogrosUsuario(String id) {
+    public List<Logro> verLogrosUsuario(String id) throws Exception {
         return dao.verLogrosUsuario(id);
     }
     
@@ -47,12 +54,28 @@ public class Controlador {
         return dao.obtenerReservas();
     }
     
+    public List<ItemReserva> obtenerReservasUsuario(String idUsuario) throws Exception {
+        return dao.obtenerReservasUsuario(idUsuario);
+    }
+    
+    public void cancelarActividad(String idUsuario, String idActividad) throws Exception {
+        dao.cancelarActividad(idUsuario, idActividad);
+    }
+
+    public void cancelarReserva(String idUsuario, String idReserva) throws Exception {
+        dao.cancelarReserva(idUsuario, idReserva);
+    }
+    
+    public void actualizarPerfil(String idUsuario, String nombreUsuario, String contrasenaUsuario, String nombre, String apellidos, String email, String telefono, String direccion) throws Exception {
+        dao.actualizarPerfil(idUsuario, nombreUsuario, contrasenaUsuario, nombre, apellidos, email, telefono, direccion);
+    }
+    
     public void registrarseEnActividad(String idUsuario, String idActividad) throws Exception {
     dao.registrarseEnActividad(idUsuario, idActividad);
-}
+    }
 
-    public void reservarPista(String idUsuario, String idPista, Date inicio, Date fin) throws Exception {
-        dao.reservarPista(idUsuario, idPista, inicio, fin);
+    public void reservarPista(String idUsuario, String idPista, Date inicio, Date fin, double importe, Pago metodoPago) throws Exception {
+        dao.reservarPista(idUsuario, idPista, inicio, fin, importe, metodoPago);
     }
       
 }

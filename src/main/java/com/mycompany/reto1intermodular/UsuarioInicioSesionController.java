@@ -14,13 +14,8 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
-import javafx.scene.paint.Color;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.stage.Window;
+import modelo.Rol;
 import modelo.Usuario;
 
 /**
@@ -59,8 +54,7 @@ public class UsuarioInicioSesionController extends LoggerController implements I
     private Button btnOjo;
     @FXML 
     private Label lblError;
-    
-
+   
     private final Controlador controlador = new Controlador();
     
     private Stage stage;
@@ -80,13 +74,6 @@ public class UsuarioInicioSesionController extends LoggerController implements I
         return usuarioEncontrado;
     }
     
-    
-    private void initialize() {
-        // Las dos cajas de contraseña comparten el mismo texto
-        txtContrasenaVisible.textProperty().bindBidirectional(pwdContrasena.textProperty());
-    }
-    
-
     @FXML
     private void alternarVisibilidad() {
         boolean mostrar = !txtContrasenaVisible.isVisible();
@@ -94,7 +81,6 @@ public class UsuarioInicioSesionController extends LoggerController implements I
         pwdContrasena.setVisible(!mostrar);
     }
 
-    /*
     @FXML
     private void entrar() {
         String user = txtUsuario.getText().trim();
@@ -106,52 +92,21 @@ public class UsuarioInicioSesionController extends LoggerController implements I
         }
 
         try {
-            Usuario usuarioEncontrado = controlador.logearse(user, pass);
+            Usuario encontrado = controlador.logearse(user, pass);
 
-            if (usuarioEncontrado != null) {
+            if (encontrado == null) {
+                mostrarError("Usuario o contraseña incorrectos");
+            } else if (encontrado.getRol() == null) {
+                // Usuario sin rol válido en Mongo: no sabemos a qué menú mandarlo
+                logger.warning("El usuario " + user + " no tiene un rol válido");
+                mostrarError("Tu cuenta no tiene un rol asignado");
+            } else {
+                usuarioEncontrado = encontrado;
                 loginCorrecto = true;
                 stage.close();
-            } else {
-                mostrarError("Usuario o contraseña incorrectos");
             }
-
-        } catch (Exception e) {       
-            logger.severe("Error durante el inicio de sesión: " + e.getMessage());
-        }
-        
-    }
-    */
-    
-    @FXML
-    private void entrar() {
-        String user = txtUsuario.getText().trim();
-        String pass = pwdContrasena.getText();
-
-        if (user.isEmpty() || pass.isEmpty()) {
-            mostrarError("Introduce usuario y contraseña");
-            return;
-        }
-
-        try {
-
-            // pasando el usario lgo cambiar si no funca
-            usuarioEncontrado = controlador.logearse(user, pass);
-
-            if (usuarioEncontrado != null) {
-
-                loginCorrecto = true;
-
-                // Cerramos el popup
-                stage.close();
-
-            } else {
-
-                mostrarError("Usuario o contraseña incorrectos");
-            }
-
         } catch (Exception e) {
-
-            logger.severe("Error al iniciar sesión: " + e.getMessage());
+            logger.severe("Error al iniciar sesión: " + e);
             mostrarError("Se ha producido un error al iniciar sesión");
         }
     }
@@ -163,11 +118,9 @@ public class UsuarioInicioSesionController extends LoggerController implements I
         Parent root = loader.load();
         
         Scene escena = new Scene(root);
-        //escena.getStylesheets().add(getClass().getResource("/styles/RegistroCSS.css").toExternalForm());
-            
         stage.setScene(escena);
         stage.setTitle("Registro de cliente");
-           
+        
         } catch (IOException e) {
             System.out.println("ERROR:" + e);
         }

@@ -31,17 +31,6 @@ public class EmpleadoGestionController implements Initializable {
     
     @FXML
     private void volver() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/reto1intermodular/EmpleadoMenu.fxml"));
-
-            Parent root = loader.load();
-
-            Stage stage = (Stage) btnAtras.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Menu");
-
-        } catch (IOException e) {
-            System.out.println("ERROR: " + e);
-        }
+        
     }
 }

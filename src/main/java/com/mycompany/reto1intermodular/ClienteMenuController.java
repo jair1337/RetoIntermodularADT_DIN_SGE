@@ -14,7 +14,11 @@ import javafx.scene.control.ToggleButton;
 import javafx.stage.Stage;
 import modelo.Usuario;
 
-
+/**
+ * FXML Controller class
+ *
+ * @author Albeiro.Mamani
+ */
 public class ClienteMenuController extends LoggerController implements Initializable {
 
     private Usuario usuarioActual;

@@ -9,6 +9,7 @@ import com.mongodb.client.model.Filters;
 import static com.mongodb.client.model.Filters.eq;
 import com.mongodb.client.model.Updates;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +17,11 @@ import modelo.*;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+/**
+ * FXML Controller class
+ *
+ * @author Albeiro.Mamani
+ */
 public class DaoImplementacion implements Dao {
    
     private static final String uri = "mongodb://localhost:27017";
@@ -36,6 +42,7 @@ public class DaoImplementacion implements Dao {
     */
     }
    
+    /*
     @Override
     public Usuario logearse(String nombreUsuario, String contrasenaUsuario) throws Exception {
 
@@ -51,6 +58,8 @@ public class DaoImplementacion implements Dao {
             if (documento == null) {
                 return null;
             }
+            
+            
 
             // Comprobamos la contraseña
             String contrasenaGuardada = documento.getString("contrasenaUsuario");
@@ -88,42 +97,56 @@ public class DaoImplementacion implements Dao {
             return usuario;
         }
     }
-  
-    /*
+    */
     @Override
-    public Usuario registrarse(String dni, String nombreUsuario, String contrasenaUsuario, String nombre, String apellidos, String email, String telefono, String direccion) throws Exception {
+    public Usuario logearse(String nombreUsuario, String contrasenaUsuario) throws Exception {
+
         try (MongoClient mongoClient = MongoClients.create(uri)) {
 
             MongoDatabase database = mongoClient.getDatabase("base_datos");
 
             MongoCollection<Document> collection = database.getCollection("usuarios");
 
+            // Buscamos al usuario por su nombre de usuario
             Document documento = collection.find(eq("nombreUsuario", nombreUsuario)).first();
-            
-            if (documento != null) {
+
+            if (documento == null) {
                 return null;
             }
-            
-            FindIterable<Document> documentos = collection.find();
-            
-            collection.insertOne(documento);
-            
+
+            // Comprobamos la contraseña
+            String contrasenaGuardada = documento.getString("contrasenaUsuario");
+
+            if (contrasenaGuardada == null ||
+                !contrasenaGuardada.equals(contrasenaUsuario)) {
+                return null;
+            }
+
+            // Recuperamos TODOS los datos del usuario
             Usuario usuario = new Usuario();
 
-            usuario.setDni(dni);
-            usuario.setNombreUsuario(nombreUsuario);
-            usuario.setContrasenaUsuario(contrasenaUsuario);
-            usuario.setNombre(nombre);
-            usuario.setApellidos(apellidos);
-            usuario.setEmail(email);
-            usuario.setTelefono(telefono);
-            usuario.setDireccion(direccion);
+            usuario.setId(documento.getObjectId("_id").toString());
+            usuario.setDni(documento.getString("dni"));
+            usuario.setNombreUsuario(documento.getString("nombreUsuario"));
+            usuario.setContrasenaUsuario(contrasenaGuardada);
+            usuario.setRol(leerRol(documento.getString("rol")));
+            usuario.setNombre(documento.getString("nombre"));
+            usuario.setApellidos(documento.getString("apellidos"));
+            usuario.setEmail(documento.getString("email"));
+            usuario.setTelefono(documento.getString("telefono"));
+            
+            Document direccionDoc = documento.get("direccion", Document.class);
 
+            if (direccionDoc != null) {
+                String direccionCompleta = formatearDireccion(direccionDoc);
+
+                usuario.setDireccion(direccionCompleta);
+            }
+            
             return usuario;
         }
-        
     }
-    */
+  
     @Override
     public Usuario registrarse(String dni, String nombreUsuario, String contrasenaUsuario, String nombre, String apellidos, String email, String telefono, String direccion) throws Exception {
         try (MongoClient mongoClient = MongoClients.create(uri)) {
@@ -207,8 +230,36 @@ public class DaoImplementacion implements Dao {
     }
     
     @Override
-    public Usuario verLogrosUsuario(String id) {  
-        return null;
+    public List<Logro> verLogrosUsuario(String idUsuario) throws Exception {
+        List<Logro> lista = new ArrayList<>();
+
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
+            MongoDatabase database = mongoClient.getDatabase("base_datos");
+
+            Document usuario = database.getCollection("usuarios").find(eq("_id", new ObjectId(idUsuario))).first();
+
+            if (usuario == null) {
+                return lista;
+            }
+
+            // El usuario guarda los _id de sus logros en "logrosObtenidos"
+            List<ObjectId> idsLogros = usuario.getList("logrosObtenidos", ObjectId.class);
+
+            if (idsLogros == null || idsLogros.isEmpty()) {
+                return lista;
+            }
+
+            for (Document documento : database.getCollection("logros").find(Filters.in("_id", idsLogros))) {
+                Logro logro = new Logro();
+                logro.setId(documento.getObjectId("_id").toString());
+                logro.setNombre(documento.getString("nombre"));
+                logro.setDescripcion(documento.getString("descripcion"));
+                logro.setIconoUrl(documento.getString("iconoUrl"));
+                lista.add(logro);
+            }
+        }
+
+        return lista;
     }
     
     @Override
@@ -431,39 +482,8 @@ public class DaoImplementacion implements Dao {
         }
     }
 
-    /*
     @Override
-    public void reservarPista(String idUsuario, String idPista, Date inicio, Date fin) throws Exception {
-        try (MongoClient mongoClient = MongoClients.create(uri)) {
-            MongoDatabase database = mongoClient.getDatabase("base_datos");
-            MongoCollection<Document> pistas = database.getCollection("pistas");
-            MongoCollection<Document> reservas = database.getCollection("reservas");
-
-            ObjectId pistaId = new ObjectId(idPista);
-
-            Document pista = pistas.find(eq("_id", pistaId)).first();
-            if (pista == null) {
-                throw new Exception("La pista ya no existe");
-            }
-
-            // Ajustar el valor al del enum Estado
-            if (!"DISPONIBLE".equals(pista.getString("estado"))) {
-                throw new Exception("La pista no está disponible");
-            }
-
-            // ¿Hay otra reserva que se solape con ese horario?
-            Document solape = reservas.find(Filters.and(eq("idPista", pistaId), Filters.lt("fechaInicio", fin), Filters.gt("fechaFin", inicio))).first();
-
-            if (solape != null) {
-                throw new Exception("La pista ya está reservada en ese horario");
-            }
-
-            reservas.insertOne(new Document("idPista", pistaId).append("idUsuario", new ObjectId(idUsuario)).append("fechaInicio", inicio).append("fechaFin", fin));
-        }
-    }*/
-    
-    @Override
-    public void reservarPista(String idUsuario, String idPista, Date inicio, Date fin) throws Exception {
+    public void reservarPista(String idUsuario, String idPista, Date inicio, Date fin, double importe, Pago metodoPago) throws Exception {
         try (MongoClient mongoClient = MongoClients.create(uri)) {
             MongoDatabase database = mongoClient.getDatabase("base_datos");
             MongoCollection<Document> pistas = database.getCollection("pistas");
@@ -486,6 +506,7 @@ public class DaoImplementacion implements Dao {
             // 2. Comprobación de solapes usando los nombres correctos (fechaHoraInicio / fechaHoraFin)
             Document solape = reservas.find(Filters.and(
                     eq("idPista", pistaId),
+                    Filters.ne("estado", EstadoReserva.Cancelada.name()),   // las canceladas no bloquean el horario
                     Filters.lt("fechaHoraInicio", fin),
                     Filters.gt("fechaHoraFin", inicio)
             )).first();
@@ -500,30 +521,195 @@ public class DaoImplementacion implements Dao {
                     .append("fechaHoraInicio", inicio)
                     .append("fechaHoraFin", fin)
                     .append("fechaReserva", new Date())
-                    .append("estado", "Confirmada");
+                    .append("importe", importe)
+                    .append("metodoPago", metodoPago.name())
+                    .append("estado", EstadoReserva.Confirmada.name());
 
             reservas.insertOne(nuevaReserva);
         }
     }
     
+    
+    
+    // ------------------------------------------------------------------
+    // Actividades registradas + pistas reservadas de UN usuario
+    // ------------------------------------------------------------------
     @Override
-    public List<Actividad> obtenerActividadesReservadas(String id) throws Exception {
-        
-        /*try (MongoClient mongoClient = MongoClients.create(uri)) {
-            
+    public List<ItemReserva> obtenerReservasUsuario(String idUsuario) throws Exception {
+        List<ItemReserva> lista = new ArrayList<>();
+
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
             MongoDatabase database = mongoClient.getDatabase("base_datos");
+            ObjectId usrId = new ObjectId(idUsuario);
 
-            MongoCollection<Document> collection = database.getCollection("usuarios");
-            MongoCollection<Document> collectionPolideportivos = database.getCollection("polideportivos");
-
-            Document documento = collection.find(eq("_id", id)).first();
-            
-            if (documento == null) {
-                return null;
+            // Actividades: el usuario aparece en el array "participantes"
+            MongoCollection<Document> actividades = database.getCollection("actividades");
+            for (Document act : actividades.find(eq("participantes", usrId))) {
+                lista.add(new ItemReserva(
+                        act.getObjectId("_id").toString(),
+                        "Actividad",
+                        act.getString("titulo"),
+                        act.getDate("fechaInicio"),
+                        numero(act, "precio"),
+                        "Registrada"));
             }
-        }   */
-        return null;
+
+            // Pistas: reservas cuyo idCliente es el usuario
+            MongoCollection<Document> pistas = database.getCollection("pistas");
+            MongoCollection<Document> reservas = database.getCollection("reservas");
+            for (Document res : reservas.find(eq("idCliente", usrId))) {
+                String nombrePista = "Pista";
+                ObjectId pistaId = res.getObjectId("idPista");
+
+                if (pistaId != null) {
+                    Document pista = pistas.find(eq("_id", pistaId)).first();
+                    if (pista != null && pista.getString("nombre") != null) {
+                        nombrePista = pista.getString("nombre");
+                    }
+                }
+
+                lista.add(new ItemReserva(
+                        res.getObjectId("_id").toString(),
+                        "Pista",
+                        nombrePista,
+                        res.getDate("fechaHoraInicio"),
+                        numero(res, "importe"),
+                        res.getString("estado")));
+            }
+        }
+
+        // Ordenadas por fecha
+        lista.sort(Comparator.comparing(ItemReserva::getFecha, Comparator.nullsLast(Comparator.<Date>naturalOrder())));
+        return lista;
+    }
+
+    // Lee un número aunque en Mongo esté guardado como Int32 o como Double
+    private static double numero(Document d, String campo) {
+        Object valor = d.get(campo);
+        return (valor instanceof Number) ? ((Number) valor).doubleValue() : 0.0;
     }
     
+    // ------------------------------------------------------------------
+    // Cancelar la participación en una actividad
+    // ------------------------------------------------------------------
+    @Override
+    public void cancelarActividad(String idUsuario, String idActividad) throws Exception {
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
+            MongoCollection<Document> actividades = mongoClient.getDatabase("base_datos").getCollection("actividades");
+
+            long modificados = actividades.updateOne(
+                    eq("_id", new ObjectId(idActividad)),
+                    Updates.pull("participantes", new ObjectId(idUsuario))
+            ).getModifiedCount();
+
+            if (modificados == 0) {
+                throw new Exception("No estabas registrado en esa actividad");
+            }
+        }
+    }
+
+    // ------------------------------------------------------------------
+    // Cancelar una reserva de pista (queda guardada con estado "Cancelada")
+    // ------------------------------------------------------------------
+    @Override
+    public void cancelarReserva(String idUsuario, String idReserva) throws Exception {
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
+            MongoCollection<Document> reservas = mongoClient.getDatabase("base_datos").getCollection("reservas");
+
+            // Solo se puede cancelar una reserva propia y que no esté ya cancelada
+            long modificados = reservas.updateOne(
+                    Filters.and(
+                            eq("_id", new ObjectId(idReserva)),
+                            eq("idCliente", new ObjectId(idUsuario)),
+                            Filters.ne("estado", EstadoReserva.Cancelada.name())),
+                    Updates.set("estado", EstadoReserva.Cancelada.name())
+            ).getModifiedCount();
+
+            if (modificados == 0) {
+                throw new Exception("No se ha podido cancelar la reserva");
+            }
+        }
+    }
+
+    // ------------------------------------------------------------------
+    // Actualizar los datos del perfil
+    // ------------------------------------------------------------------
+    @Override
+    public void actualizarPerfil(String idUsuario, String nombreUsuario, String contrasenaUsuario, String nombre, String apellidos, String email, String telefono, String direccion) throws Exception {
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
+            MongoCollection<Document> collection = mongoClient.getDatabase("base_datos").getCollection("usuarios");
+
+            ObjectId id = new ObjectId(idUsuario);
+
+            // El nuevo nombre de usuario no puede ser de otra persona
+            Document repetido = collection.find(Filters.and(
+                    eq("nombreUsuario", nombreUsuario),
+                    Filters.ne("_id", id))).first();
+
+            if (repetido != null) {
+                throw new Exception("Ese nombre de usuario ya está en uso");
+            }
+
+            long encontrados = collection.updateOne(eq("_id", id), Updates.combine(
+                    Updates.set("nombreUsuario", nombreUsuario),
+                    Updates.set("contrasenaUsuario", contrasenaUsuario),
+                    Updates.set("nombre", nombre),
+                    Updates.set("apellidos", apellidos),
+                    Updates.set("email", email),
+                    Updates.set("telefono", telefono),
+                    Updates.set("direccion", direccionADocumento(direccion))
+            )).getMatchedCount();
+
+            if (encontrados == 0) {
+                throw new Exception("No se ha encontrado el usuario");
+            }
+        }
+    }
+
+    // "calle, numero, localidad, codigoPostal, provincia" (sin escribir "null")
+    private static String formatearDireccion(Document d) {
+        return texto(d, "calle") + ", "
+                + texto(d, "numero") + ", "
+                + texto(d, "localidad") + ", "
+                + texto(d, "codigoPostal") + ", "
+                + texto(d, "provincia");
+    }
+
+    // Inversa de formatearDireccion: si el texto tiene 5 partes separadas por coma
+    // se reparte en los 5 campos; si no, todo va a "calle" (como hace el registro)
+    private static Document direccionADocumento(String direccion) {
+        String[] partes = direccion.split(",", -1);
+
+        if (partes.length == 5) {
+            return new Document("calle", partes[0].trim())
+                    .append("numero", partes[1].trim())
+                    .append("localidad", partes[2].trim())
+                    .append("codigoPostal", partes[3].trim())
+                    .append("provincia", partes[4].trim());
+        }
+
+        return new Document("calle", direccion.replaceAll("[\\s,]+$", "").trim())
+                .append("numero", "")
+                .append("localidad", "")
+                .append("codigoPostal", "")
+                .append("provincia", "");
+    }
+
+    private static String texto(Document d, String campo) {
+        Object valor = d.get(campo);
+        return valor == null ? "" : valor.toString();
+    }
     
+    // Convierte el texto guardado en Mongo ("Cliente", "Empleado"...) en el enum Rol.
+    // Devuelve null si el campo falta o no es un rol válido.
+    private static Rol leerRol(String texto) {
+        if (texto == null) {
+            return null;
+        }
+        try {
+            return Rol.valueOf(texto.trim());
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+    }
 }

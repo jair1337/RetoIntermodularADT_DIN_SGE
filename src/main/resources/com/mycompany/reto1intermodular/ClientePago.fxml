@@ -22,11 +22,13 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Button fx:id="btnAtras" mnemonicParsing="false" prefWidth="70.0" text="Atras" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
-      <Button fx:id="btnPagar" mnemonicParsing="false" prefWidth="70.0" text="Pagar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+      <Button fx:id="btnAtras" mnemonicParsing="false" onAction="#volver" prefWidth="70.0" text="Atras" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+      <Button fx:id="btnPagar" mnemonicParsing="false" onAction="#pagar" prefWidth="70.0" text="Pagar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
       <Label text="Total a pagar (EUR): " GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets left="50.0" />
@@ -50,8 +52,10 @@
             <Insets left="50.0" />
          </GridPane.margin>
       </Label>
-      <RadioButton mnemonicParsing="false" text="Tarjeta" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-      <RadioButton mnemonicParsing="false" text="Bizum" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+      <RadioButton fx:id="rbTarjeta" mnemonicParsing="false" text="Tarjeta" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+      <RadioButton fx:id="rbBizum" mnemonicParsing="false" text="Bizum" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
       <DatePicker maxWidth="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+      <Spinner fx:id="sprHora" maxWidth="90.0" prefWidth="90.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+      <Label fx:id="lblTotal" text="Total" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
    </children>
 </GridPane>
