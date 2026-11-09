@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" prefHeight="560.0" prefWidth="1000.0" spacing="15.0" styleClass="content-bg" stylesheets="@/styles/ApartadoLoginCSS.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.AdministradorGestionPolideportivoController">
+   <children>
+      <Label text="Gestión de Polideportivos" styleClass="menu-title">
+         <font>
+            <Font size="36.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="20.0" />
+         </VBox.margin>
+      </Label>
+      
+      <!-- Botón extra solicitado arriba del todo -->
+      <Button fx:id="btnAnadirPolideportivo" prefWidth="240.0" mnemonicParsing="false" onAction="#abrirAnadirPolideportivo" styleClass="primary-btn" text="Añadir polideportivo">
+         <VBox.margin>
+            <Insets bottom="10.0" top="5.0" />
+         </VBox.margin>
+      </Button>
+      
+      <!-- Opciones del diagrama de navegación -->
+      <Button fx:id="btnAnadirPistas" prefWidth="240.0" mnemonicParsing="false" onAction="#abrirAnadirPistas" styleClass="primary-btn" text="Añadir pistas">
+         <VBox.margin>
+            <Insets bottom="10.0" top="5.0" />
+         </VBox.margin>
+      </Button>
+      
+      <Button fx:id="btnAnadirClases" prefWidth="240.0" mnemonicParsing="false" onAction="#abrirAnadirClases" styleClass="primary-btn" text="Añadir clases">
+         <VBox.margin>
+            <Insets bottom="10.0" top="5.0" />
+         </VBox.margin>
+      </Button>
+      
+      <Button fx:id="btnAnadirActividades" prefWidth="240.0" mnemonicParsing="false" onAction="#abrirAnadirActividades" styleClass="primary-btn" text="Añadir actividades">
+         <VBox.margin>
+            <Insets bottom="10.0" top="5.0" />
+         </VBox.margin>
+      </Button>
+      
+      <!-- Botón Atrás -->
+      <Button fx:id="btnAtras" prefWidth="240.0" mnemonicParsing="false" onAction="#volver" styleClass="primary-btn" text="Atrás">
+         <VBox.margin>
+            <Insets top="20.0" />
+         </VBox.margin>
+      </Button>
+   </children>
+</VBox>

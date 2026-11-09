@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import modelo.Usuario;
+import com.mycompany.reto1intermodular.AdministradorMenuController;
 
 /**
  * FXML Controller class
@@ -51,24 +52,25 @@ public class PerfilController extends LoggerController implements Initializable 
     @FXML
     private ImageView imgPerfil;
     
-    @Override
+   @Override
     public void initialize(URL url, ResourceBundle rb) {
         bloquearCampos(true);
         
         Image image = new Image(getClass().getResourceAsStream("/images/usuarioimg.jpg"));
         imgPerfil.setImage(image);
         
-        usuarioActual = Sesion.getUsuario();
+        // Si ya nos pasaron un usuario antes por setUsuario, lo respetamos; si no, tiramos de Sesion
+        if (usuarioActual == null) {
+            usuarioActual = Sesion.getUsuario();
+        }
         cargarPerfil();
-       
     }
     
-    /*
     public void setUsuario(Usuario usuario) {
         this.usuarioActual = usuario;
-        //cargarPerfil();
+        cargarPerfil(); // Recargamos al recibirlo para asegurar que tiene los datos del admin
     }
-    */
+    
     
     private void cargarPerfil() {
     if (usuarioActual == null) {
@@ -158,18 +160,56 @@ public class PerfilController extends LoggerController implements Initializable 
     
     
        
-    @FXML
+  @FXML
     private void volver() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/reto1intermodular/ClienteMenu.fxml"));
+            String rutaDestino = "/com/mycompany/reto1intermodular/ClienteMenu.fxml";
+            String tituloVentana = "Menú Cliente";
 
+            // Si por lo que sea usuarioActual está a null, intentamos rescatarlo de Sesion
+            if (usuarioActual == null && Sesion.getUsuario() != null) {
+                usuarioActual = Sesion.getUsuario();
+            }
+
+            // Verificamos el rol del usuario actual para decidir la ruta exacta
+            if (usuarioActual != null && usuarioActual.getRol() != null) {
+                switch (usuarioActual.getRol()) {
+                    case Administrador:
+                        rutaDestino = "/com/mycompany/reto1intermodular/AdministradorMenu.fxml";
+                        tituloVentana = "Menú Administrador";
+                        break;
+                    case Empleado:
+                        rutaDestino = "/com/mycompany/reto1intermodular/EmpleadoMenu.fxml";
+                        tituloVentana = "Menú Empleado";
+                        break;
+                    case Cliente:
+                    default:
+                        rutaDestino = "/com/mycompany/reto1intermodular/ClienteMenu.fxml";
+                        tituloVentana = "Menú Cliente";
+                        break;
+                }
+            }
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaDestino));
             Parent root = loader.load();
+
+            // Pasamos el usuario al controlador de destino según a qué menú estemos volviendo
+            Object controller = loader.getController();
+            if (controller != null && usuarioActual != null) {
+                try {
+                    controller.getClass().getMethod("setUsuario", Usuario.class).invoke(controller, usuarioActual);
+                } catch (Exception e) {
+                    // Si el controlador destino no tiene setUsuario, se ignora de forma segura
+                }
+            }
+
             Scene escena = btnAtras.getScene();
             escena.setRoot(root);
             
-            logger.info("Volviendo al escenario Menu");
+            logger.info("Volviendo al escenario: " + tituloVentana);
         } catch (IOException e) {
-            logger.severe("ERROR: " + e);
+            logger.severe("ERROR al volver: " + e);
+            System.out.println("ERROR: " + e);
         }
-    }  
+    }
 }
