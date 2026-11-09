@@ -8,51 +8,48 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.AdministradorMenuController">
+<SplitPane dividerPositions="0.28" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="1000.0" stylesheets="@/styles/ApartadoLoginCSS.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.AdministradorMenuController">
    <items>
-      <VBox alignment="CENTER" maxWidth="200.0">
+      <VBox alignment="CENTER" maxWidth="280.0" prefWidth="260.0" styleClass="sidebar">
          <children>
             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
-            <Label text="Usuario" />
-            <Label text="Rol: Adminstrador" />
-            <Button fx:id="btnPerfil" maxWidth="150.0" mnemonicParsing="false" onAction="#abrirPerfil" text="Consultar perfil">
+            <Label text="Usuario" style="-fx-text-fill: white; -fx-font-weight: bold;" />
+            <Label text="Rol: Administrador" style="-fx-text-fill: rgba(255,255,255,0.8);" />
+            <Button fx:id="btnPerfil" prefWidth="220.0" mnemonicParsing="false" onAction="#abrirPerfil" styleClass="primary-btn" text="Consultar perfil">
                <VBox.margin>
                   <Insets bottom="10.0" top="10.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="btnCerrarSesion" maxWidth="150.0" mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar sesion">
+            <Button fx:id="btnCerrarSesion" prefWidth="220.0" mnemonicParsing="false" onAction="#cerrarSesion" styleClass="primary-btn" text="Cerrar sesion">
                <VBox.margin>
                   <Insets bottom="10.0" top="10.0" />
                </VBox.margin>
             </Button>
          </children>
       </VBox>
-      <VBox alignment="CENTER">
+      <VBox alignment="CENTER" styleClass="content-bg">
          <children>
-            <Label text="TxandaSport">
-               <font>
-                  <Font size="36.0" />
-               </font>
+            <Label text="TxandaSport" styleClass="menu-title">
                <VBox.margin>
-                  <Insets bottom="10.0" />
+                  <Insets bottom="20.0" />
                </VBox.margin>
             </Label>
-            <Button maxWidth="150.0" mnemonicParsing="false" text="Añadir polideportivo">
+            <Button fx:id="btnGestionarPolideportivo" prefWidth="240.0" mnemonicParsing="false" onAction="#abrirGestionPolideportivo" styleClass="primary-btn" text="Gestionar polideportivo">
                <VBox.margin>
                   <Insets bottom="10.0" top="10.0" />
                </VBox.margin>
             </Button>
-            <Button maxWidth="150.0" mnemonicParsing="false" text="Registrar empleado">
+            <Button fx:id="btnRegistrarEmpleado" prefWidth="240.0" mnemonicParsing="false" onAction="#abrirRegistrarEmpleado" styleClass="primary-btn" text="Registrar empleado">
                <VBox.margin>
                   <Insets bottom="10.0" top="10.0" />
                </VBox.margin>
             </Button>
-            <Button maxWidth="150.0" mnemonicParsing="false" text="Modificar horario">
+            <Button fx:id="btnModificarHorario" prefWidth="240.0" mnemonicParsing="false" onAction="#abrirModificarHorario" styleClass="primary-btn" text="Modificar horario">
                <VBox.margin>
                   <Insets bottom="10.0" top="10.0" />
                </VBox.margin>
             </Button>
-            <Button maxWidth="150.0" mnemonicParsing="false" text="Eliminar usuario">
+            <Button fx:id="btnEliminarUsuario" prefWidth="240.0" mnemonicParsing="false" onAction="#abrirEliminarUsuario" styleClass="primary-btn" text="Eliminar usuario">
                <VBox.margin>
                   <Insets bottom="10.0" top="10.0" />
                </VBox.margin>

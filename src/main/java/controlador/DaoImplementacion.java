@@ -115,7 +115,7 @@ public class DaoImplementacion implements Dao {
             }
 
             // Comprobamos la contraseña
-            String contrasenaGuardada = documento.getString("contrasenaUsuario");
+            String contrasenaGuardada = documento.getString("password");
 
             if (contrasenaGuardada == null ||
                 !contrasenaGuardada.equals(contrasenaUsuario)) {
@@ -171,7 +171,7 @@ public class DaoImplementacion implements Dao {
             // Creamos el nuevo documento con los datos del usuario
             Document documento = new Document("dni", dni)
                     .append("nombreUsuario", nombreUsuario)
-                    .append("contrasenaUsuario", contrasenaUsuario)
+                    .append("password", contrasenaUsuario)
                     .append("nombre", nombre)
                     .append("apellidos", apellidos)
                     .append("email", email)
@@ -208,7 +208,7 @@ public class DaoImplementacion implements Dao {
 
             MongoCollection<Document> collection = database.getCollection("usuarios");
 
-            Document documento = collection.find(eq("_id", id)).first();
+            Document documento = collection.find(eq("_id", new ObjectId(id))).first();
             
             if (documento == null) {
                 return null;
@@ -218,7 +218,7 @@ public class DaoImplementacion implements Dao {
 
             usuario.setDni(documento.getString("dni"));
             usuario.setNombreUsuario(documento.getString("nombreUsuario"));
-            usuario.setContrasenaUsuario(documento.getString("contrasenaUsuario"));
+            usuario.setContrasenaUsuario(documento.getString("password"));
             usuario.setNombre(documento.getString("nombre"));
             usuario.setApellidos(documento.getString("apellidos"));
             usuario.setEmail(documento.getString("email"));
@@ -345,7 +345,7 @@ public class DaoImplementacion implements Dao {
 
                 actividad.setFechaFin(documento.getDate("fechaFin"));
 
-                actividad.setPrecio((documento.getDouble("precio")));
+                actividad.setPrecio(numero(documento, "precio"));
 
                 actividad.setAforoMaximo(documento.getInteger("aforoMaximo"));
 
@@ -652,7 +652,7 @@ public class DaoImplementacion implements Dao {
 
             long encontrados = collection.updateOne(eq("_id", id), Updates.combine(
                     Updates.set("nombreUsuario", nombreUsuario),
-                    Updates.set("contrasenaUsuario", contrasenaUsuario),
+                    Updates.set("password", contrasenaUsuario),
                     Updates.set("nombre", nombre),
                     Updates.set("apellidos", apellidos),
                     Updates.set("email", email),
@@ -711,5 +711,154 @@ public class DaoImplementacion implements Dao {
         } catch (IllegalArgumentException e) {
             return null;
         }
+    }
+    @Override
+    public void insertarPolideportivo(String nombre, String calle, String numero, String localidad, String provincia) throws Exception {
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
+            MongoDatabase database = mongoClient.getDatabase("base_datos");
+            MongoCollection<Document> collection = database.getCollection("polideportivos");
+
+            Document direccionDoc = new Document("calle", calle)
+                    .append("numero", numero)
+                    .append("localidad", localidad)
+                    .append("provincia", provincia);
+
+            Document polideportivo = new Document("nombre", nombre)
+                    .append("direccion", direccionDoc)
+                    .append("actividades", new ArrayList<ObjectId>())
+                    .append("valoraciones", new ArrayList<Document>());
+
+            collection.insertOne(polideportivo);
+        }
+    }
+    @Override
+    public void registrarEmpleado(String dni, String nombreUsuario, String password, String nombre, String apellidos, String email, String telefono, String direccion, String puesto) throws Exception {
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
+            MongoDatabase database = mongoClient.getDatabase("base_datos");
+            MongoCollection<Document> collection = database.getCollection("usuarios");
+
+            Document existente = collection.find(eq("nombreUsuario", nombreUsuario)).first();
+            if (existente != null) {
+                throw new Exception("El nombre de usuario ya está en uso");
+            }
+
+            Document direccionDoc = direccionADocumento(direccion);
+
+            Document empleado = new Document("dni", dni)
+                    .append("rol", "Empleado")
+                    .append("nombreUsuario", nombreUsuario)
+                    .append("password", password)
+                    .append("nombre", nombre)
+                    .append("apellidos", apellidos)
+                    .append("email", email)
+                    .append("telefono", telefono)
+                    .append("direccion", direccionDoc)
+                    .append("puesto", puesto)
+                    .append("actividadesAsignadas", new ArrayList<ObjectId>());
+
+            collection.insertOne(empleado);
+        }
+        
+        
+    }
+    @Override
+    public void eliminarUsuario(String idUsuario) throws Exception {
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
+            MongoDatabase database = mongoClient.getDatabase("base_datos");
+            MongoCollection<Document> collection = database.getCollection("usuarios");
+
+            long eliminados = collection.deleteOne(eq("_id", new ObjectId(idUsuario))).getDeletedCount();
+
+            if (eliminados == 0) {
+                throw new Exception("No se ha encontrado al usuario para eliminar");
+            }
+        }
+    }
+    @Override
+    public void modificarHorarioEmpleado(String idEmpleado, List<ObjectId> nuevasActividadesAsignadas) throws Exception {
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
+            MongoDatabase database = mongoClient.getDatabase("base_datos");
+            MongoCollection<Document> collection = database.getCollection("usuarios");
+
+            long modificados = collection.updateOne(
+                    Filters.and(
+                            eq("_id", new ObjectId(idEmpleado)),
+                            eq("rol", "Empleado")
+                    ),
+                    Updates.set("actividadesAsignadas", nuevasActividadesAsignadas)
+            ).getModifiedCount();
+
+            if (modificados == 0) {
+                throw new Exception("No se ha encontrado al empleado o no se pudo actualizar su horario/asignación");
+            }
+        }
+    }
+    @Override
+    public void insertarZona(String nombre, String tipo, String idPolideportivo, double precioHora, String estado) throws Exception {
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
+            MongoDatabase database = mongoClient.getDatabase("base_datos");
+            MongoCollection<Document> collection = database.getCollection("pistas");
+
+            // Creamos el documento respetando los campos y convirtiendo el ID del polideportivo a ObjectId
+            Document pista = new Document("nombre", nombre)
+                    .append("tipo", tipo)
+                    .append("localizacion", new ObjectId(idPolideportivo))
+                    .append("precioHora", precioHora)
+                    .append("estado", estado);
+
+            collection.insertOne(pista);
+        }
+    }
+    @Override
+public void insertarActividad(String idPolideportivo, String titulo, String tipo, String localizacion, Date fechaInicio, Date fechaFin, double precio, int aforoMaximo, int puntos, String idEmpleado) throws Exception {
+    try (MongoClient mongoClient = MongoClients.create(uri)) {
+        MongoDatabase database = mongoClient.getDatabase("base_datos");
+        MongoCollection<Document> collection = database.getCollection("actividades");
+
+        Document actividad = new Document("titulo", titulo)
+                .append("tipo", tipo)
+                .append("pistaZona", localizacion)
+                .append("localizacion", new ObjectId(idPolideportivo))
+                .append("fechaInicio", fechaInicio)
+                .append("fechaFin", fechaFin)
+                .append("precio", precio)
+                .append("aforoMaximo", aforoMaximo)
+                .append("puntos", puntos)
+                .append("idEmpleado", new ObjectId(idEmpleado))
+                .append("participantes", new ArrayList<ObjectId>());
+
+        collection.insertOne(actividad);
+    }
+}
+@Override
+    public List<Usuario> obtenerUsuarios() throws Exception {
+        List<Usuario> listaUsuarios = new ArrayList<>();
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
+            MongoDatabase database = mongoClient.getDatabase("base_datos");
+            MongoCollection<Document> collection = database.getCollection("usuarios");
+
+            FindIterable<Document> documentos = collection.find();
+
+            for (Document documento : documentos) {
+                Usuario usuario = new Usuario();
+                usuario.setId(documento.getObjectId("_id").toString());
+                usuario.setDni(documento.getString("dni"));
+                usuario.setNombreUsuario(documento.getString("nombreUsuario"));
+                usuario.setContrasenaUsuario(documento.getString("password"));
+                usuario.setRol(leerRol(documento.getString("rol")));
+                usuario.setNombre(documento.getString("nombre"));
+                usuario.setApellidos(documento.getString("apellidos"));
+                usuario.setEmail(documento.getString("email"));
+                usuario.setTelefono(documento.getString("telefono"));
+
+                Document direccionDoc = documento.get("direccion", Document.class);
+                if (direccionDoc != null) {
+                    usuario.setDireccion(formatearDireccion(direccionDoc));
+                }
+
+                listaUsuarios.add(usuario);
+            }
+        }
+        return listaUsuarios;
     }
 }

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="1000.0" styleClass="content-bg" stylesheets="@/styles/ApartadoLoginCSS.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.AdministradorAnadirActividadesController">
+   <children>
+      <VBox prefHeight="580.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <!-- Título -->
+            <Label text="Actividades" styleClass="menu-title">
+               <font>
+                  <Font size="28.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="50.0" top="15.0" />
+               </VBox.margin>
+            </Label>
+
+            <!-- Contenido central con las dos secciones del boceto -->
+            <GridPane hgap="40.0" vgap="10.0" VBox.vgrow="ALWAYS">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="420.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="420.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="420.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <!-- Sección Izquierda: Polideportivo -->
+                  <VBox spacing="10.0" style="-fx-border-color: #cccccc; -fx-border-radius: 5; -fx-padding: 15; -fx-background-color: #ffffff;">
+                     <children>
+                        <Label text="Polideportivo" underline="true">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <GridPane hgap="10.0" vgap="12.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="250.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="ID:" />
+                              <TextField fx:id="txtPolyId" GridPane.columnIndex="1" />
+                              <Label text="Nombre:" GridPane.rowIndex="1" />
+                              <TextField fx:id="txtPolyNombre" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label text="Direccion:" GridPane.rowIndex="2" />
+                              <TextField fx:id="txtPolyDireccion" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Label text="Actividad:" GridPane.rowIndex="3" />
+                              <TextField fx:id="txtPolyActividad" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                           </children>
+                        </GridPane>
+                     </children>
+                  </VBox>
+
+                  <!-- Sección Derecha: Datos actividad -->
+                  <VBox spacing="8.0" style="-fx-border-color: #cccccc; -fx-border-radius: 5; -fx-padding: 15; -fx-background-color: #ffffff;" GridPane.columnIndex="1">
+                     <children>
+                        <Label text="Datos actividad" underline="true">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <GridPane hgap="10.0" vgap="8.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="10.0" prefWidth="120.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="240.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="ID de pista:" />
+                              <TextField fx:id="txtActPistaId" GridPane.columnIndex="1" />
+                              <Label text="Titulo:" GridPane.rowIndex="1" />
+                              <TextField fx:id="txtActTitulo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label text="Pista zona:" GridPane.rowIndex="2" />
+                              <TextField fx:id="txtActPistaZona" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Label text="Localizacion:" GridPane.rowIndex="3" />
+                              <TextField fx:id="txtActLocalizacion" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <Label text="Fecha de inicio:" GridPane.rowIndex="4" />
+                              <TextField fx:id="txtActFechaInicio" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <Label text="Fecha limite:" GridPane.rowIndex="5" />
+                              <TextField fx:id="txtActFechaLimite" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <Label text="Precio/hora:" GridPane.rowIndex="6" />
+                              <Spinner fx:id="spinnerActPrecio" editable="true" prefWidth="240.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <Label text="Aforo:" GridPane.rowIndex="7" />
+                              <TextField fx:id="txtActAforo" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                              <Label text="Puntos:" GridPane.rowIndex="8" />
+                              <Spinner fx:id="spinnerActPuntos" editable="true" prefWidth="240.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                              <Label text="Empleado a cargo (ID):" GridPane.rowIndex="9" />
+                              <TextField fx:id="txtActEmpleadoId" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                           </children>
+                        </GridPane>
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets left="50.0" right="50.0" />
+               </VBox.margin>
+            </GridPane>
+
+            <!-- Barra inferior con botones Atras y Registrar con ancho ampliado -->
+            <HBox alignment="CENTER_LEFT" prefHeight="60.0">
+               <children>
+                  <Button fx:id="btnAtras" mnemonicParsing="false" onAction="#volver" prefWidth="130.0" styleClass="primary-btn" text="Atras" />
+                  <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Button fx:id="btnRegistrar" mnemonicParsing="false" onAction="#handleRegistrar" prefWidth="140.0" styleClass="primary-btn" text="Registrar" />
+                     </children>
+                     <HBox.margin>
+                        <Insets right="50.0" />
+                     </HBox.margin>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets left="50.0" right="50.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
