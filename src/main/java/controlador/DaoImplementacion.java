@@ -170,6 +170,7 @@ public class DaoImplementacion implements Dao {
 
             // Creamos el nuevo documento con los datos del usuario
             Document documento = new Document("dni", dni)
+                    .append("rol", "Cliente")
                     .append("nombreUsuario", nombreUsuario)
                     .append("contrasenaUsuario", contrasenaUsuario)
                     .append("nombre", nombre)
@@ -177,6 +178,9 @@ public class DaoImplementacion implements Dao {
                     .append("email", email)
                     .append("telefono", telefono)
                     .append("direccion", direccionDoc);
+            /* LUEGO AÑADO, NO TE OLVIDES JAIR
+            .append("puntos", 0)
+            .append("logrosObtenidos", new ArrayList<>()) */
 
             // Insertamos el documento en MongoDB
             collection.insertOne(documento);
@@ -185,6 +189,7 @@ public class DaoImplementacion implements Dao {
             Usuario usuario = new Usuario();
 
             usuario.setDni(dni);
+            usuario.setRol(Rol.Cliente);
             usuario.setNombreUsuario(nombreUsuario);
             usuario.setContrasenaUsuario(contrasenaUsuario);
             usuario.setNombre(nombre);
@@ -193,7 +198,6 @@ public class DaoImplementacion implements Dao {
             usuario.setTelefono(telefono);
             String direccionCompleta = direccion + ", , , , ";
             usuario.setDireccion(direccionCompleta);
-            //usuario.setDireccion(direccion);
             
             return usuario;
         }

@@ -1,16 +1,10 @@
-/* ====== Fondo de la ventana principal ====== */
+/* ====== Fondo general oscuro para toda la app ====== */
 .root-bg {
-    -fx-background-color: linear-gradient(to bottom right, #0b2a5b, #1d5fb8);
-    /* Para usar una imagen de fondo: copia fondo.jpg en src/main/resources/images
-       y descomenta estas 4 líneas (el degradado queda como respaldo) */
-    /* -fx-background-image: url("/images/fondo.jpg");
-    -fx-background-size: cover;
-    -fx-background-position: center center;
-    -fx-background-repeat: no-repeat; */
+    -fx-background-color: #0f1c2e;
 }
 
 .overlay { 
-    -fx-background-color: rgba(10, 30, 70, 0.55); 
+    -fx-background-color: rgba(0, 0, 0, 0.4); 
 }
 
 .brand { 
@@ -25,108 +19,110 @@
 }
 .hero-sub { 
     -fx-font-size: 15px; 
-    -fx-text-fill: rgba(255,255,255,0.8); 
+    -fx-text-fill: #94a3b8; 
 }
 .nav-icon { 
     -fx-font-size: 26px; 
-    -fx-text-fill: white; 
+    -fx-text-fill: #94a3b8; 
 }
 .nav-text { 
     -fx-font-size: 12px; 
-    -fx-text-fill: rgba(255,255,255,0.75); 
+    -fx-text-fill: #94a3b8; 
 }
 
-/* ====== Botones principales ====== */
+/* ====== Botones principales (Conservan el verde deportivo) ====== */
 .primary-btn {
-    -fx-background-color: linear-gradient(to bottom, #2b8cf0, #1565c0);
+    -fx-background-color: linear-gradient(to bottom, #10b981, #059669);
     -fx-text-fill: white;
     -fx-font-size: 15px;
     -fx-font-weight: bold;
     -fx-background-radius: 12;
     -fx-padding: 12 34 12 34;
     -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(21,101,192,0.45), 14, 0.2, 0, 4);
+    -fx-effect: dropshadow(gaussian, rgba(16,185,129,0.35), 14, 0.2, 0, 4);
 }
-.primary-btn:hover   { -fx-background-color: linear-gradient(to bottom, #44a0ff, #1976d2); }
-.primary-btn:pressed { -fx-background-color: #0f4c99; }
+.primary-btn:hover    { -fx-background-color: linear-gradient(to bottom, #34d399, #10b981); }
+.primary-btn:pressed { -fx-background-color: #047857; }
 .primary-btn.full    { -fx-pref-height: 44; }
 
 /* ====== Popup de login ====== */
-.popup-wrapper { -fx-background-color: transparent; }
+.popup-wrapper { -fx-background-color: rgba(7, 14, 23, 0.7); }
 
 .login-card {
-    -fx-background-color: #f4f7fd;
+    -fx-background-color: #1e293b; /* Un tono ligeramente más claro que el fondo para destacar */
     -fx-background-radius: 18;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 30, 0.1, 0, 8);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 35, 0.2, 0, 10);
 }
 
-.brand-small  { -fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1a56a8; }
-.login-title  { -fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #14305e; }
-.login-sub    { -fx-font-size: 12px; -fx-text-fill: #37455f; }
+.brand-small  { -fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #ffffff; }
+.login-title  { -fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #ffffff; }
+.login-sub    { -fx-font-size: 12px; -fx-text-fill: #94a3b8; }
 
 .login-field {
-    -fx-background-color: white;
+    -fx-background-color: #0f1c2e;
     -fx-background-radius: 10;
-    -fx-border-color: #d5deee;
+    -fx-border-color: #334155;
     -fx-border-radius: 10;
+    -fx-text-fill: white;
     -fx-padding: 11 40 11 14;
     -fx-font-size: 13px;
 }
-.login-field:focused { -fx-border-color: #2b8cf0; }
+.login-field:focused { -fx-border-color: #10b981; }
 
 .eye-btn {
     -fx-background-color: transparent;
-    -fx-text-fill: #46557a;
+    -fx-text-fill: #94a3b8;
     -fx-cursor: hand;
     -fx-padding: 0 12 0 0;
 }
 
 .close-btn {
     -fx-background-color: transparent;
-    -fx-text-fill: #46557a;
+    -fx-text-fill: #94a3b8;
     -fx-font-size: 15px;
     -fx-cursor: hand;
 }
-.close-btn:hover { -fx-text-fill: #d32f2f; }
+.close-btn:hover { -fx-text-fill: #ef4444; }
 
-.forgot-link { -fx-text-fill: #1a56a8; -fx-font-size: 12px; -fx-border-color: transparent; }
-.error-label { -fx-text-fill: #d32f2f; -fx-font-size: 12px; }
+.forgot-link { -fx-text-fill: #10b981; -fx-font-size: 12px; -fx-border-color: transparent; }
+.error-label { -fx-text-fill: #ef4444; -fx-font-size: 12px; }
 
-/* ====== Menú principal ====== */
+/* ====== Menú principal (Sidebar y Contenido Oscuro) ====== */
 .sidebar {
-    -fx-background-color: linear-gradient(to bottom, #14407f, #0b2a5b);
+    -fx-background-color: linear-gradient(to bottom, #070e17, #0f1c2e);
 }
 .sidebar-logo { -fx-font-size: 30px; -fx-text-fill: white; }
 
 .nav-btn {
     -fx-background-color: transparent;
-    -fx-text-fill: rgba(255,255,255,0.85);
+    -fx-text-fill: rgba(255,255,255,0.7);
     -fx-font-size: 18px;
     -fx-background-radius: 12;
     -fx-pref-width: 46;
     -fx-pref-height: 46;
     -fx-cursor: hand;
 }
-.nav-btn:hover    { -fx-background-color: rgba(255,255,255,0.14); }
-.nav-btn:selected { -fx-background-color: white; -fx-text-fill: #1565c0; }
+.nav-btn:hover    { -fx-background-color: rgba(255,255,255,0.1); -fx-text-fill: white; }
+.nav-btn:selected { -fx-background-color: #10b981; -fx-text-fill: white; }
 
 .content-bg {
-    -fx-background-color: linear-gradient(to bottom right, #f6f9fe, #dde8f8);
+    -fx-background-color: #0f1c2e; /* Mantiene la tonalidad oscura de la app */
 }
-.menu-title { -fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: #14305e; }
-.menu-sub   { -fx-font-size: 14px; -fx-text-fill: #37455f; }
+.menu-title { -fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: #ffffff; }
+.menu-sub   { -fx-font-size: 14px; -fx-text-fill: #94a3b8; }
 
 .menu-card {
-    -fx-background-color: rgba(255,255,255,0.92);
+    -fx-background-color: #1e293b; /* Tarjetas oscuras uniformes */
     -fx-background-radius: 18;
     -fx-pref-width: 220;
     -fx-pref-height: 135;
     -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(20,60,120,0.18), 18, 0.1, 0, 5);
+    -fx-border-color: #334155;
+    -fx-border-radius: 18;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 18, 0.1, 0, 5);
 }
-.menu-card:hover   { -fx-background-color: white; -fx-translate-y: -3; }
-.menu-card:pressed { -fx-background-color: #e8f1ff; }
+.menu-card:hover    { -fx-background-color: #273548; -fx-translate-y: -3; -fx-border-color: #10b981; }
+.menu-card:pressed { -fx-background-color: #15202b; }
 
-.card-icon { -fx-font-size: 36px; -fx-text-fill: #1a6fd6; }
-.card-text { -fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #14305e; -fx-text-alignment: center; }
-
+.card-icon { -fx-font-size: 36px; -fx-text-fill: #10b981; }
+.card-text { -fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #ffffff; -fx-text-alignment: center; }
