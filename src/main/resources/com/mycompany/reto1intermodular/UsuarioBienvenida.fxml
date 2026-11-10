@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane fx:id="root" prefHeight="560.0" prefWidth="1000.0" styleClass="root-bg" stylesheets="@../styles/ApartadoLoginCSS.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.UsuarioBienvenidaController">
+<StackPane fx:id="root" prefHeight="560.0" prefWidth="1000.0" styleClass="root-bg" stylesheets="@../../../styles/ApartadoLoginCSS.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.UsuarioBienvenidaController">
    <children>
       <BorderPane>
          <center>
@@ -18,9 +18,9 @@
                   <Insets left="70.0" right="70.0" />
                </padding>
                <children>
-                  <Label styleClass="brand" text="  🏟 TxandaSport" />
+                  <Label styleClass="brand" text="  TxandaSport" />
                   <Label styleClass="hero-title" text="Gestiona tu deporte&#10;como nunca antes" />
-                  <Label styleClass="hero-sub" text="Organizar polideportivos nunca&#10;fue tan facil!" />
+                  <Label prefHeight="42.0" prefWidth="310.0" styleClass="hero-sub" text="Organizar polideportivos nunca fue tan facil!" />
                   <Button fx:id="btnComenzar" onAction="#abrirLogin" styleClass="primary-btn" text="▶   Comenzar" />
                </children>
             </VBox>

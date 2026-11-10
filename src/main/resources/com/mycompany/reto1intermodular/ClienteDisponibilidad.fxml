@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.ClienteDisponibilidadController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="1000.0" stylesheets="@../../../styles/ApartadoLoginCSS.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.ClienteDisponibilidadController">
   <tabs>
     <Tab text="Clases">
          <content>
@@ -24,12 +24,12 @@
                               <Insets left="10.0" right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField>
+                        <TextField styleClass="text-field">
                            <HBox.margin>
                               <Insets left="10.0" right="10.0" />
                            </HBox.margin>
                         </TextField>
-                        <Button mnemonicParsing="false" text="Buscar">
+                        <Button mnemonicParsing="false" styleClass="secondary-btn" text="Buscar">
                            <HBox.margin>
                               <Insets left="10.0" right="10.0" />
                            </HBox.margin>
@@ -47,7 +47,7 @@
                               <TableColumn fx:id="colPrecio" prefWidth="160.0" text="Precio" />
                           </columns>
                         </TableView>
-                        <Button fx:id="btnRegistrarseActividad" mnemonicParsing="false" onAction="#registroEnActividad" prefWidth="100.0" text="Registrarse">
+                        <Button fx:id="btnRegistrarseActividad" mnemonicParsing="false" onAction="#registroEnActividad" prefWidth="100.0" styleClass="secondary-btn" text="Registrarse">
                            <HBox.margin>
                               <Insets left="40.0" />
                            </HBox.margin>
@@ -56,7 +56,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="70.0">
                      <children>
-                        <Button fx:id="btnAtras" maxWidth="70.0" mnemonicParsing="false" onAction="#volver" prefWidth="70.0" text="Atras">
+                        <Button fx:id="btnAtras" maxWidth="70.0" mnemonicParsing="false" onAction="#volver" prefWidth="70.0" styleClass="secondary-btn" text="Atras">
                            <HBox.margin>
                               <Insets left="30.0" />
                            </HBox.margin>
@@ -77,12 +77,12 @@
                               <Insets left="10.0" right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField>
+                        <TextField styleClass="text-field">
                            <HBox.margin>
                               <Insets left="10.0" right="10.0" />
                            </HBox.margin>
                         </TextField>
-                        <Button mnemonicParsing="false" text="Buscar">
+                        <Button maxWidth="70.0" mnemonicParsing="false" prefWidth="70.0" styleClass="secondary-btn" text="Buscar">
                            <HBox.margin>
                               <Insets left="10.0" right="10.0" />
                            </HBox.margin>
@@ -100,7 +100,7 @@
                               <TableColumn fx:id="colPrecioPista" prefWidth="160.0" text="Precio/hora" />
                           </columns>
                         </TableView>
-                        <Button fx:id="btnReservarPista" mnemonicParsing="false" onAction="#reservarPista" prefWidth="100.0" text="Reservar">
+                        <Button fx:id="btnReservarPista" mnemonicParsing="false" onAction="#reservarPista" prefWidth="100.0" styleClass="secondary-btn" text="Reservar">
                            <HBox.margin>
                               <Insets left="40.0" />
                            </HBox.margin>
@@ -109,7 +109,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="70.0">
                      <children>
-                        <Button maxWidth="70.0" mnemonicParsing="false" onAction="#volver" prefWidth="70.0" text="Atras">
+                        <Button maxWidth="70.0" mnemonicParsing="false" onAction="#volver" prefWidth="70.0" styleClass="secondary-btn" text="Atras">
                            <HBox.margin>
                               <Insets left="30.0" />
                            </HBox.margin>

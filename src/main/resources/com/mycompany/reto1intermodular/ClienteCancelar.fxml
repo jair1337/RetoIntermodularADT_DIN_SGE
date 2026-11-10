@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="560.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.ClienteCancelarController">
+<VBox alignment="CENTER" prefHeight="560.0" prefWidth="1000.0" stylesheets="@../../../styles/ApartadoLoginCSS.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.ClienteCancelarController">
    <children>
       <HBox alignment="CENTER" prefHeight="70.0">
          <children>
@@ -19,7 +19,7 @@
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>
             </Label>
-            <TextField>
+            <TextField styleClass="text-field">
                <HBox.margin>
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>
@@ -34,12 +34,12 @@
                   <Insets left="10.0" />
                </HBox.margin>
             </Label>
-            <ComboBox prefWidth="150.0">
+            <ComboBox prefWidth="150.0" styleClass="combo-box">
                <HBox.margin>
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>
             </ComboBox>
-            <Button mnemonicParsing="false" text="Aplicar" />
+            <Button mnemonicParsing="false" styleClass="secondary-btn" text="Aplicar" />
          </children>
       </HBox>
       <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
@@ -52,7 +52,7 @@
                   <TableColumn fx:id="colEstado" prefWidth="166.4000244140625" text="Estado" />
               </columns>
             </TableView>
-            <Button fx:id="btnCancelar" mnemonicParsing="false" prefWidth="100.0" text="Cancelar">
+            <Button fx:id="btnCancelar" mnemonicParsing="false" prefWidth="100.0" styleClass="secondary-btn" text="Cancelar">
                <HBox.margin>
                   <Insets left="40.0" />
                </HBox.margin>
@@ -61,7 +61,7 @@
       </HBox>
       <HBox alignment="CENTER_LEFT" prefHeight="70.0">
          <children>
-            <Button fx:id="btnAtras" mnemonicParsing="false" onAction="#volver" prefWidth="100.0" text="Atras">
+            <Button fx:id="btnAtras" mnemonicParsing="false" onAction="#volver" prefWidth="100.0" styleClass="secondary-btn" text="Atras">
                <HBox.margin>
                   <Insets left="30.0" />
                </HBox.margin>

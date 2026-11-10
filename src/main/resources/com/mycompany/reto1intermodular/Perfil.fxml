@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.PerfilController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="1000.0" stylesheets="@../../../styles/ApartadoLoginCSS.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.PerfilController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.4000244140625" minWidth="10.0" prefWidth="166.3999816894531" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="208.2000244140625" minWidth="10.0" prefWidth="173.40001831054684" />
@@ -31,9 +31,9 @@
       <RowConstraints maxHeight="94.39999999999998" minHeight="10.0" prefHeight="86.39999999999998" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Button fx:id="btnAtras" maxWidth="100.0" mnemonicParsing="false" onAction="#volver" text="Atras" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.rowSpan="2" GridPane.valignment="CENTER" />
-      <Button fx:id="btnModificar" maxWidth="100.0" mnemonicParsing="false" onAction="#desbloquearCampos" text="Modificar" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.rowSpan="2" GridPane.valignment="CENTER" />
-      <Button fx:id="btnGuardar" maxWidth="100.0" mnemonicParsing="false" onAction="#actualizarPerfil" text="Guardar" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.rowSpan="2" GridPane.valignment="CENTER" />
+      <Button fx:id="btnAtras" maxWidth="100.0" mnemonicParsing="false" onAction="#volver" styleClass="secondary-btn" text="Atras" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.rowSpan="2" GridPane.valignment="CENTER" />
+      <Button fx:id="btnModificar" maxWidth="100.0" mnemonicParsing="false" onAction="#desbloquearCampos" styleClass="secondary-btn" text="Modificar" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.rowSpan="2" GridPane.valignment="CENTER" />
+      <Button fx:id="btnGuardar" maxWidth="100.0" mnemonicParsing="false" onAction="#actualizarPerfil" styleClass="secondary-btn" text="Guardar" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.rowSpan="2" GridPane.valignment="CENTER" />
       <Label text="Direccion:" GridPane.halignment="LEFT" GridPane.rowIndex="6" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets left="30.0" />

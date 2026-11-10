@@ -11,6 +11,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import modelo.Usuario;
 
@@ -47,7 +49,7 @@ public class ClienteMenuController extends LoggerController implements Initializ
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    
+        
     }
     
     // ===== Barra lateral =====   

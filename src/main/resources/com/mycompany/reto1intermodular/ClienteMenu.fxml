@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="560.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.ClienteMenuController">
+<BorderPane prefHeight="560.0" prefWidth="1000.0" stylesheets="@../../../styles/ApartadoLoginCSS.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.ClienteMenuController">
 
     <!-- ============ Barra lateral ============ -->
     <left>
@@ -20,7 +20,6 @@
                 <Insets top="22.0" />
             </padding>
             <children>
-                <Label styleClass="sidebar-logo" text="Logo" />
                 <Region prefHeight="10.0" />
                 <ToggleButton fx:id="btnCasa" selected="true" styleClass="nav-btn" text="🏠" />
                 <ToggleButton fx:id="btnPerfil" onAction="#abrirPerfil" styleClass="nav-btn" text="👤" />
@@ -32,12 +31,12 @@
 
     <!-- ============ Contenido ============ -->
     <center>
-        <VBox spacing="6.0" styleClass="content-bg">
+        <VBox spacing="6.0">
             <padding>
                 <Insets bottom="40.0" left="60.0" right="60.0" top="50.0" />
             </padding>
             <children>
-                <Label styleClass="menu-title" text="Menú Principal" />
+                <Label styleClass="menu-title" text="Menú principal" />
                 <Label styleClass="menu-sub" text="¿Qué quieres hacer?" />
                 <Region prefHeight="22.0" />
 

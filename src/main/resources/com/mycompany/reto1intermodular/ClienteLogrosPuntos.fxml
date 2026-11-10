@@ -10,24 +10,24 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.ClienteLogrosPuntosController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="1000.0" stylesheets="@../../../styles/ApartadoLoginCSS.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.ClienteLogrosPuntosController">
    <top>
       <VBox alignment="CENTER" prefHeight="116.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fx:id="imgPuntos" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="lblPuntos" text="Sin puntos">
+            <Label fx:id="lblPuntos" styleClass="hero-title" text="Sin puntos">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label text="Puntos" />
+            <Label styleClass="hero-sub" text="Puntos" />
          </children>
       </VBox>
    </top>
    <center>
       <VBox alignment="CENTER" prefHeight="223.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Logros">
+            <Label styleClass="hero-sub" text="Logros">
                <font>
                   <Font size="36.0" />
                </font>
@@ -45,7 +45,7 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnAtras" maxWidth="70.0" mnemonicParsing="false" onAction="#volver" prefWidth="70.0" text="Atras" />
+            <Button fx:id="btnAtras" maxWidth="100.0" mnemonicParsing="false" onAction="#volver" prefWidth="100.0" styleClass="secondary-btn" text="Atras" />
          </children>
       </HBox>
    </bottom>
