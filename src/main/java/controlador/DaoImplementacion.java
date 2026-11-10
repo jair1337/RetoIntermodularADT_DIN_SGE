@@ -115,7 +115,7 @@ public class DaoImplementacion implements Dao {
             }
 
             // Comprobamos la contraseña
-            String contrasenaGuardada = documento.getString("password");
+            String contrasenaGuardada = documento.getString("contrasenaUsuario");
 
             if (contrasenaGuardada == null ||
                 !contrasenaGuardada.equals(contrasenaUsuario)) {
@@ -171,7 +171,7 @@ public class DaoImplementacion implements Dao {
             // Creamos el nuevo documento con los datos del usuario
             Document documento = new Document("dni", dni)
                     .append("nombreUsuario", nombreUsuario)
-                    .append("password", contrasenaUsuario)
+                    .append("contrasenaUsuario", contrasenaUsuario)
                     .append("nombre", nombre)
                     .append("apellidos", apellidos)
                     .append("email", email)
@@ -218,7 +218,7 @@ public class DaoImplementacion implements Dao {
 
             usuario.setDni(documento.getString("dni"));
             usuario.setNombreUsuario(documento.getString("nombreUsuario"));
-            usuario.setContrasenaUsuario(documento.getString("password"));
+            usuario.setContrasenaUsuario(documento.getString("contrasenaUsuario"));
             usuario.setNombre(documento.getString("nombre"));
             usuario.setApellidos(documento.getString("apellidos"));
             usuario.setEmail(documento.getString("email"));
@@ -652,7 +652,7 @@ public class DaoImplementacion implements Dao {
 
             long encontrados = collection.updateOne(eq("_id", id), Updates.combine(
                     Updates.set("nombreUsuario", nombreUsuario),
-                    Updates.set("password", contrasenaUsuario),
+                    Updates.set("contrasenaUsuario", contrasenaUsuario),
                     Updates.set("nombre", nombre),
                     Updates.set("apellidos", apellidos),
                     Updates.set("email", email),
@@ -732,7 +732,7 @@ public class DaoImplementacion implements Dao {
         }
     }
     @Override
-    public void registrarEmpleado(String dni, String nombreUsuario, String password, String nombre, String apellidos, String email, String telefono, String direccion, String puesto) throws Exception {
+    public void registrarEmpleado(String dni, String nombreUsuario, String contrasenaUsuario, String nombre, String apellidos, String email, String telefono, String direccion, String puesto) throws Exception {
         try (MongoClient mongoClient = MongoClients.create(uri)) {
             MongoDatabase database = mongoClient.getDatabase("base_datos");
             MongoCollection<Document> collection = database.getCollection("usuarios");
@@ -747,7 +747,7 @@ public class DaoImplementacion implements Dao {
             Document empleado = new Document("dni", dni)
                     .append("rol", "Empleado")
                     .append("nombreUsuario", nombreUsuario)
-                    .append("password", password)
+                    .append("contrasenaUsuario", contrasenaUsuario)
                     .append("nombre", nombre)
                     .append("apellidos", apellidos)
                     .append("email", email)
@@ -844,7 +844,7 @@ public void insertarActividad(String idPolideportivo, String titulo, String tipo
                 usuario.setId(documento.getObjectId("_id").toString());
                 usuario.setDni(documento.getString("dni"));
                 usuario.setNombreUsuario(documento.getString("nombreUsuario"));
-                usuario.setContrasenaUsuario(documento.getString("password"));
+                usuario.setContrasenaUsuario(documento.getString("contrasenaUsuario"));
                 usuario.setRol(leerRol(documento.getString("rol")));
                 usuario.setNombre(documento.getString("nombre"));
                 usuario.setApellidos(documento.getString("apellidos"));
