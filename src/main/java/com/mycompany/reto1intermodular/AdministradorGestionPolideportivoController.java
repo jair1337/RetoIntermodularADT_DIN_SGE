@@ -34,7 +34,7 @@ public class AdministradorGestionPolideportivoController extends LoggerControlle
 
     public void setUsuario(Usuario usuario) {
         this.usuarioActual = usuario;
-        logger.info("Submenú de gestión de polideportivos abierto por: " + (usuarioActual != null ? usuarioActual.getNombreUsuario() : "Desconocido"));
+        logger.info("Submenú de gestion de polideportivos abierto por: " + (usuarioActual != null ? usuarioActual.getNombreUsuario() : "Desconocido"));
     }
 
     @Override
@@ -75,9 +75,9 @@ public class AdministradorGestionPolideportivoController extends LoggerControlle
             Scene escena = btnAtras.getScene();
             escena.setRoot(root);
             
-            logger.info("Volviendo al menú principal de administrador");
+            logger.info("Volviendo al menu principal de administrador");
         } catch (IOException e) {
-            logger.severe("Error al volver al menú de administrador: " + e.getMessage());
+            logger.severe("Error al volver al menu de administrador: " + e.getMessage());
             System.out.println("ERROR: " + e);
         }
     }

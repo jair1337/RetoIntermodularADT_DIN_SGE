@@ -53,19 +53,10 @@
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label text="ID:" />
-                              <TextField fx:id="txtPolyId" GridPane.columnIndex="1" />
-                              <Label text="Nombre:" GridPane.rowIndex="1" />
-                              <TextField fx:id="txtPolyNombre" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Label text="Direccion:" GridPane.rowIndex="2" />
-                              <TextField fx:id="txtPolyDireccion" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <Label text="Actividad:" GridPane.rowIndex="3" />
-                              <TextField fx:id="txtPolyActividad" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <Label text="Seleccionar:" />
+                              <ComboBox fx:id="cbPolideportivo" prefWidth="250.0" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
                      </children>
@@ -89,19 +80,19 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label text="ID de pista:" />
-                              <TextField fx:id="txtPistaId" GridPane.columnIndex="1" />
-                              <Label text="Tipo:" GridPane.rowIndex="1" />
-                              <TextField fx:id="txtPistaTipo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Label text="Localizacion:" GridPane.rowIndex="2" />
-                              <TextField fx:id="txtPistaLocalizacion" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <Label text="Precio/hora:" GridPane.rowIndex="3" />
-                              <Spinner fx:id="spinnerPistaPrecio" editable="true" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <Label text="Estado:" GridPane.rowIndex="4" />
-                              <ComboBox fx:id="cbPistaEstado" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <Label text="Tipo:" />
+                              <TextField fx:id="txtPistaTipo" GridPane.columnIndex="1" />
+                              
+                              <Label text="Localizacion:" GridPane.rowIndex="1" />
+                              <TextField fx:id="txtPistaLocalizacion" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              
+                              <Label text="Precio/hora:" GridPane.rowIndex="2" />
+                              <Spinner fx:id="spinnerPistaPrecio" editable="true" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              
+                              <Label text="Estado:" GridPane.rowIndex="3" />
+                              <ComboBox fx:id="cbPistaEstado" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                            </children>
                         </GridPane>
                      </children>
@@ -112,7 +103,7 @@
                </VBox.margin>
             </GridPane>
 
-            <!-- Barra inferior con botones Atras y Registrar con ancho ampliado -->
+            <!-- Barra inferior con botones Atras y Registrar -->
             <HBox alignment="CENTER_LEFT" prefHeight="70.0">
                <children>
                   <Button fx:id="btnAtras" mnemonicParsing="false" onAction="#volver" prefWidth="130.0" styleClass="primary-btn" text="Atras" />

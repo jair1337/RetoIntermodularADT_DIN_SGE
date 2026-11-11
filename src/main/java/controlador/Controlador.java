@@ -7,6 +7,7 @@ import modelo.ItemReserva;
 import modelo.Logro;
 import modelo.Pago;
 import modelo.Pista;
+import modelo.Polideportivo;
 import modelo.Reserva;
 import modelo.Usuario;
 import org.bson.types.ObjectId;
@@ -46,6 +47,10 @@ public class Controlador {
     
     public List<Actividad> obtenerActividades() throws Exception {
         return dao.obtenerActividades();
+    }
+    
+    public List<Actividad> obtenerActividadesPorEmpleado(String idEmpleado) throws Exception {
+        return dao.obtenerActividadesPorEmpleado(idEmpleado);
     }
     
     public List<Pista> obtenerPistas() throws Exception {
@@ -103,8 +108,12 @@ public class Controlador {
     }
     public void insertarActividad(String idPolideportivo, String titulo, String tipo, String localizacion, Date fechaInicio, Date fechaFin, double precio, int aforoMaximo, int puntos, String idEmpleado) throws Exception {
         dao.insertarActividad(idPolideportivo, titulo, tipo, localizacion, fechaInicio, fechaFin, precio, aforoMaximo, puntos, idEmpleado);
-}
+    }
     public List<Usuario> obtenerUsuarios() throws Exception {
         return dao.obtenerUsuarios();
+    }
+    
+    public List<Polideportivo> obtenerPolideportivos() throws Exception {
+        return dao.obtenerPolideportivos();
     }
 }

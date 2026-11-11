@@ -40,7 +40,7 @@ public class AdministradorMenuController extends LoggerController implements Ini
     public void setUsuario(Usuario usuario) {
         this.usuarioActual = usuario;
         System.out.println("Administrador recibido: " + usuarioActual);
-        logger.info("Menú de administrador inicializado para el usuario: " + (usuarioActual != null ? usuarioActual.getNombreUsuario() : "Desconocido"));
+        logger.info("Menu de administrador inicializado para el usuario: " + (usuarioActual != null ? usuarioActual.getNombreUsuario() : "Desconocido"));
     }
 
     @Override
@@ -75,7 +75,7 @@ public class AdministradorMenuController extends LoggerController implements Ini
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Cerrar sesión");
         alert.setHeaderText(null);
-        alert.setContentText("¿Estás seguro de que quieres cerrar sesión?");
+        alert.setContentText("¿Estás seguro de que quieres cerrar sesion?");
         
         if (alert.showAndWait().get() == ButtonType.OK) {
             try {
@@ -103,10 +103,10 @@ public class AdministradorMenuController extends LoggerController implements Ini
                 stage.setTitle("TxandaSport - Bienvenida");
                 stage.show();
                 
-                logger.info("Sesión de administrador cerrada correctamente y vuelta a la bienvenida con estilos.");
+                logger.info("Sesion de administrador cerrada correctamente y vuelta a la bienvenida con estilos.");
             } catch (IOException e) {
-                logger.severe("Error al cerrar sesión: " + e.getMessage());
-                System.out.println("ERROR al cerrar sesión: " + e);
+                logger.severe("Error al cerrar sesion: " + e.getMessage());
+                System.out.println("ERROR al cerrar sesion: " + e);
                 e.printStackTrace();
             }
         }

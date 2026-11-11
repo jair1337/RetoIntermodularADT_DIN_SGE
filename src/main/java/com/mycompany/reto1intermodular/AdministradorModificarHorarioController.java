@@ -62,7 +62,6 @@ public class AdministradorModificarHorarioController extends LoggerController im
     private void cargarEmpleados() {
         try {
             cbEmpleado.getItems().clear();
-            // Obtenemos todos los usuarios desde el controlador y filtramos los que sean empleados
             List<Usuario> todosLosUsuarios = controlador.obtenerUsuarios();
             if (todosLosUsuarios != null) {
                 for (Usuario u : todosLosUsuarios) {
@@ -105,13 +104,12 @@ public class AdministradorModificarHorarioController extends LoggerController im
         try {
             cbDiaEliminar.getItems().clear();
             
-            // Buscamos las actividades que tiene asignadas este empleado
-            List<Actividad> todas = controlador.obtenerActividades();
-            if (todas != null) {
-                for (Actividad act : todas) {
-                    if (act.getIdEmpleado() != null && act.getIdEmpleado().equals(empleadoSeleccionado.getId())) {
-                        cbDiaEliminar.getItems().add(act);
-                    }
+            // Llamamos al DAO optimizado para que lea el array de actividadesAsignadas del usuario en MongoDB
+            List<Actividad> actividadesDelEmpleado = controlador.obtenerActividadesPorEmpleado(empleadoSeleccionado.getId());
+            
+            if (actividadesDelEmpleado != null) {
+                for (Actividad act : actividadesDelEmpleado) {
+                    cbDiaEliminar.getItems().add(act);
                 }
             }
 
@@ -129,7 +127,11 @@ public class AdministradorModificarHorarioController extends LoggerController im
             });
             cbDiaEliminar.setButtonCell(cbDiaEliminar.getCellFactory().call(null));
             
-            mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Horario del empleado cargado correctamente.");
+            if (cbDiaEliminar.getItems().isEmpty()) {
+                mostrarAlerta(Alert.AlertType.INFORMATION, "Sin horarios", "Este empleado no tiene actividades asignadas actualmente.");
+            } else {
+                logger.info("Horario cargado correctamente para: " + empleadoSeleccionado.getNombreUsuario());
+            }
         } catch (Exception e) {
             logger.severe("Error al buscar horario del empleado: " + e.getMessage());
             mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo cargar el horario: " + e.getMessage());
@@ -146,25 +148,25 @@ public class AdministradorModificarHorarioController extends LoggerController im
             return;
         }
 
-        logger.info("Intentando eliminar asignación de horario para el empleado...");
+        logger.info("Intentando eliminar asignacion de horario para el empleado: " + empleadoSeleccionado.getNombreUsuario());
         try {
-            // Recopilamos los IDs de las actividades que se quedan (todas menos la seleccionada)
+            List<Actividad> actividadesActuales = cbDiaEliminar.getItems();
             List<ObjectId> actualizadas = new ArrayList<>();
-            List<Actividad> todas = controlador.obtenerActividades();
-            for (Actividad act : todas) {
-                if (act.getIdEmpleado() != null && act.getIdEmpleado().equals(empleadoSeleccionado.getId())) {
-                    if (!act.getId().equals(actividadAEliminar.getId())) {
-                        actualizadas.add(new ObjectId(act.getId()));
-                    }
+            
+            // Recopilamos los IDs de todas las actividades MENOS la que queremos borrar
+            for (Actividad act : actividadesActuales) {
+                if (!act.getId().equals(actividadAEliminar.getId())) {
+                    actualizadas.add(new ObjectId(act.getId()));
                 }
             }
             
+            // Actualizamos en la base de datos el array de actividades asignadas del empleado
             controlador.modificarHorarioEmpleado(empleadoSeleccionado.getId(), actualizadas);
             
-            logger.info("Horario modificado (eliminado) con éxito.");
+            logger.info("Horario modificado (eliminado) con exito.");
             mostrarAlerta(Alert.AlertType.INFORMATION, "Operación exitosa", "Se ha actualizado el horario del empleado correctamente.");
             
-            // Refrescamos la lista
+            // Refrescamos automáticamente la vista recargando el ComboBox
             handleBuscar(event);
 
         } catch (Exception e) {
@@ -179,46 +181,48 @@ public class AdministradorModificarHorarioController extends LoggerController im
         LocalDate fechaSeleccionada = dpDiaAnadir.getValue();
 
         if (empleadoSeleccionado == null || fechaSeleccionada == null) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Datos incompletos", "Selecciona un empleado y una fecha válida en el calendario.");
+            mostrarAlerta(Alert.AlertType.WARNING, "Datos incompletos", "Selecciona un empleado y una fecha valida en el calendario.");
             return;
         }
 
         logger.info("Intentando añadir nueva fecha/horario laborable al empleado: " + empleadoSeleccionado.getNombreUsuario());
         try {
             List<ObjectId> actualizadas = new ArrayList<>();
-            List<Actividad> todas = controlador.obtenerActividades();
             
-            // Mantenemos las que ya tenía asignadas
-            for (Actividad act : todas) {
-                if (act.getIdEmpleado() != null && act.getIdEmpleado().equals(empleadoSeleccionado.getId())) {
-                    actualizadas.add(new ObjectId(act.getId()));
-                }
+            // Mantenemos las que ya tenía asignadas obteniéndolas del ComboBox actual
+            List<Actividad> actividadesActuales = cbDiaEliminar.getItems();
+            for (Actividad act : actividadesActuales) {
+                actualizadas.add(new ObjectId(act.getId()));
             }
             
-            // Buscamos actividades que coincidan con la fecha seleccionada en el DatePicker para asignarlas
+            // Buscamos en todas las actividades globales las que coincidan con la fecha seleccionada
+            List<Actividad> todas = controlador.obtenerActividades();
             boolean anadido = false;
-            for (Actividad act : todas) {
-                if (act.getFechaInicio() != null) {
-                    LocalDate fechaAct = act.getFechaInicio().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
-                    if (fechaAct.equals(fechaSeleccionada)) {
-                        ObjectId idActObj = new ObjectId(act.getId());
-                        if (!actualizadas.contains(idActObj)) {
-                            actualizadas.add(idActObj);
-                            anadido = true;
+            
+            if (todas != null) {
+                for (Actividad act : todas) {
+                    if (act.getFechaInicio() != null) {
+                        LocalDate fechaAct = act.getFechaInicio().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+                        if (fechaAct.equals(fechaSeleccionada)) {
+                            ObjectId idActObj = new ObjectId(act.getId());
+                            if (!actualizadas.contains(idActObj)) {
+                                actualizadas.add(idActObj);
+                                anadido = true;
+                            }
                         }
                     }
                 }
             }
             
             if (!anadido) {
-                mostrarAlerta(Alert.AlertType.WARNING, "Sin actividades", "No hay actividades registradas en esa fecha para asignar.");
+                mostrarAlerta(Alert.AlertType.WARNING, "Sin actividades", "No hay actividades registradas en esa fecha para asignar (o ya las tiene todas).");
                 return;
             }
 
             controlador.modificarHorarioEmpleado(empleadoSeleccionado.getId(), actualizadas);
             
-            logger.info("Horario añadido con éxito.");
-            mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Se ha añadido la nueva fecha al horario del empleado.");
+            logger.info("Horario añadido con exito.");
+            mostrarAlerta(Alert.AlertType.INFORMATION, "Exito", "Se ha añadido la nueva fecha al horario del empleado.");
             
             dpDiaAnadir.setValue(null); 
             handleBuscar(event);
@@ -228,9 +232,9 @@ public class AdministradorModificarHorarioController extends LoggerController im
             mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo añadir el horario: " + e.getMessage());
         }
     }
-
+    
     @FXML
-    private void volver(ActionEvent event) {
+    public void volver(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/reto1intermodular/AdministradorMenu.fxml"));
             Parent root = loader.load();
@@ -241,9 +245,9 @@ public class AdministradorModificarHorarioController extends LoggerController im
             Scene escena = btnAtras.getScene();
             escena.setRoot(root);
             
-            logger.info("Volviendo al menú de administrador desde modificar horario");
+            logger.info("Volviendo al menu de administrador desde modificar horario");
         } catch (IOException e) {
-            logger.severe("Error al volver al menú de administrador: " + e.getMessage());
+            logger.severe("Error al volver al menu de administrador: " + e.getMessage());
             System.out.println("ERROR: " + e);
         }
     }

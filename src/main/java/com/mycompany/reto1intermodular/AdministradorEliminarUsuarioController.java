@@ -64,7 +64,7 @@ public class AdministradorEliminarUsuarioController extends LoggerController imp
         String dniBuscado = txtDni.getText() != null ? txtDni.getText().trim() : "";
 
         if (dniBuscado.isEmpty()) {
-            mostrarAlerta(Alert.AlertType.WARNING, "DNI vacío", "Por favor, introduce un DNI para buscar al usuario.");
+            mostrarAlerta(Alert.AlertType.WARNING, "DNI vacio", "Por favor, introduce un DNI para buscar al usuario.");
             return;
         }
 
@@ -98,7 +98,7 @@ public class AdministradorEliminarUsuarioController extends LoggerController imp
 
         } catch (Exception e) {
             logger.severe("Error al buscar el usuario por DNI: " + e.getMessage());
-            mostrarAlerta(Alert.AlertType.ERROR, "Error", "Ocurrió un error al realizar la búsqueda: " + e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "Ocurrio un error al realizar la búsqueda: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -117,7 +117,7 @@ public class AdministradorEliminarUsuarioController extends LoggerController imp
             controlador.eliminarUsuario(idUsuarioEncontrado);
 
             logger.info("Usuario eliminado correctamente.");
-            mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "El usuario ha sido eliminado de la base de datos.");
+            mostrarAlerta(Alert.AlertType.INFORMATION, "Exito", "El usuario ha sido eliminado de la base de datos.");
 
             // Limpiamos la pantalla tras la eliminación
             txtDni.clear();
@@ -144,9 +144,9 @@ public class AdministradorEliminarUsuarioController extends LoggerController imp
             Scene escena = btnAtras.getScene();
             escena.setRoot(root);
             
-            logger.info("Volviendo al menú de administrador desde eliminar usuario");
+            logger.info("Volviendo al menu de administrador desde eliminar usuario");
         } catch (IOException e) {
-            logger.severe("Error al volver al menú de administrador: " + e.getMessage());
+            logger.severe("Error al volver al menu de administrador: " + e.getMessage());
             System.out.println("ERROR: " + e);
         }
     }

@@ -3,6 +3,7 @@ package com.mycompany.reto1intermodular;
 import controlador.Controlador;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +17,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
+import modelo.Polideportivo;
 import modelo.Usuario;
 
 /**
@@ -29,15 +31,7 @@ public class AdministradorAnadirPistasController extends LoggerController implem
     private final Controlador controlador = new Controlador();
 
     @FXML
-    private TextField txtPolyId;
-    @FXML
-    private TextField txtPolyNombre;
-    @FXML
-    private TextField txtPolyDireccion;
-    @FXML
-    private TextField txtPolyActividad;
-    @FXML
-    private TextField txtPistaId;
+    private ComboBox<Polideportivo> cbPolideportivo;
     @FXML
     private TextField txtPistaTipo;
     @FXML
@@ -62,40 +56,65 @@ public class AdministradorAnadirPistasController extends LoggerController implem
         SpinnerValueFactory<Double> valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 500.0, 10.0, 1.0);
         spinnerPistaPrecio.setValueFactory(valueFactory);
 
-        // 2. Rellenamos el ComboBox de estados (según tus enums de EstadoPista o valores comunes como 'Libre', 'Ocupada', etc.)
-        cbPistaEstado.getItems().addAll("Libre", "Ocupada", "Mantenimiento");
+        // 2. Rellenamos el ComboBox de estados
+        cbPistaEstado.getItems().addAll("Libre", "Ocupado", "Mantenimiento");
         cbPistaEstado.setValue("Libre"); // Valor por defecto
+
+        // 3. Cargamos los polideportivos en el desplegable
+        cargarPolideportivos();
     }    
+
+    private void cargarPolideportivos() {
+        try {
+            cbPolideportivo.getItems().clear();
+            List<Polideportivo> lista = controlador.obtenerPolideportivos();
+            if (lista != null) {
+                cbPolideportivo.getItems().addAll(lista);
+            }
+
+            cbPolideportivo.setCellFactory(param -> new javafx.scene.control.ListCell<Polideportivo>() {
+                @Override
+                protected void updateItem(Polideportivo item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                    } else {
+                        setText(item.getNombre());
+                    }
+                }
+            });
+            cbPolideportivo.setButtonCell(cbPolideportivo.getCellFactory().call(null));
+
+        } catch (Exception e) {
+            logger.severe("Error al cargar polideportivos: " + e.getMessage());
+        }
+    }
 
     @FXML
     private void handleRegistrar(ActionEvent event) {
-        String idPolideportivo = txtPolyId.getText() != null ? txtPolyId.getText().trim() : "";
-        String nombrePista = txtPistaId.getText() != null ? txtPistaId.getText().trim() : ""; // Usado como nombre de la pista/zona
+        Polideportivo poliSeleccionado = cbPolideportivo.getValue();
         String tipoPista = txtPistaTipo.getText() != null ? txtPistaTipo.getText().trim() : "";
+        String localizacionPista = txtPistaLocalizacion.getText() != null ? txtPistaLocalizacion.getText().trim() : "";
         double precioHora = spinnerPistaPrecio.getValue();
         String estadoPista = cbPistaEstado.getValue();
 
         // Validaciones básicas de campos obligatorios
-        if (idPolideportivo.isEmpty() || nombrePista.isEmpty() || tipoPista.isEmpty()) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Campos incompletos", "Por favor, introduce el ID del polideportivo, el identificador/nombre de la pista y su tipo.");
+        if (poliSeleccionado == null || tipoPista.isEmpty() || localizacionPista.isEmpty()) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Campos incompletos", "Por favor, selecciona un polideportivo, introduce el tipo y la localizacion de la pista.");
             return;
         }
 
-        logger.info("Intentando registrar nueva pista/zona: " + nombrePista + " para el polideportivo ID: " + idPolideportivo);
+        logger.info("Intentando registrar nueva pista/zona: " + tipoPista + " para el polideportivo: " + poliSeleccionado.getNombre());
 
         try {
             // Llamamos al método del controlador que mapea con el DAO e inserta en la colección 'pistas'
-            controlador.insertarZona(nombrePista, tipoPista, idPolideportivo, precioHora, estadoPista);
+            controlador.insertarZona(tipoPista, tipoPista, poliSeleccionado.getId(), precioHora, estadoPista);
 
-            logger.info("Pista registrada con éxito en MongoDB.");
+            logger.info("Pista registrada con exito en MongoDB.");
             mostrarAlerta(Alert.AlertType.INFORMATION, "Registro exitoso", "La pista ha sido registrada correctamente.");
 
             // Limpiamos los campos del formulario tras el éxito
-            txtPolyId.clear();
-            txtPolyNombre.clear();
-            txtPolyDireccion.clear();
-            txtPolyActividad.clear();
-            txtPistaId.clear();
+            cbPolideportivo.setValue(null);
             txtPistaTipo.clear();
             txtPistaLocalizacion.clear();
             spinnerPistaPrecio.getValueFactory().setValue(10.0);
@@ -120,9 +139,9 @@ public class AdministradorAnadirPistasController extends LoggerController implem
             Scene escena = btnAtras.getScene();
             escena.setRoot(root);
             
-            logger.info("Volviendo al submenú de polideportivos desde añadir pistas");
+            logger.info("Volviendo al submenu de polideportivos desde añadir pistas");
         } catch (IOException e) {
-            logger.severe("Error al volver al submenú de polideportivos: " + e.getMessage());
+            logger.severe("Error al volver al submenu de polideportivos: " + e.getMessage());
             System.out.println("ERROR: " + e);
         }
     }

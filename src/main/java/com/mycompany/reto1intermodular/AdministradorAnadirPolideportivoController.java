@@ -70,7 +70,7 @@ public class AdministradorAnadirPolideportivoController extends LoggerController
             // Llamamos al método del controlador que inserta en la base de datos (colección polideportivos)
             controlador.insertarPolideportivo(nombre, calle, numero, localidad, provincia);
 
-            logger.info("Polideportivo registrado con éxito en MongoDB.");
+            logger.info("Polideportivo registrado con exito en MongoDB.");
             mostrarAlerta(Alert.AlertType.INFORMATION, "Registro exitoso", "El polideportivo ha sido registrado correctamente.");
 
             // Limpiamos los campos del formulario tras la inserción correcta
@@ -99,9 +99,9 @@ public class AdministradorAnadirPolideportivoController extends LoggerController
             Scene escena = btnAtras.getScene();
             escena.setRoot(root);
             
-            logger.info("Volviendo al submenú de gestión de polideportivos desde añadir polideportivo");
+            logger.info("Volviendo al submenu de gestion de polideportivos desde añadir polideportivo");
         } catch (IOException e) {
-            logger.severe("Error al volver al submenú de gestión de polideportivos: " + e.getMessage());
+            logger.severe("Error al volver al submenu de gestion de polideportivos: " + e.getMessage());
             System.out.println("ERROR: " + e);
         }
     }

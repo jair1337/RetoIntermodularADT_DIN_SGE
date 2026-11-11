@@ -23,6 +23,8 @@ public interface Dao {
     
     public List<Actividad> obtenerActividades() throws Exception;
     
+    public List<Actividad> obtenerActividadesPorEmpleado(String idEmpleado) throws Exception;
+    
     public List<Pista> obtenerPistas() throws Exception;
 
     public List<Reserva> obtenerReservas() throws Exception;
@@ -49,7 +51,8 @@ public interface Dao {
     
     public void insertarZona(String nombre, String tipo, String idPolideportivo, double precioHora, String estado) throws Exception;
     
-    public void insertarActividad(String idPolideportivo, String titulo, String tipo, String localizacion, Date fechaInicio, Date fechaFin, double precio, int aforoMaximo, int puntos, String idEmpleado) throws Exception;
-    
+public void insertarActividad(String idPolideportivo, String titulo, String tipo, String localizacion, Date fechaInicio, Date fechaFin, double precio, int aforoMaximo, int puntos, String idEmpleado) throws Exception;    
     public List<Usuario> obtenerUsuarios() throws Exception;
+    
+    public List<Polideportivo> obtenerPolideportivos() throws Exception;
 }

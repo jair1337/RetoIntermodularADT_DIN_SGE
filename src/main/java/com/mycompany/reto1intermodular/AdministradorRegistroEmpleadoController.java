@@ -56,7 +56,7 @@ public class AdministradorRegistroEmpleadoController extends LoggerController im
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Al ser un campo de texto libre, no requiere inicialización de elementos desplegables.
+        // Al ser un campo de texto libre, no requiere inicializacion de elementos desplegables.
     }    
 
     @FXML
@@ -107,10 +107,10 @@ public class AdministradorRegistroEmpleadoController extends LoggerController im
             Scene escena = btnAtras.getScene();
             if (escena != null) {
                 escena.setRoot(root);
-                logger.info("Volviendo al menú de administrador desde registro de empleado");
+                logger.info("Volviendo al menu de administrador desde registro de empleado");
             }
         } catch (IOException e) {
-            logger.severe("Error al volver al menú de administrador: " + e.getMessage());
+            logger.severe("Error al volver al menu de administrador: " + e.getMessage());
             e.printStackTrace();
         }
     }

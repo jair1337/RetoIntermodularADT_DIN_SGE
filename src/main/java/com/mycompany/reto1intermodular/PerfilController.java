@@ -74,7 +74,7 @@ public class PerfilController extends LoggerController implements Initializable 
     
     private void cargarPerfil() {
     if (usuarioActual == null) {
-        logger.warning("No se ha recibido ningún usuario");
+        logger.warning("No se ha recibido ningun usuario");
         return;
     }
 

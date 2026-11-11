@@ -3,6 +3,7 @@ package com.mycompany.reto1intermodular;
 import controlador.Controlador;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,10 +17,12 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
+import modelo.Polideportivo;
+import modelo.Rol;
 import modelo.Usuario;
 
 /**
- * FXML Controller class para añadir clases / actividades
+ * FXML Controller class para añadir clases / pistas / zonas
  * 
  * @author Inés
  */
@@ -29,15 +32,9 @@ public class AdministradorAnadirClasesController extends LoggerController implem
     private final Controlador controlador = new Controlador();
 
     @FXML
-    private TextField txtPolyId;
+    private ComboBox<Polideportivo> cbPolideportivo;
     @FXML
-    private TextField txtPolyNombre;
-    @FXML
-    private TextField txtPolyDireccion;
-    @FXML
-    private TextField txtPolyActividad;
-    @FXML
-    private TextField txtPistaId;
+    private ComboBox<Usuario> cbEmpleado;
     @FXML
     private TextField txtPistaTipo;
     @FXML
@@ -58,49 +55,106 @@ public class AdministradorAnadirClasesController extends LoggerController implem
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // 1. Configuramos el Spinner de precio de la clase (valor inicial 5.0, rango de 0 a 200, saltos de 1.0)
-        SpinnerValueFactory<Double> valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 200.0, 5.0, 1.0);
+        // 1. Configuramos el Spinner de precio
+        SpinnerValueFactory<Double> valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 200.0, 15.0, 1.0);
         spinnerClasePrecio.setValueFactory(valueFactory);
 
-        // 2. Rellenamos el ComboBox de estados de la clase
-        cbClaseEstado.getItems().addAll("Activa", "Cancelada", "Completa");
-        cbClaseEstado.setValue("Activa"); // Valor por defecto
+        // 2. Rellenamos el ComboBox de estados
+        cbClaseEstado.getItems().addAll("Libre", "Ocupado", "Mantenimiento");
+        cbClaseEstado.setValue("Libre"); // Valor por defecto común para pistas/zonas
+
+        // 3. Cargamos los desplegables de la izquierda
+        cargarPolideportivos();
+        cargarEmpleados();
     }    
+
+    private void cargarPolideportivos() {
+        try {
+            cbPolideportivo.getItems().clear();
+            List<Polideportivo> lista = controlador.obtenerPolideportivos();
+            if (lista != null) {
+                cbPolideportivo.getItems().addAll(lista);
+            }
+
+            cbPolideportivo.setCellFactory(param -> new javafx.scene.control.ListCell<Polideportivo>() {
+                @Override
+                protected void updateItem(Polideportivo item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                    } else {
+                        setText(item.getNombre());
+                    }
+                }
+            });
+            cbPolideportivo.setButtonCell(cbPolideportivo.getCellFactory().call(null));
+
+        } catch (Exception e) {
+            logger.severe("Error al cargar polideportivos: " + e.getMessage());
+        }
+    }
+
+    private void cargarEmpleados() {
+        try {
+            cbEmpleado.getItems().clear();
+            List<Usuario> usuarios = controlador.obtenerUsuarios();
+            if (usuarios != null) {
+                for (Usuario u : usuarios) {
+                    if (u.getRol() == Rol.Empleado) {
+                        cbEmpleado.getItems().add(u);
+                    }
+                }
+            }
+
+            cbEmpleado.setCellFactory(param -> new javafx.scene.control.ListCell<Usuario>() {
+                @Override
+                protected void updateItem(Usuario item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                    } else {
+                        setText(item.getNombre() + " " + item.getApellidos() + " (" + item.getNombreUsuario() + ")");
+                    }
+                }
+            });
+            cbEmpleado.setButtonCell(cbEmpleado.getCellFactory().call(null));
+
+        } catch (Exception e) {
+            logger.severe("Error al cargar empleados: " + e.getMessage());
+        }
+    }
 
     @FXML
     private void handleRegistrar(ActionEvent event) {
-        String idPolideportivo = txtPolyId.getText() != null ? txtPolyId.getText().trim() : "";
-        String nombreClase = txtPistaId.getText() != null ? txtPistaId.getText().trim() : "";
+        Polideportivo poliSeleccionado = cbPolideportivo.getValue();
         String tipoClase = txtPistaTipo.getText() != null ? txtPistaTipo.getText().trim() : "";
+        String localizacion = txtPistaLocalizacion.getText() != null ? txtPistaLocalizacion.getText().trim() : "";
         double precioClase = spinnerClasePrecio.getValue();
         String estadoClase = cbClaseEstado.getValue();
 
-        // Validaciones básicas de campos obligatorios
-        if (idPolideportivo.isEmpty() || nombreClase.isEmpty() || tipoClase.isEmpty()) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Campos incompletos", "Por favor, introduce el ID del polideportivo, el identificador de la clase y su tipo.");
+        // Validaciones básicas
+        if (poliSeleccionado == null || tipoClase.isEmpty() || localizacion.isEmpty()) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Campos incompletos", "Por favor, selecciona un polideportivo, introduce el tipo y la localizacion.");
             return;
         }
 
-        logger.info("Intentando registrar nueva clase/actividad: " + nombreClase + " para el polideportivo ID: " + idPolideportivo);
+        logger.info("Intentando registrar nueva zona/pista: " + tipoClase + " en polideportivo: " + poliSeleccionado.getNombre());
 
         try {
-            // Aquí puedes invocar el método correspondiente en tu controlador/DAO para guardar la clase
-            // Por ejemplo, si tienes un método de inserción de actividades:
-            // controlador.insertarActividad(...);
+            // Invocamos el método del controlador para insertar la zona/pista en la BD
+            // (nombre, tipo, idPolideportivo, precioHora, estado)
+            controlador.insertarZona(tipoClase, tipoClase, poliSeleccionado.getId(), precioClase, estadoClase);
 
-            logger.info("Clase registrada con éxito.");
-            mostrarAlerta(Alert.AlertType.INFORMATION, "Registro exitoso", "La clase ha sido registrada correctamente.");
+            logger.info("Clase/Zona registrada con exito.");
+            mostrarAlerta(Alert.AlertType.INFORMATION, "Registro exitoso", "La clase/pista ha sido registrada correctamente.");
 
             // Limpiamos los campos del formulario tras el éxito
-            txtPolyId.clear();
-            txtPolyNombre.clear();
-            txtPolyDireccion.clear();
-            txtPolyActividad.clear();
-            txtPistaId.clear();
+            cbPolideportivo.setValue(null);
+            cbEmpleado.setValue(null);
             txtPistaTipo.clear();
             txtPistaLocalizacion.clear();
-            spinnerClasePrecio.getValueFactory().setValue(5.0);
-            cbClaseEstado.setValue("Activa");
+            spinnerClasePrecio.getValueFactory().setValue(15.0);
+            cbClaseEstado.setValue("Libre");
 
         } catch (Exception e) {
             logger.severe("Error al registrar la clase: " + e.getMessage());
@@ -121,9 +175,9 @@ public class AdministradorAnadirClasesController extends LoggerController implem
             Scene escena = btnAtras.getScene();
             escena.setRoot(root);
             
-            logger.info("Volviendo al submenú de polideportivos desde añadir clases");
+            logger.info("Volviendo al submenu de polideportivos desde añadir clases");
         } catch (IOException e) {
-            logger.severe("Error al volver al submenú de polideportivos: " + e.getMessage());
+            logger.severe("Error al volver al submenu de polideportivos: " + e.getMessage());
             System.out.println("ERROR: " + e);
         }
     }
