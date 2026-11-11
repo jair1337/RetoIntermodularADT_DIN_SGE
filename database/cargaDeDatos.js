@@ -90,7 +90,7 @@ const adminMaster = db.usuarios.insertOne({
   dni: "11111111A",
   rol: "Administrador",
   nombreUsuario: "admin",
-  password: "123",
+  contrasenaUsuario: "123",
   nombre: "Admin",
   apellidos: "General",
   email: "admin@txandasport.com",
@@ -109,7 +109,7 @@ const empUnai = db.usuarios.insertOne({
   dni: "44444444D",
   rol: "Empleado",
   nombreUsuario: "unai",
-  password: "123",
+  contrasenaUsuario: "123",
   nombre: "Unai",
   apellidos: "Lopez Lopez",
   email: "unai.lopez@email.com",
@@ -130,7 +130,7 @@ const cliUgaitz = db.usuarios.insertOne({
   dni: "55555555E",
   rol: "Cliente",
   nombreUsuario: "ugaitz",
-  password: "123",
+  contrasenaUsuario: "123",
   nombre: "Ugaitz",
   apellidos: "Sanchez Molino",
   email: "ugaitz.sanchez@email.com",
@@ -151,7 +151,7 @@ const cliIkerne = db.usuarios.insertOne({
   dni: "66666666F",
   rol: "Cliente",
   nombreUsuario: "ikerne",
-  password: "123",
+  contrasenaUsuario: "123",
   nombre: "Ikerne",
   apellidos: "Sevilla Gal",
   email: "ikerne.sevilla@email.com",
@@ -172,7 +172,7 @@ const cliKepa = db.usuarios.insertOne({
   dni: "77777777G",
   rol: "Cliente",
   nombreUsuario: "kepa",
-  password: "123",
+  contrasenaUsuario: "123",
   nombre: "Kepa",
   apellidos: "Luengo Dice",
   email: "kepa.luengo@email.com",
@@ -205,7 +205,7 @@ const pistaTenis = db.pistas.insertOne({
   nombre: "Pista Tenis Exterior",
   tipo: "Tenis",
   localizacion: poliZorroza,
-  precioHora: 15,
+  precioHora: 15.0,
   estado: "Ocupada"
 }).insertedId;
 
@@ -213,7 +213,7 @@ const pistaMulti = db.pistas.insertOne({
   nombre: "Pista Polideportiva Cubierta",
   tipo: "Multideporte",
   localizacion: poliArtxanda,
-  precioHora: 20,
+  precioHora: 20.0,
   estado: "Mantenimiento"
 }).insertedId;
 
@@ -229,7 +229,7 @@ const act1 = db.actividades.insertOne({
   localizacion: poliErandio,
   fechaInicio: ISODate('2026-10-15T17:00:00.000+00:00'),
   fechaFin: ISODate('2026-10-15T19:00:00.000+00:00'),
-  precio: 15,
+  precio: 15.0,
   aforoMaximo: 8,
   puntos: 50,
   idEmpleado: empUnai,
@@ -245,7 +245,7 @@ const act2 = db.actividades.insertOne({
   fechaFin: ISODate('2026-10-16T20:00:00.000+00:00'),
   precio: 18,
   aforoMaximo: 6,
-  puntos: 40,
+  puntos: 40.0,
   idEmpleado: empUnai,
   participantes: [cliUgaitz]
 }).insertedId;
@@ -257,7 +257,7 @@ const act3 = db.actividades.insertOne({
   localizacion: poliArtxanda,
   fechaInicio: ISODate('2026-10-20T10:00:00.000+00:00'),
   fechaFin: ISODate('2026-10-20T14:00:00.000+00:00'),
-  precio: 10,
+  precio: 10.0,
   aforoMaximo: 20,
   puntos: 30,
   idEmpleado: empUnai,
@@ -285,7 +285,7 @@ db.reservas.insertOne({
   idPista: pistaTenis,
   fechaHoraInicio: ISODate('2026-10-15T19:00:00.000+00:00'),
   fechaHoraFin: ISODate('2026-10-15T20:00:00.000+00:00'),
-  importe: 15,
+  importe: 15.0,
   metodoPago: "Tarjeta",
   estado: "Confirmada",
   fechaReserva: ISODate('2026-10-13T09:00:00.000+00:00')
@@ -296,7 +296,7 @@ db.reservas.insertOne({
   idPista: pistaMulti,
   fechaHoraInicio: ISODate('2026-10-18T11:00:00.000+00:00'),
   fechaHoraFin: ISODate('2026-10-18T12:00:00.000+00:00'),
-  importe: 20,
+  importe: 20.0,
   metodoPago: "Bizum",
   estado: "Pendiente",
   fechaReserva: ISODate('2026-10-13T11:00:00.000+00:00')
