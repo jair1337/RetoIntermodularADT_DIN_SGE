@@ -91,7 +91,7 @@ public class ClienteRegistroController implements Initializable {
             escena.getStylesheets().add(getClass().getResource("/styles/ApartadoLoginCSS.css").toExternalForm());
             
             stage.setScene(escena);
-            stage.setTitle("Iniciar sesión");
+            stage.setTitle("Iniciar sesion");
             
         } catch (IOException e) {
             System.out.println("ERROR: " + e);

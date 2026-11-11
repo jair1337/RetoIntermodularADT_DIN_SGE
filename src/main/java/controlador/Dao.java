@@ -3,6 +3,7 @@ package controlador;
 import java.util.Date;
 import java.util.List;
 import modelo.*;
+import org.bson.types.ObjectId;
 
 /**
  * FXML Controller class
@@ -22,6 +23,8 @@ public interface Dao {
     
     public List<Actividad> obtenerActividades() throws Exception;
     
+    public List<Actividad> obtenerActividadesPorEmpleado(String idEmpleado) throws Exception;
+    
     public List<Pista> obtenerPistas() throws Exception;
 
     public List<Reserva> obtenerReservas() throws Exception;
@@ -38,4 +41,18 @@ public interface Dao {
     
     public void reservarPista(String idUsuario, String idPista, Date inicio, Date fin, double importe, Pago metodoPago) throws Exception;
     
+    public void insertarPolideportivo(String nombre, String calle, String numero, String localidad, String provincia) throws Exception;
+    
+    public void registrarEmpleado(String dni, String nombreUsuario, String password, String nombre, String apellidos, String email, String telefono, String direccion, String puesto) throws Exception;
+    
+    public void eliminarUsuario(String idUsuario) throws Exception;
+    
+    public void modificarHorarioEmpleado(String idEmpleado, List<ObjectId> nuevasActividadesAsignadas) throws Exception;
+    
+    public void insertarZona(String nombre, String tipo, String idPolideportivo, double precioHora, String estado) throws Exception;
+    
+public void insertarActividad(String idPolideportivo, String titulo, String tipo, String localizacion, Date fechaInicio, Date fechaFin, double precio, int aforoMaximo, int puntos, String idEmpleado) throws Exception;    
+    public List<Usuario> obtenerUsuarios() throws Exception;
+    
+    public List<Polideportivo> obtenerPolideportivos() throws Exception;
 }

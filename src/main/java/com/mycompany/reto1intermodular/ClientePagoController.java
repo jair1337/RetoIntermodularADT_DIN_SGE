@@ -109,11 +109,11 @@ public class ClientePagoController extends LoggerController implements Initializ
         Usuario usuario = Sesion.getUsuario();
  
         if (usuario == null || pista == null) {
-            new Alert(Alert.AlertType.WARNING, "No hay una sesión o una pista seleccionada").showAndWait();
+            new Alert(Alert.AlertType.WARNING, "No hay una sesion o una pista seleccionada").showAndWait();
             return;
         }
         if (dtrFecha.getValue() == null) {
-            new Alert(Alert.AlertType.WARNING, "Elige un día para la reserva").showAndWait();
+            new Alert(Alert.AlertType.WARNING, "Elige un dia para la reserva").showAndWait();
             return;
         }
  

@@ -9,7 +9,7 @@ db.createCollection("usuarios", {
         "dni",
         "rol",
         "nombreUsuario",
-        "password",
+        "contrasenaUsuario",
         "nombre",
         "apellidos",
         "email",
@@ -29,7 +29,7 @@ db.createCollection("usuarios", {
           description: "El rol solo puede ser: Cliente, Empleado o Administrador"
         },
         nombreUsuario: { bsonType: "string" },
-        password: { bsonType: "string" },
+        contrasenaUsuario: { bsonType: "string" },
         nombre: { bsonType: "string" },
         apellidos: { bsonType: "string" },
         email: {

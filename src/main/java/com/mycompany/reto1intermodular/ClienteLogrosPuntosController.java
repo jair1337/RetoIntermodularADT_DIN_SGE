@@ -64,7 +64,7 @@ public class ClienteLogrosPuntosController implements Initializable {
     // Usuario que inició sesión (igual que en Perfil)
     Usuario usuario = Sesion.getUsuario();
     if (usuario == null) {
-        logger.warning("No hay ningún usuario en sesión");
+        logger.warning("No hay ningún usuario en sesion");
         return;
     }
 
