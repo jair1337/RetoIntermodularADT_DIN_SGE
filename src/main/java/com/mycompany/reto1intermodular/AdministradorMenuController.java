@@ -100,6 +100,7 @@ public class AdministradorMenuController extends LoggerController implements Ini
                 }
                 
                 stage.setScene(scene);
+                Sesion.cerrar();
                 stage.setTitle("TxandaSport - Bienvenida");
                 stage.show();
                 

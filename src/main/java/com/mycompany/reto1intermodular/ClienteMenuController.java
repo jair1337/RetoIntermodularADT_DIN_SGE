@@ -121,32 +121,48 @@ public class ClienteMenuController extends LoggerController implements Initializ
         }
     }
     
-       @FXML
+    @FXML
     private void cerrarSesion(ActionEvent event) {
-        Node boton = (Node) event.getSource();
-
-        Alert aviso = new Alert(Alert.AlertType.CONFIRMATION);
-        aviso.setTitle("Cerrar sesión");
-        aviso.setHeaderText(null);
-        aviso.setContentText("¿Estás seguro de que quieres cerrar sesión?");
-        aviso.initOwner(boton.getScene().getWindow());
-
-        if (aviso.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK) {
-            return;
-        }
-
-        try {
-            Parent bienvenida = FXMLLoader.load(
-                    getClass().getResource("UsuarioBienvenida.fxml"));
-            boton.getScene().setRoot(bienvenida);
-            Sesion.cerrar();
-        } catch (IOException e) {
-            new Alert(Alert.AlertType.ERROR,
-                    "No se pudo volver a la pantalla de bienvenida. "
-                    + e.getMessage()).showAndWait();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Cerrar sesión");
+        alert.setHeaderText(null);
+        alert.setContentText("¿Estás seguro de que quieres cerrar sesion?");
+        
+        if (alert.showAndWait().get() == ButtonType.OK) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/reto1intermodular/UsuarioBienvenida.fxml"));
+                Parent root = loader.load();
+                
+                Stage stage = (Stage) btnCerrarSesion.getScene().getWindow();
+                Scene scene = new Scene(root);
+                
+                // Inyectamos la hoja de estilos por código para garantizar que cargue el diseño azul
+                try {
+                    String css = getClass().getResource("/styles/ApartadoLoginCSS.css").toExternalForm();
+                    scene.getStylesheets().add(css);
+                } catch (Exception e) {
+                    try {
+                        // Ruta alternativa por si estuviera empaquetada en el paquete
+                        String cssAlt = getClass().getResource("/com/mycompany/reto1intermodular/styles/ApartadoLoginCSS.css").toExternalForm();
+                        scene.getStylesheets().add(cssAlt);
+                    } catch (Exception ex) {
+                        System.out.println("No se pudo cargar el CSS automáticamente: " + ex.getMessage());
+                    }
+                }
+                
+                stage.setScene(scene);
+                Sesion.cerrar();
+                stage.setTitle("TxandaSport - Bienvenida");
+                stage.show();
+                
+                logger.info("Sesion de cliente cerrada correctamente y vuelta a la bienvenida con estilos.");
+            } catch (IOException e) {
+                logger.severe("Error al cerrar sesion: " + e.getMessage());
+                System.out.println("ERROR al cerrar sesion: " + e);
+                e.printStackTrace();
+            }
         }
     }
-
     // ===== Tarjetas del menú =====
     @FXML
     private void abrirDisponibilidad() {
@@ -189,6 +205,7 @@ public class ClienteMenuController extends LoggerController implements Initializ
             System.out.println("ERROR: " + e);
         }
     }
+    
     
     @FXML
     private void abrirAyuda() {
