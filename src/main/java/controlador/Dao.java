@@ -55,4 +55,9 @@ public void insertarActividad(String idPolideportivo, String titulo, String tipo
     public List<Usuario> obtenerUsuarios() throws Exception;
     
     public List<Polideportivo> obtenerPolideportivos() throws Exception;
+    
+        List<RecursoMantenimiento> obtenerRecursos(String idPolideportivo);
+
+    long programarMantenimiento(String idEmpleado, String idPolideportivo,
+            RecursoMantenimiento recurso, Date inicio, Date fin) throws Exception;
 }

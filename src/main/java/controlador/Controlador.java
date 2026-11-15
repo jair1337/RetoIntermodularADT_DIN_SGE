@@ -10,6 +10,7 @@ import modelo.Pista;
 import modelo.Polideportivo;
 import modelo.Reserva;
 import modelo.Usuario;
+import modelo.RecursoMantenimiento;
 import org.bson.types.ObjectId;
 
 /**
@@ -115,5 +116,13 @@ public class Controlador {
     
     public List<Polideportivo> obtenerPolideportivos() throws Exception {
         return dao.obtenerPolideportivos();
+    }
+        public List<RecursoMantenimiento> obtenerRecursos(String idPolideportivo) {
+        return dao.obtenerRecursos(idPolideportivo);
+    }
+
+    public long programarMantenimiento(String idEmpleado, String idPolideportivo,
+            RecursoMantenimiento recurso, Date inicio, Date fin) throws Exception {
+        return dao.programarMantenimiento(idEmpleado, idPolideportivo, recurso, inicio, fin);
     }
 }
