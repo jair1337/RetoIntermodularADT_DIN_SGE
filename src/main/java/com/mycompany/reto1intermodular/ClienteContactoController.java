@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
 /**
@@ -25,6 +26,10 @@ public class ClienteContactoController extends LoggerController implements Initi
     private Button btnEnviar;
     @FXML
     private TextArea taComentario;
+    @FXML
+    private Label lblTitulo;
+    @FXML
+    private Label lblSubtitulo;
 
     /**
      * Initializes the controller class.
@@ -37,7 +42,6 @@ public class ClienteContactoController extends LoggerController implements Initi
     @FXML
     private void enviarMensaje() {
     Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        
         
         alert.setTitle("Contactanos");
         alert.setHeaderText("¡Mensaje enviado!");

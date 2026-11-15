@@ -12,7 +12,7 @@
    <children>
       <VBox alignment="CENTER_LEFT" prefHeight="100.0">
          <children>
-            <Label styleClass="hero-title" text="Contactanos">
+            <Label fx:id="lblTitulo" styleClass="hero-title" text="Contactanos">
                <font>
                   <Font size="36.0" />
                </font>
@@ -20,7 +20,7 @@
                   <Insets left="100.0" />
                </VBox.margin>
             </Label>
-            <Label styleClass="hero-sub" text="Tus comentarios nos ayudan a mejorar">
+            <Label fx:id="lblSubtitulo" styleClass="hero-sub" text="Tus comentarios nos ayudan a mejorar">
                <VBox.margin>
                   <Insets left="100.0" />
                </VBox.margin>
