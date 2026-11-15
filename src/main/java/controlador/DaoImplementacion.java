@@ -410,6 +410,116 @@ public class DaoImplementacion implements Dao {
         return listaReservas;
     }
     
+        @Override
+    public List<RecursoMantenimiento> obtenerRecursos(String idPolideportivo) {
+        List<RecursoMantenimiento> recursos = new ArrayList<>();
+
+        try (MongoClient cliente = MongoClients.create(uri)) {
+            MongoDatabase db = cliente.getDatabase("base_datos");
+            ObjectId poli = new ObjectId(idPolideportivo);
+
+            for (Document pista : db.getCollection("pistas").find(eq("localizacion", poli))) {
+                recursos.add(new RecursoMantenimiento(
+                        pista.getObjectId("_id").toString(), pista.getString("nombre"), false));
+            }
+
+            for (Document actividad : db.getCollection("actividades").find(eq("localizacion", poli))) {
+                recursos.add(new RecursoMantenimiento(
+                        actividad.getObjectId("_id").toString(), actividad.getString("titulo"), true));
+            }
+        }
+
+        return recursos;
+    }
+
+    @Override
+    public long programarMantenimiento(String idEmpleado, String idPolideportivo,
+            RecursoMantenimiento recurso, Date inicio, Date fin) throws Exception {
+        if (!inicio.before(fin) || !fin.after(new Date())) {
+            throw new IllegalArgumentException("Introduce un intervalo válido que aún no haya terminado");
+        }
+
+        ObjectId empleado = new ObjectId(idEmpleado);
+        ObjectId poli = new ObjectId(idPolideportivo);
+        ObjectId id = new ObjectId(recurso.id());
+
+        try (MongoClient cliente = MongoClients.create(uri)) {
+            MongoDatabase db = cliente.getDatabase("base_datos");
+            if (db.getCollection("usuarios").find(Filters.and(
+                    eq("_id", empleado), eq("rol", "Empleado"))).first() == null) {
+                throw new Exception("Solo un empleado puede programar el mantenimiento");
+            }
+
+            MongoCollection<Document> recursos =
+                    db.getCollection(recurso.actividad() ? "actividades" : "pistas");
+            var filtro = Filters.and(eq("_id", id), eq("localizacion", poli));
+            Document seleccionado = recursos.find(filtro).first();
+
+            if (seleccionado == null) {
+                throw new Exception("El recurso ya no está disponible en este polideportivo");
+            }
+
+            recursos.updateOne(filtro, Updates.addToSet("mantenimientos",
+                    new Document("inicio", inicio).append("fin", fin)));
+
+            if (recurso.actividad()) {
+                return cancelarInscripciones(recursos, seleccionado, inicio, fin);
+            }
+
+            long canceladas = db.getCollection("reservas").updateMany(
+                    Filters.and(
+                            eq("idPista", id),
+                            Filters.in("estado", "Confirmada", "Pendiente"),
+                            Filters.lt("fechaHoraInicio", fin),
+                            Filters.gt("fechaHoraFin", inicio)),
+                    Updates.set("estado", "Cancelada")).getModifiedCount();
+
+            MongoCollection<Document> actividades = db.getCollection("actividades");
+            for (Document actividad : actividades.find(Filters.and(
+                    eq("localizacion", poli),
+                    eq("pistaZona", seleccionado.getString("nombre"))))) {
+                canceladas += cancelarInscripciones(actividades, actividad, inicio, fin);
+            }
+
+            return canceladas;
+        }
+    }
+
+    private long cancelarInscripciones(MongoCollection<Document> actividades,
+            Document actividad, Date inicio, Date fin) {
+        if (!solapa(actividad.getDate("fechaInicio"), actividad.getDate("fechaFin"), inicio, fin)) {
+            return 0;
+        }
+
+        List<ObjectId> inscritos = actividad.getList("participantes", ObjectId.class, List.of());
+        if (inscritos.isEmpty()) {
+            return 0;
+        }
+
+        actividades.updateOne(eq("_id", actividad.getObjectId("_id")), Updates.combine(
+                Updates.addEachToSet("participantesCancelados", inscritos),
+                Updates.pullAll("participantes", inscritos)));
+        return inscritos.size();
+    }
+
+    private boolean solapa(Date inicio, Date fin, Date otroInicio, Date otroFin) {
+        return inicio.before(otroFin) && fin.after(otroInicio);
+    }
+
+    private boolean enMantenimiento(Document recurso, Date inicio, Date fin) {
+        if ("Mantenimiento".equals(recurso.getString("estado"))) {
+            return true;
+        }
+
+        for (Document tramo : recurso.getList("mantenimientos", Document.class, List.of())) {
+            if (solapa(inicio, fin, tramo.getDate("inicio"), tramo.getDate("fin"))) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    
     @Override
     public void registrarseEnActividad(String idUsuario, String idActividad) throws Exception {
         try (MongoClient mongoClient = MongoClients.create(uri)) {
@@ -422,7 +532,25 @@ public class DaoImplementacion implements Dao {
             if (actividad == null) {
                 throw new Exception("La actividad ya no existe");
             }
+            
+            Date inicio = actividad.getDate("fechaInicio");
+            Date fin = actividad.getDate("fechaFin");
 
+            if (enMantenimiento(actividad, inicio, fin)) {
+                throw new Exception("La actividad está en mantenimiento en ese horario");
+            }
+
+            MongoCollection<Document> zonas =
+                    mongoClient.getDatabase("base_datos").getCollection("pistas");
+
+            for (Document zona : zonas.find(Filters.and(
+                    eq("localizacion", actividad.getObjectId("localizacion")),
+                    eq("nombre", actividad.getString("pistaZona"))))) {
+                if (enMantenimiento(zona, inicio, fin)) {
+                    throw new Exception("La pista o aula está en mantenimiento en ese horario");
+                }
+            }
+            
             List<ObjectId> participantes = actividad.getList("participantes", ObjectId.class, new ArrayList<>());
 
             if (participantes.contains(usrId)) {
@@ -450,7 +578,9 @@ public class DaoImplementacion implements Dao {
             if (pista == null) {
                 throw new Exception("La pista ya no existe");
             }
-
+             if (enMantenimiento(pista, inicio, fin)) {
+                throw new Exception("La pista está en mantenimiento en ese horario");
+            } 
             String estadoPista = pista.getString("estado");
             if (!"Libre".equalsIgnoreCase(estadoPista)) {
                 throw new Exception("La pista no está disponible (estado actual: " + estadoPista + ")");
@@ -502,6 +632,17 @@ public class DaoImplementacion implements Dao {
             }
 
             MongoCollection<Document> pistas = database.getCollection("pistas");
+                        for (Document act : actividades.find(Filters.and(
+                    eq("participantesCancelados", usrId),
+                    Filters.ne("participantes", usrId)))) {
+                lista.add(new ItemReserva(
+                        act.getObjectId("_id").toString(),
+                        "Actividad",
+                        act.getString("titulo"),
+                        act.getDate("fechaInicio"),
+                        numero(act, "precio"),
+                        "Cancelada"));
+            }
             MongoCollection<Document> reservas = database.getCollection("reservas");
             for (Document res : reservas.find(eq("idCliente", usrId))) {
                 String nombrePista = "Pista";
