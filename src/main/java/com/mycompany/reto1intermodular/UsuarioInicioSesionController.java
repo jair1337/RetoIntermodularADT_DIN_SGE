@@ -9,13 +9,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import modelo.Rol;
 import modelo.Usuario;
 
 /**
@@ -39,8 +39,6 @@ public class UsuarioInicioSesionController extends LoggerController implements I
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        // Las dos cajas de contraseña comparten el mismo texto
         txtContrasenaVisible.textProperty().bindBidirectional(pwdContrasena.textProperty());
     }
 
@@ -87,7 +85,7 @@ public class UsuarioInicioSesionController extends LoggerController implements I
         String pass = pwdContrasena.getText();
 
         if (user.isEmpty() || pass.isEmpty()) {
-            mostrarError("Introduce usuario y contraseña");
+            mostrarAlerta(Alert.AlertType.ERROR, "Error de validación", "Introduce usuario y contraseña");
             return;
         }
 
@@ -95,19 +93,26 @@ public class UsuarioInicioSesionController extends LoggerController implements I
             Usuario encontrado = controlador.logearse(user, pass);
 
             if (encontrado == null) {
-                mostrarError("Usuario o contraseña incorrectos");
+                logger.warning("Intento de login fallido para el usuario: " + user);
+                mostrarAlerta(Alert.AlertType.ERROR, "Error de acceso", "Usuario o contraseña incorrectos");
             } else if (encontrado.getRol() == null) {
-                // Usuario sin rol válido en Mongo: no sabemos a qué menú mandarlo
-                logger.warning("El usuario " + user + " no tiene un rol válido");
-                mostrarError("Tu cuenta no tiene un rol asignado");
+                logger.warning("El usuario " + user + " no tiene un rol válido en MongoDB.");
+                mostrarAlerta(Alert.AlertType.ERROR, "Error de rol", "Tu cuenta no tiene un rol asignado");
             } else {
                 usuarioEncontrado = encontrado;
                 loginCorrecto = true;
-                stage.close();
+                logger.info("Login exitoso para el usuario: " + user);
+                mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Login correcto");
+                
+                //stage.close();
+                if (stage != null) {
+                    stage.close();
+                }
+                
             }
         } catch (Exception e) {
-            logger.severe("Error al iniciar sesión: " + e);
-            mostrarError("Se ha producido un error al iniciar sesión");
+            logger.severe("Error crítico al iniciar sesión: " + e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error del sistema", "Se ha producido un error al iniciar sesión");
         }
     }
     
@@ -130,11 +135,13 @@ public class UsuarioInicioSesionController extends LoggerController implements I
     private void cerrar() {
         stage.close();
     }
-
-    private void mostrarError(String msg) {
-        lblError.setText(msg);
-        lblError.setVisible(true);
-        lblError.setManaged(true);
-    }   
+    
+    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
     
 }

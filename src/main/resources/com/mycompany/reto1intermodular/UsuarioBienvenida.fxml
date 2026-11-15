@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane fx:id="root" prefHeight="560.0" prefWidth="1000.0" styleClass="root-bg" stylesheets="@../styles/ApartadoLoginCSS.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.UsuarioBienvenidaController">
+<StackPane fx:id="root" prefHeight="560.0" prefWidth="1000.0" styleClass="root-bg" stylesheets="@../../../styles/ApartadoLoginCSS.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.UsuarioBienvenidaController">
    <children>
       <BorderPane>
          <center>
@@ -18,9 +18,9 @@
                   <Insets left="70.0" right="70.0" />
                </padding>
                <children>
-                  <Label styleClass="brand" text="  🏟 TxandaSport" />
-                  <Label styleClass="hero-title" text="Gestiona tu deporte&#10;como nunca antes" />
-                  <Label styleClass="hero-sub" text="Organizar polideportivos nunca&#10;fue tan facil!" />
+                  <Label fx:id="lblTxandaSport" styleClass="brand" text="TxandaSport" />
+                  <Label fx:id="lblTitulo" styleClass="hero-title" text="Gestiona tu deporte&#10;como nunca antes" />
+                  <Label fx:id="lblSubtitulo" prefHeight="42.0" prefWidth="310.0" styleClass="hero-sub" text="Organizar polideportivos nunca fue tan facil!" />
                   <Button fx:id="btnComenzar" onAction="#abrirLogin" styleClass="primary-btn" text="▶   Comenzar" />
                </children>
             </VBox>
@@ -33,20 +33,20 @@
                <children>
                   <VBox alignment="CENTER" spacing="4.0">
                      <children>
-                        <Label styleClass="nav-icon" text="🎉" />
-                        <Label styleClass="nav-text" text="Sencillez" />
+                        <Label fx:id="IconoIzquierdo" styleClass="nav-icon" text="🎉" />
+                        <Label fx:id="lblSencillez" styleClass="nav-text" text="Sencillez" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" spacing="4.0">
                      <children>
-                        <Label styleClass="nav-icon" text="🔒" />
-                        <Label styleClass="nav-text" text="Seguridad" />
+                        <Label fx:id="IconoCentral" styleClass="nav-icon" text="🔒" />
+                        <Label fx:id="lblSeguridad" styleClass="nav-text" text="Seguridad" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" spacing="4.0">
                      <children>
-                        <Label styleClass="nav-icon" text="📊" />
-                        <Label styleClass="nav-text" text="Resultados" />
+                        <Label fx:id="IconoDerecho" styleClass="nav-icon" text="📊" />
+                        <Label fx:id="lblResultados" styleClass="nav-text" text="Resultados" />
                      </children>
                   </VBox>
                </children>

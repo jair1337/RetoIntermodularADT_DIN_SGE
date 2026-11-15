@@ -8,12 +8,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.stage.Stage;
 import modelo.Usuario;
@@ -43,6 +43,10 @@ public class ClienteMenuController extends LoggerController implements Initializ
     private Button btnContactanos;
     @FXML
     private Button btnAyuda;
+    @FXML
+    private Label lblTitulo;
+    @FXML
+    private Label lblSubtitulo;
     
     public void setUsuario(Usuario usuario) {
         this.usuarioActual = usuario;
@@ -51,7 +55,7 @@ public class ClienteMenuController extends LoggerController implements Initializ
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    
+        
     }
     
     // ===== Barra lateral =====   
@@ -77,26 +81,6 @@ public class ClienteMenuController extends LoggerController implements Initializ
             logger.severe("Error al abrir Perfil: " + e.getMessage());
         }
     }
-    /*
-    @FXML
-    private void abrirPerfil() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/reto1intermodular/Perfil.fxml"));
-
-            Parent root = loader.load();
-            Scene escena = btnPerfil.getScene();
-            escena.setRoot(root);
-            
-            Stage stage = (Stage) escena.getWindow();
-            stage.setWidth(450);
-            stage.setHeight(550);
-            stage.centerOnScreen();
-            logger.info("Inicializando escenario Perfil");
-        } catch (IOException e) {
-            System.out.println("ERROR: " + e);
-        }
-    }
-    */
     
     @FXML
     private void abrirPuntosYLogros() {
@@ -104,14 +88,7 @@ public class ClienteMenuController extends LoggerController implements Initializ
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/reto1intermodular/ClienteLogrosPuntos.fxml"));
 
             Parent root = loader.load();
-            
-            /*
-            ClientePuntosLogrosController plController = loader.getController();
-
-            
-            plController.setUsuario(usuarioActual);
-            */
-            
+                       
             Scene escena = btnPuntosLogros.getScene();
             escena.setRoot(root);
             
@@ -121,6 +98,17 @@ public class ClienteMenuController extends LoggerController implements Initializ
         }
     }
     
+
+    /*
+    @FXML
+    private void cerrarSesion() {
+    Stage stage = (Stage) btnCerrarSesion.getScene().getWindow();
+    stage.close();
+    logger.info("Sesion cerrada");
+    }
+    */
+    
+
     @FXML
     private void cerrarSesion(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

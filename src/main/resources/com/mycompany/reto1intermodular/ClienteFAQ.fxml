@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.ClienteFAQController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="1000.0" stylesheets="@../../../styles/ApartadoLoginCSS.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.reto1intermodular.ClienteFAQController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="348.20001220703125" minWidth="10.0" prefWidth="332.2000244140625" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="358.80004882812506" minWidth="10.0" prefWidth="330.59997558593744" />
@@ -34,7 +34,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="104.0" layoutY="31.0" text="Info" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                        <Label fx:id="lblUno" layoutX="31.200000000000003" layoutY="31.200000000000003" text="TxandaSport es una startup especializada en servicios deportivos y ocio que dinamiza polideportivos e instalaciones públicas mediante una plataforma digital integral." wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                      </children></AnchorPane>
               </content>
                <VBox.margin>
@@ -45,7 +45,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="79.0" layoutY="14.0" text="Info" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                        <Label fx:id="lblDos" layoutX="79.0" layoutY="14.0" text="Operamos de forma digital a través de nuestra app y colaboramos directamente en diversos polideportivos municipales y centros asociados de la zona." wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                      </children></AnchorPane>
               </content>
                <VBox.margin>
@@ -56,7 +56,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="107.0" layoutY="31.0" text="Info" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                        <Label fx:id="lblTres" layoutX="107.0" layoutY="31.0" text="Alquiler rápido de pistas, clases dirigidas (baile, cross-training), campus deportivos trimestrales y un sistema de logros y puntos para fidelizar al usuario." wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                      </children></AnchorPane>
               </content>
                <VBox.margin>
@@ -71,11 +71,11 @@
                <font>
                   <Font size="24.0" />
                </font></Label>
-            <TitledPane animated="false" maxWidth="300.0" prefWidth="300.0" text="Como gestionamos los polideportivos">
+            <TitledPane animated="false" maxWidth="300.0" prefWidth="300.0" styleClass="menu-title" text="Como gestionamos los polideportivos">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="45.0" layoutY="22.0" text="Label" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                        <Label fx:id="lblCuatro" layoutX="45.0" layoutY="22.0" text="Mediante acuerdos de cesión de franjas horarias en horas de menor uso, maximizamos la ocupación de las pistas y ofrecemos actividades privadas exclusivas." wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                      </children></AnchorPane>
               </content>
                <VBox.margin>
@@ -86,7 +86,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="100.0" layoutY="14.0" text="Label" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                        <Label fx:id="lblCinco" layoutX="100.0" layoutY="14.0" text="Las actividades y reservas se realizan en los distintos polideportivos municipales asociados. Puedes consultar la ubicación exacta de cada instalación dentro de la app." wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                      </children></AnchorPane>
               </content>
                <VBox.margin>
@@ -97,7 +97,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="101.0" layoutY="14.0" text="Label" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                        <Label fx:id="lblSeis" layoutX="101.0" layoutY="14.0" text="Desde la app puedes gestionar tus reservas inmediatas de pistas, apuntarte a clases dirigidas y llevar un seguimiento de tus métricas y logros." wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                      </children>
                   </AnchorPane>
               </content>
@@ -117,7 +117,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="72.0" layoutY="31.0" text="Label" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                        <Label fx:id="lblSiete" layoutX="72.0" layoutY="31.0" text="El pago del alquiler express de pistas se realiza en nuestra aplicacion de  forma segura directamente al seleccionar una pista y reservarla." wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                      </children></AnchorPane>
               </content>
                <VBox.margin>
@@ -128,7 +128,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="121.0" layoutY="31.0" text="Label" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                        <Label fx:id="lblOcho" layoutX="121.0" layoutY="31.0" text="Todos los cobros de suscripciones, bonos de actividades y alquileres se procesan de manera automatizada e integrada en el ecosistema digital de la app." wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                      </children></AnchorPane>
               </content>
                <VBox.margin>
@@ -139,7 +139,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="135.0" layoutY="31.0" text="Label" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                        <Label fx:id="lblNueve" layoutX="135.0" layoutY="31.0" text="Aceptamos pagos mediante Tarjeta o Bizum en nuestra plataforma de cobro seguro." wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                      </children></AnchorPane>
               </content>
                <VBox.margin>
@@ -153,6 +153,6 @@
             <Font size="36.0" />
          </font>
       </Label>
-      <Button fx:id="btnAtras" maxWidth="70.0" mnemonicParsing="false" onAction="#volver" prefWidth="70.0" text="Atras" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+      <Button fx:id="btnAtras" maxWidth="100.0" mnemonicParsing="false" onAction="#volver" prefWidth="100.0" styleClass="secondary-btn" text="Atras" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
    </children>
 </GridPane>
