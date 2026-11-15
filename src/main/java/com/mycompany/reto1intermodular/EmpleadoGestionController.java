@@ -23,7 +23,15 @@ import modelo.Usuario;
 
 public class EmpleadoGestionController {
 
-    private final Controlador controlador = new Controlador();
+       private final Controlador controlador;
+
+    public EmpleadoGestionController() {
+        this(new Controlador());
+    }
+
+    EmpleadoGestionController(Controlador controlador) {
+        this.controlador = controlador;
+    }
     private final DateTimeFormatter formatoHora =
             DateTimeFormatter.ofPattern("HH:mm").withResolverStyle(ResolverStyle.STRICT);
 

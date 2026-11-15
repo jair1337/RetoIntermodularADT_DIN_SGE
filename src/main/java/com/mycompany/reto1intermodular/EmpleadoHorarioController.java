@@ -33,6 +33,16 @@ public class EmpleadoHorarioController {
     @FXML private TableColumn<Actividad, String> colActividad;
     @FXML private TableColumn<Actividad, String> colInicio;
     @FXML private TableColumn<Actividad, String> colFin;
+    
+        private final Controlador controlador;
+
+    public EmpleadoHorarioController() {
+        this(new Controlador());
+    }
+
+    EmpleadoHorarioController(Controlador controlador) {
+        this.controlador = controlador;
+    }
 
     @FXML
     private void initialize() {
@@ -51,7 +61,7 @@ public class EmpleadoHorarioController {
 
         try {
             asignaciones.addAll(
-                    new Controlador().obtenerActividadesPorEmpleado(empleado.getId()));
+                controlador.obtenerActividadesPorEmpleado(empleado.getId()));
             asignaciones.sort(Comparator.comparing(Actividad::getFechaInicio,
                     Comparator.nullsLast(Comparator.naturalOrder())));
             buscar();
