@@ -17,6 +17,7 @@ import modelo.Rol;
 import modelo.Usuario;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
+import javafx.util.Callback;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -45,7 +46,14 @@ public class EmpleadoHorarioControllerTest extends ApplicationTest {
         };
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("EmpleadoHorario.fxml"));
-        loader.setControllerFactory(tipo -> new EmpleadoHorarioController(datosPrueba));
+       loader.setControllerFactory(
+    new Callback<Class<?>, Object>() {
+        @Override
+        public Object call(Class<?> tipo) {
+            return new EmpleadoHorarioController(datosPrueba);
+        }
+    }
+);
         Parent root = loader.load();
         stage.setScene(new Scene(root));
         stage.show();
@@ -60,11 +68,14 @@ public class EmpleadoHorarioControllerTest extends ApplicationTest {
     public void testHorarioInicialOrdenadoPorFecha() {
         TableView<?> tabla = lookup("#tablaHorario").queryAs(TableView.class);
 
-        interact(() -> {
-            assertEquals(2, tabla.getItems().size());
-            assertEquals("Pádel", ((Actividad) tabla.getItems().get(0)).getTitulo());
-            assertEquals("Yoga", ((Actividad) tabla.getItems().get(1)).getTitulo());
-        });
+       interact(new Runnable() {
+    @Override
+    public void run() {
+        assertEquals(2, tabla.getItems().size());
+        assertEquals("Pádel", ((Actividad) tabla.getItems().get(0)).getTitulo());
+        assertEquals("Yoga", ((Actividad) tabla.getItems().get(1)).getTitulo());
+    }
+});
     }
 
     @Test
@@ -72,20 +83,31 @@ public class EmpleadoHorarioControllerTest extends ApplicationTest {
         DatePicker fecha = lookup("#dpFecha").queryAs(DatePicker.class);
         TableView<?> tabla = lookup("#tablaHorario").queryAs(TableView.class);
 
-        interact(() -> fecha.setValue(diaYoga));
+       interact(new Runnable() {
+    @Override
+    public void run() {
+        fecha.setValue(diaYoga);
+    }
+});
         clickOn("Buscar");
 
-        interact(() -> {
-            assertEquals(1, tabla.getItems().size());
-            assertEquals("Yoga", ((Actividad) tabla.getItems().get(0)).getTitulo());
-        });
+        interact(new Runnable() {
+    @Override
+    public void run() {
+        assertEquals(1, tabla.getItems().size());
+        assertEquals("Yoga", ((Actividad) tabla.getItems().get(0)).getTitulo());
+    }
+});
 
         clickOn("Mostrar todo");
 
-        interact(() -> {
-            assertNull(fecha.getValue());
-            assertEquals(2, tabla.getItems().size());
-        });
+        interact(new Runnable() {
+    @Override
+    public void run() {
+        assertNull(fecha.getValue());
+        assertEquals(2, tabla.getItems().size());
+    }
+});
     }
 
     private Actividad crearActividad(String titulo, LocalDate dia, int hora) {

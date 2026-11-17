@@ -45,7 +45,12 @@ public class EmpleadoMenuControllerTest extends ApplicationTest {
         verifyThat("#tfNombreUsuario", isVisible());
 
         TextField usuario = lookup("#tfNombreUsuario").queryAs(TextField.class);
-        interact(() -> assertEquals("unai", usuario.getText()));
+        interact(new Runnable() {
+    @Override
+    public void run() {
+        assertEquals("unai", usuario.getText());
+    }
+});
 
         clickOn("#btnAtras");
         verifyThat("#btnPerfil", isVisible());
@@ -59,6 +64,10 @@ public class EmpleadoMenuControllerTest extends ApplicationTest {
         push(KeyCode.ESCAPE);
 
         verifyThat("#btnPerfil", isVisible());
-        interact(() -> assertSame(empleado, Sesion.getUsuario()));
+interact(new Runnable() {
+    @Override
+    public void run() {
+        assertSame(empleado, Sesion.getUsuario());
     }
+});    }
 }

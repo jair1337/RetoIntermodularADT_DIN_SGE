@@ -17,6 +17,7 @@ import modelo.Rol;
 import modelo.Usuario;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
+import javafx.util.Callback;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -68,7 +69,14 @@ public class EmpleadoGestionControllerTest extends ApplicationTest {
         };
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("EmpleadoGestion.fxml"));
-        loader.setControllerFactory(tipo -> new EmpleadoGestionController(datosPrueba));
+        loader.setControllerFactory(
+    new Callback<Class<?>, Object>() {
+        @Override
+        public Object call(Class<?> tipo) {
+            return new EmpleadoGestionController(datosPrueba);
+        }
+    }
+);
         Parent root = loader.load();
         stage.setScene(new Scene(root));
         stage.show();
@@ -85,33 +93,51 @@ public class EmpleadoGestionControllerTest extends ApplicationTest {
         ComboBox<Polideportivo> centros = lookup("#polideportivo").queryAs(ComboBox.class);
         ComboBox<RecursoMantenimiento> recursos = lookup("#recurso").queryAs(ComboBox.class);
 
-        interact(() -> {
-            centros.getSelectionModel().select(erandio);
-            assertEquals(List.of(pista), recursos.getItems());
+       interact(new Runnable() {
+    @Override
+    public void run() {
+        centros.getSelectionModel().select(erandio);
+        assertEquals(List.of(pista), recursos.getItems());
 
-            recursos.getSelectionModel().select(pista);
-            centros.getSelectionModel().select(getxo);
+        recursos.getSelectionModel().select(pista);
+        centros.getSelectionModel().select(getxo);
 
-            assertEquals(List.of(actividad), recursos.getItems());
-            assertNull(recursos.getValue());
-        });
+        assertEquals(List.of(actividad), recursos.getItems());
+        assertNull(recursos.getValue());
+    }
+});
     }
 
     @Test
     @SuppressWarnings("unchecked")
     public void testAplicarSinRecursoMuestraAviso() {
         ComboBox<Polideportivo> centros = lookup("#polideportivo").queryAs(ComboBox.class);
-        interact(() -> centros.getSelectionModel().select(erandio));
+       interact(new Runnable() {
+    @Override
+    public void run() {
+        centros.getSelectionModel().select(erandio);
+    }
+});
 
         clickOn("Aplicar mantenimiento");
         verifyThat(".dialog-pane", isVisible());
 
         DialogPane aviso = lookup(".dialog-pane").queryAs(DialogPane.class);
-        interact(() -> assertEquals(
+        interact(new Runnable() {
+    @Override
+    public void run() {
+        assertEquals(
                 "Selecciona el polideportivo, el recurso y las dos fechas.",
-                aviso.getContentText()));
+                aviso.getContentText());
+    }
+});
 
         push(KeyCode.ENTER);
-        interact(() -> assertEquals(0, guardados));
+        interact(new Runnable() {
+    @Override
+    public void run() {
+        assertEquals(0, guardados);
+    }
+});
     }
 }

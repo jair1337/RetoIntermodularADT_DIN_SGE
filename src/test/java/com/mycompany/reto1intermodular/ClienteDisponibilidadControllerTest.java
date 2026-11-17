@@ -106,9 +106,12 @@ public class ClienteDisponibilidadControllerTest extends ApplicationTest {
         
         Spinner<Integer> spinner = lookup("#sprHora").queryAs(Spinner.class);
 
-        javafx.application.Platform.runLater(() -> {
-            spinner.getValueFactory().setValue(22); 
-        });
+       javafx.application.Platform.runLater(new Runnable() {
+    @Override
+    public void run() {
+        spinner.getValueFactory().setValue(22);
+    }
+});
     
         clickOn("#btnPagar");
         
