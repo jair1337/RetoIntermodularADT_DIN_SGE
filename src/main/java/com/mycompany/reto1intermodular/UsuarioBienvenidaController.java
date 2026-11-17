@@ -17,7 +17,8 @@ import javafx.stage.Window;
 import modelo.Rol;
 import static modelo.Rol.Administrador;
 import static modelo.Rol.Empleado;
-
+import javafx.event.EventHandler;
+import javafx.stage.WindowEvent;
 /**
  * FXML Controller class
  *
@@ -116,10 +117,13 @@ public class UsuarioBienvenidaController extends LoggerController implements Ini
         login.setStage(popup);
 
         // Centrar el popup
-        popup.setOnShown(e -> {
-            popup.setX(owner.getX() + (owner.getWidth() - popup.getWidth()) / 2);
-            popup.setY(owner.getY() + (owner.getHeight() - popup.getHeight()) / 2);
-        });
+        popup.setOnShown(new EventHandler<WindowEvent>() {
+    @Override
+    public void handle(WindowEvent event) {
+        popup.setX(owner.getX() + (owner.getWidth() - popup.getWidth()) / 2);
+        popup.setY(owner.getY() + (owner.getHeight() - popup.getHeight()) / 2);
+    }
+});
 
         overlay.setVisible(true);
 

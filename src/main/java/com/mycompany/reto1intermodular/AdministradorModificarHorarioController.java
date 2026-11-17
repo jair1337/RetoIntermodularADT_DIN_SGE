@@ -20,6 +20,9 @@ import javafx.scene.control.DatePicker;
 import modelo.Actividad;
 import modelo.Usuario;
 import org.bson.types.ObjectId;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.util.Callback;
 
 /**
  * FXML Controller class para modificar el horario de los empleados
@@ -73,17 +76,29 @@ public class AdministradorModificarHorarioController extends LoggerController im
             }
             
             // Muestra el nombre de usuario y nombre real de forma limpia en el desplegable
-            cbEmpleado.setCellFactory(param -> new javafx.scene.control.ListCell<Usuario>() {
+           cbEmpleado.setCellFactory(
+    new Callback<ListView<Usuario>, ListCell<Usuario>>() {
+        @Override
+        public ListCell<Usuario> call(ListView<Usuario> param) {
+            return new ListCell<Usuario>() {
                 @Override
                 protected void updateItem(Usuario item, boolean empty) {
                     super.updateItem(item, empty);
                     if (empty || item == null) {
                         setText(null);
                     } else {
-                        setText(item.getNombreUsuario() + " (" + item.getNombre() + " " + item.getApellidos() + ")");
+                        setText(item.getNombreUsuario()
+                                + " ("
+                                + item.getNombre()
+                                + " "
+                                + item.getApellidos()
+                                + ")");
                     }
                 }
-            });
+            };
+        }
+    }
+);
             cbEmpleado.setButtonCell(cbEmpleado.getCellFactory().call(null));
 
             logger.info("Combobox de empleados cargado con éxito.");
@@ -116,17 +131,27 @@ public class AdministradorModificarHorarioController extends LoggerController im
             }
 
             // Formato visual para el ComboBox de actividades asignadas
-            cbDiaEliminar.setCellFactory(param -> new javafx.scene.control.ListCell<Actividad>() {
+           cbDiaEliminar.setCellFactory(
+    new Callback<ListView<Actividad>, ListCell<Actividad>>() {
+        @Override
+        public ListCell<Actividad> call(ListView<Actividad> param) {
+            return new ListCell<Actividad>() {
                 @Override
                 protected void updateItem(Actividad item, boolean empty) {
                     super.updateItem(item, empty);
                     if (empty || item == null) {
                         setText(null);
                     } else {
-                        setText(item.getTitulo() + " (" + item.getFechaInicio() + ")");
+                        setText(item.getTitulo()
+                                + " ("
+                                + item.getFechaInicio()
+                                + ")");
                     }
                 }
-            });
+            };
+        }
+    }
+);
             cbDiaEliminar.setButtonCell(cbDiaEliminar.getCellFactory().call(null));
             
             mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Horario del empleado cargado correctamente.");

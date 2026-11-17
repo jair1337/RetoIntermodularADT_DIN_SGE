@@ -14,7 +14,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.beans.value.ObservableValue;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.value.ChangeListener;
+import java.util.concurrent.Callable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
@@ -63,13 +68,29 @@ public class ClienteCancelarController extends LoggerController implements Initi
         cargarDatos();
  
         // El botón hace lo mismo aunque no tenga onAction en el FXML
-        btnCancelar.setOnAction(e -> cancelar());
+       btnCancelar.setOnAction(new EventHandler<ActionEvent>() {
+    @Override
+    public void handle(ActionEvent event) {
+        cancelar();
+    }
+});
  
         // Deshabilitado si no hay fila seleccionada o si la reserva ya está cancelada
-        btnCancelar.disableProperty().bind(Bindings.createBooleanBinding(() -> {
-            ItemReserva seleccionado = tbActividades.getSelectionModel().getSelectedItem();
-            return seleccionado == null || "Cancelada".equals(seleccionado.getEstado());
-        }, tbActividades.getSelectionModel().selectedItemProperty()));
+        btnCancelar.disableProperty().bind(
+    Bindings.createBooleanBinding(
+        new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                ItemReserva seleccionado =
+                        tbActividades.getSelectionModel().getSelectedItem();
+
+                return seleccionado == null
+                        || "Cancelada".equals(seleccionado.getEstado());
+            }
+        },
+        tbActividades.getSelectionModel().selectedItemProperty()
+    )
+);
     }
  
     private void configurarColumnas() {

@@ -25,6 +25,9 @@ import javafx.scene.control.ToggleGroup;
 import modelo.Pago;
 import modelo.Pista;
 import modelo.Usuario;
+import javafx.util.Callback;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 /**
  * FXML Controller class
  *
@@ -71,19 +74,42 @@ public class ClientePagoController extends LoggerController implements Initializ
  
         // Fecha: por defecto hoy y sin permitir días pasados
         dtrFecha.setValue(LocalDate.now());
-        dtrFecha.setDayCellFactory(picker -> new DateCell() {
-            @Override
-            public void updateItem(LocalDate item, boolean empty) {
-                super.updateItem(item, empty);
-                setDisable(empty || item.isBefore(LocalDate.now()));
-            }
-        });
+      dtrFecha.setDayCellFactory(
+    new Callback<DatePicker, DateCell>() {
+        @Override
+        public DateCell call(DatePicker picker) {
+            return new DateCell() {
+                @Override
+                public void updateItem(LocalDate item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    if (empty) {
+                        setDisable(true);
+                    } else {
+                        setDisable(item.isBefore(LocalDate.now()));
+                    }
+                }
+            };
+        }
+    }
+);
  
         sprHora.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(HORA_APERTURA, HORA_CIERRE - 1, 10));
         sprCantidad.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 4, 1));
  
         // Al cambiar las horas se recalcula el total
-        sprCantidad.valueProperty().addListener((obs, anterior, nuevo) -> actualizarTotal());
+        sprCantidad.valueProperty().addListener(
+    new ChangeListener<Integer>() {
+        @Override
+        public void changed(
+                ObservableValue<? extends Integer> observable,
+                Integer anterior,
+                Integer nuevo) {
+
+            actualizarTotal();
+        }
+    }
+);
     }
  
     // Lo llama ClienteDisponibilidadController justo después de cargar el FXML
